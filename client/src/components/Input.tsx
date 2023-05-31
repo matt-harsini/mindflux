@@ -9,28 +9,38 @@ const feelings: Feelings = {
   CARD_ANXIOUS: "Anxiety",
   CARD_ANGRY: "Anger",
 };
+type Position = {
+  x: number;
+  transition: {
+    type: string;
+  };
+};
 
 export default function Input({ card_title }: InputProps) {
   const [input, setInput] = useState("1");
-  const [position, setPosition] = useState({ x: 0 });
+  const [position, setPosition] = useState<Position>({
+    x: 0,
+    transition: {
+      type: "spring",
+    },
+  });
   const emoji = useRef<HTMLDivElement>(null);
 
   function changeInput(e: React.MouseEvent) {
     if (!(e.target instanceof HTMLElement)) return;
     if (e.target.nodeName === "UL") return;
     if (!emoji.current) return;
-
+    const emojiParent = emoji.current.closest("li");
+    if (!emojiParent) return;
     const { innerText } = e.target as HTMLElement;
     const target = emoji.current
       ?.closest("ul")
       ?.querySelector(`[data-value='${innerText}']`) as HTMLElement;
-
     const targetDimensions = target.getBoundingClientRect();
-    const emojiDimensions: DOMRect = emoji.current.getBoundingClientRect();
-    console.log(targetDimensions);
+    const emojiParentDimensions: DOMRect = emojiParent.getBoundingClientRect();
 
     setPosition({
-      x: targetDimensions.left - emojiDimensions.left,
+      x: targetDimensions.left - emojiParentDimensions.left,
     });
     setInput(innerText);
   }
