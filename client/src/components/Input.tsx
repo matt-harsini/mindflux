@@ -11,23 +11,25 @@ const feelings: Feelings = {
 };
 
 export default function Input({ card_title }: InputProps) {
-  const [input, setInput] = useState(null);
+  const [input, setInput] = useState("1");
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   function changeInput(e: React.MouseEvent) {
     if (!(e.target instanceof HTMLElement)) return;
     if (e.target.nodeName === "UL") return;
 
     const { innerText } = e.target as HTMLElement;
-    console.log(innerText);
-
     const emoji = document.getElementById(
       `${feelings[card_title]}-emoji`
     ) as HTMLElement;
-    const emojiParent = emoji.closest("ul");
 
-    emojiParent
-      ?.querySelector(`[data-value='${innerText}']`)
-      ?.appendChild(emoji);
+    const target = emoji
+      .closest("ul")
+      ?.querySelector(`[data-value='${innerText}']`) as HTMLElement;
+
+    const targetDimensions = target.getBoundingClientRect();
+    setTarget(targetDimensions);
+    setInput(innerText);
   }
 
   return (
@@ -43,7 +45,7 @@ export default function Input({ card_title }: InputProps) {
           <span>1</span>
           <div
             id={`${feelings[card_title]}-emoji`}
-            className="flex items-center justify-center w-full h-full absolute"
+            className="flex items-center justify-center w-full h-full absolute transition-transform duration-1000 pointer-events-none"
           >
             <motion.span className="fa-solid fa-face-smile scale-[2.1] lg:scale-[3.7] text-accent" />
           </div>
