@@ -487,7 +487,7 @@ export default function Example() {
           </div>
         </div>
       </div>
-      {selectedDay?.events.length && selectedDay.events.length > 0 && (
+      {selectedDay && selectedDay.events.length > 0 && (
         <div className="px-4 py-10 sm:px-6 lg:hidden">
           <ol className="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
             {selectedDay?.events.map((event) => (
