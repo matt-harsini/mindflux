@@ -7,6 +7,13 @@ import {
   EllipsisHorizontalIcon,
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
+import {
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  startOfMonth,
+  startOfToday,
+} from "date-fns";
 
 const days = [
   { date: "2021-12-27", events: [] },
@@ -134,11 +141,19 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 }
 
 export default function Example() {
+  const today = startOfToday();
+  console.log(today);
+  const newDays = eachDayOfInterval({
+    start: startOfMonth(today),
+    end: endOfMonth(today),
+  });
+  console.log(newDays);
+
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
       <header className="flex items-center justify-between border-base-300 px-6 py-4 lg:flex-none bg-base-200">
         <h1 className="font-semibold leading-6 text-primary-content text-2xl">
-          <time dateTime="2022-01">January 2022</time>
+          <time dateTime="2022-01">{format(today, "MMMM yyyy")}</time>
         </h1>
         <div className="flex items-center">
           <div className="relative flex items-center rounded-md bg-accent shadow-sm md:items-stretch">
