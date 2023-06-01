@@ -263,7 +263,7 @@ export default function Example() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right divide-y divide-gray-100 overflow-hidden rounded-md bg-base-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right divide-y divide-base-300 overflow-hidden rounded-md bg-base-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
@@ -288,8 +288,8 @@ export default function Example() {
                         href="#"
                         className={classNames(
                           active
-                            ? "bg-base-103 text-primary-content"
-                            : "bg-base-301 text-primary-content",
+                            ? "bg-base-300 text-primary-content"
+                            : "bg-base-100 text-primary-content",
                           "block px-4 py-2 text-sm"
                         )}
                       >
@@ -438,25 +438,25 @@ export default function Example() {
               </div>
             ))}
           </div>
-          <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden">
+          <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden bg-base-300">
             {days.map((day) => (
               <button
                 key={day.date}
                 type="button"
                 className={classNames(
-                  day.isCurrentMonth ? "bg-white" : "bg-gray-50",
+                  day.isCurrentMonth ? "bg-base-100" : "bg-base-200",
                   (day.isSelected || day.isToday) && "font-semibold",
                   day.isSelected && "text-white",
-                  !day.isSelected && day.isToday && "text-indigo-600",
+                  !day.isSelected && day.isToday && "text-accent",
                   !day.isSelected &&
                     day.isCurrentMonth &&
                     !day.isToday &&
-                    "text-gray-900",
+                    "text-primary-content",
                   !day.isSelected &&
                     !day.isCurrentMonth &&
                     !day.isToday &&
                     "text-gray-500",
-                  "flex h-14 flex-col px-3 py-2 hover:bg-base-100 focus:primary-content"
+                  "flex h-14 flex-col px-3 py-2 hover:bg-base-300 focus:primary-content"
                 )}
               >
                 <time
@@ -464,8 +464,8 @@ export default function Example() {
                   className={classNames(
                     day.isSelected &&
                       "flex h-6 w-6 items-center justify-center rounded-full",
-                    day.isSelected && day.isToday && "bg-indigo-600",
-                    day.isSelected && !day.isToday && "bg-gray-900",
+                    day.isSelected && day.isToday && "bg-accent",
+                    day.isSelected && !day.isToday && "bg-secondary",
                     "ml-auto"
                   )}
                 >
@@ -489,20 +489,22 @@ export default function Example() {
       </div>
       {selectedDay && selectedDay.events.length > 0 && (
         <div className="px-4 py-10 sm:px-6 lg:hidden">
-          <ol className="divide-y divide-gray-100 overflow-hidden rounded-lg bg-white text-sm shadow ring-1 ring-black ring-opacity-5">
+          <ol className="divide-y divide-base-300 overflow-hidden rounded-lg bg-base-100 text-sm shadow ring-1 ring-black ring-opacity-5">
             {selectedDay?.events.map((event) => (
               <li
                 key={event.id}
-                className="group flex p-4 pr-6 focus-within:bg-gray-50 hover:bg-gray-50"
+                className="group flex p-4 pr-6 focus-within:bg-base-300 hover:bg-base-300"
               >
                 <div className="flex-auto">
-                  <p className="font-semibold text-gray-900">{event.name}</p>
+                  <p className="font-semibold text-primary-content">
+                    {event.name}
+                  </p>
                   <time
                     dateTime={event.datetime}
-                    className="mt-2 flex items-center text-gray-700"
+                    className="mt-2 flex items-center text-gray-300"
                   >
                     <ClockIcon
-                      className="mr-2 h-5 w-5 text-gray-400"
+                      className="mr-2 h-5 w-5 text-gray-300"
                       aria-hidden="true"
                     />
                     {event.time}
@@ -510,7 +512,7 @@ export default function Example() {
                 </div>
                 <a
                   href={event.href}
-                  className="ml-6 flex-none self-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 opacity-0 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400 focus:opacity-100 group-hover:opacity-100"
+                  className="ml-6 flex-none self-center rounded-md px-3 py-2 font-semibold text-primary-content opacity-0 shadow-sm focus:opacity-100 group-hover:opacity-100 btn btn-accent"
                 >
                   Edit<span className="sr-only">, {event.name}</span>
                 </a>
