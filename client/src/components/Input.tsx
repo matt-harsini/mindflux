@@ -16,6 +16,7 @@ export default function Input({ card_title }: InputProps) {
   const [position, setPosition] = useState({
     x: 0,
   });
+  const [isAnimation, setIsAnimating] = useState(false);
   const emoji = useRef<HTMLDivElement>(null);
 
   function changeInput(e: React.MouseEvent) {
@@ -36,9 +37,14 @@ export default function Input({ card_title }: InputProps) {
     setInput(innerText);
   }
 
-  function appendEmoji() {
+  function handleAnimationEnd() {
     console.log(input + 1);
+    setIsAnimating(false);
   }
+  function handleAnimationStart() {
+    setIsAnimating(true);
+  }
+
   return (
     <div className="flex flex-col gap-4 ">
       <h6 className="text-center font-semibold text-lg">
@@ -49,13 +55,14 @@ export default function Input({ card_title }: InputProps) {
           data-value="1"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span>1</span>
+          <span className={isAnimation ? "hidden" : "visible"}>1</span>
           <motion.div
             transition={{ ease: [0.42, 0, 0.58, 1] }}
             ref={emoji}
+            onAnimationStart={handleAnimationStart}
             animate={position}
-            onAnimationComplete={appendEmoji}
-            className="z-30 flex items-center justify-center w-full h-full absolute pointer-events-none"
+            onAnimationComplete={handleAnimationEnd}
+            className={`z-30 flex items-center justify-center w-full h-full absolute pointer-events-none`}
           >
             <span
               className={`fa-solid ${inputIcons[card_title][input]} scale-[2.1] lg:scale-[3.7] text-accent`}
@@ -66,25 +73,25 @@ export default function Input({ card_title }: InputProps) {
           data-value="2"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span>2</span>
+          <span className={isAnimation ? "hidden" : "visible"}>2</span>
         </li>
         <li
           data-value="3"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span>3</span>
+          <span className={isAnimation ? "hidden" : "visible"}>3</span>
         </li>
         <li
           data-value="4"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span>4</span>
+          <span className={isAnimation ? "hidden" : "visible"}>4</span>
         </li>
         <li
           data-value="5"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span>5</span>
+          <span className={isAnimation ? "hidden" : "visible"}>5</span>
         </li>
       </ul>
     </div>
