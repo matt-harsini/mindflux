@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -6,17 +6,19 @@ import {
   ClockIcon,
   EllipsisHorizontalIcon,
 } from "@heroicons/react/20/solid";
-import { Menu, Transition } from "@headlessui/react";
 import {
   add,
   eachDayOfInterval,
   endOfMonth,
+  endOfWeek,
   format,
+  getDay,
   parse,
-  startOfMonth,
   startOfToday,
+  startOfWeek,
   sub,
 } from "date-fns";
+import { Fragment, useState } from "react";
 
 const days = [
   { date: "2021-12-27", events: [] },
@@ -150,9 +152,13 @@ export default function Example() {
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   console.log(today);
   const newDays = eachDayOfInterval({
-    start: startOfMonth(today),
-    end: endOfMonth(today),
+    start: startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 }),
+    end: add(endOfMonth(firstDayCurrentMonth), { days: 5 }),
   });
+  
+  console.log(newDays);
+  console.log(endOfMonth(firstDayCurrentMonth));
+
   function nextMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
@@ -167,7 +173,15 @@ export default function Example() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
   console.log(currentMonth);
-
+  const colStartClasses = [
+    "col-start-7",
+    "col-start-1",
+    "col-start-2",
+    "col-start-3",
+    "col-start-4",
+    "col-start-5",
+    "col-start-6",
+  ];
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
       <header className="flex items-center justify-between border-base-300 px-6 py-4 lg:flex-none bg-base-200">
@@ -436,29 +450,31 @@ export default function Example() {
         </div>
         <div className="flex bg-gray-200 text-xs leading-6 text-primary-content lg:flex-auto">
           <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px bg-base-300">
-            {days.map((day) => (
+            {newDays.map((day, i) => (
               <div
-                key={day.date}
+                key={day.toString()}
                 className={classNames(
                   day.isCurrentMonth
                     ? "bg-base-100"
                     : "bg-base-200 text-gray-400",
-                  "relative px-3 py-2"
+                  `relative px-3 py-2 ${
+                    i === 0 && colStartClasses[getDay(day)]
+                  }`
                 )}
               >
                 <time
-                  dateTime={day.date}
+                  dateTime={day.toString()}
                   className={
                     day.isToday
                       ? "flex h-6 w-6 items-center justify-center rounded-full bg-accent font-semibold text-white"
                       : undefined
                   }
                 >
-                  {day?.date?.split("-")?.pop()?.replace(/^0/, "")}
+                  {format(day, "d")}
                 </time>
-                {day.events.length > 0 && (
+                {/* {day.events.length > 0 && (
                   <ol className="mt-2">
-                    {/* {day.events.slice(0, 2).map((event) => (
+                    {day.events.slice(0, 2).map((event) => (
                       <li key={event.id}>
                         <a href={event.href} className="group flex">
                           <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
@@ -472,14 +488,14 @@ export default function Example() {
                           </time>
                         </a>
                       </li>
-                    ))} */}
-                    {/* {day.events.length > 2 && (
+                    ))}
+                    {day.events.length > 2 && (
                       <li className="text-gray-500">
                         + {day.events.length - 2} more
                       </li>
-                    )} */}
+                    )}
                   </ol>
-                )}
+                )} */}
               </div>
             ))}
           </div>
