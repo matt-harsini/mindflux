@@ -147,6 +147,16 @@ function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+const colStartClasses = [
+  "col-start-7",
+  "col-start-1",
+  "col-start-2",
+  "col-start-3",
+  "col-start-4",
+  "col-start-5",
+  "col-start-6",
+];
+
 export default function Example() {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -160,7 +170,6 @@ export default function Example() {
     start,
     end: add(end, { days: 41 - difference }),
   });
-  console.log(newDays);
 
   function nextMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
@@ -175,15 +184,7 @@ export default function Example() {
   function resetMonth() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
-  const colStartClasses = [
-    "col-start-7",
-    "col-start-1",
-    "col-start-2",
-    "col-start-3",
-    "col-start-4",
-    "col-start-5",
-    "col-start-6",
-  ];
+
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
       <header className="flex items-center justify-between border-base-300 px-6 py-4 lg:flex-none bg-base-200">
