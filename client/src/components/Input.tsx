@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { InputProps } from "../shared/types";
 import { motion } from "framer-motion";
 import { Feelings } from "../shared/interfaces";
+import { inputIcons } from "../theme/icons";
 
 const feelings: Feelings = {
   CARD_HAPPY: "Happiness",
@@ -11,7 +12,7 @@ const feelings: Feelings = {
 };
 
 export default function Input({ card_title }: InputProps) {
-  const [input, setInput] = useState("1");
+  const [input, setInput] = useState<string>("1");
   const [position, setPosition] = useState({
     x: 0,
   });
@@ -35,6 +36,9 @@ export default function Input({ card_title }: InputProps) {
     setInput(innerText);
   }
 
+  function appendEmoji() {
+    console.log(input);
+  }
   return (
     <div className="flex flex-col gap-4 ">
       <h6 className="text-center font-semibold text-lg">
@@ -47,12 +51,15 @@ export default function Input({ card_title }: InputProps) {
         >
           <span>1</span>
           <motion.div
-            transition={{ type: "spring", duration: 1 }}
+            transition={{ ease: [0.42, 0, 0.58, 1] }}
             ref={emoji}
             animate={position}
+            onAnimationComplete={appendEmoji}
             className="z-30 flex items-center justify-center w-full h-full absolute pointer-events-none"
           >
-            <span className="fa-solid fa-face-smile scale-[2.1] lg:scale-[3.7] text-accent" />
+            <span
+              className={`fa-solid ${inputIcons[card_title][input]} scale-[2.1] lg:scale-[3.7] text-accent`}
+            />
           </motion.div>
         </li>
         <li
