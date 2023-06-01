@@ -137,7 +137,7 @@ export default function Example() {
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
       <header className="flex items-center justify-between border-b border-gray-200 px-6 py-4 lg:flex-none">
-        <h1 className="font-semibold leading-6 text-primary-content text-xl">
+        <h1 className="font-semibold leading-6 text-primary-content text-2xl">
           <time dateTime="2022-01">January 2022</time>
         </h1>
         <div className="flex items-center">
@@ -389,13 +389,15 @@ export default function Example() {
             S<span className="sr-only sm:not-sr-only">un</span>
           </div>
         </div>
-        <div className="flex bg-gray-200 text-xs leading-6 text-gray-700 lg:flex-auto">
+        <div className="flex bg-gray-200 text-xs leading-6 text-primary-content lg:flex-auto">
           <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
             {days.map((day) => (
               <div
                 key={day.date}
                 className={classNames(
-                  day.isCurrentMonth ? "bg-white" : "bg-gray-50 text-gray-500",
+                  day.isCurrentMonth
+                    ? "bg-base-300"
+                    : "bg-base-100 text-gray-500",
                   "relative px-3 py-2"
                 )}
               >
