@@ -159,7 +159,7 @@ const colStartClasses = [
 
 export default function Example() {
   const today = startOfToday();
-  const [selectedDay, setSelectedDay] = useState(today);
+  // const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const start = startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 });
@@ -551,7 +551,7 @@ export default function Example() {
           </div>
         </div>
       </div>
-      {selectedDay.events?.length && selectedDay.events?.length > 0 && (
+      {selectedDay?.events.length && selectedDay.events.length > 0 && (
         <div className="px-4 py-10 sm:px-6 lg:hidden">
           <ol className="divide-y divide-base-300 overflow-hidden rounded-lg bg-base-100 text-sm shadow ring-1 ring-black ring-opacity-5">
             {selectedDay?.events.map((event) => (
