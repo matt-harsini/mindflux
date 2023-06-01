@@ -66,7 +66,10 @@ export default function Input({ card_title }: InputProps) {
             1
           </motion.span>
           <motion.div
-            transition={{ ease: [0.42, 0, 0.58, 1] }}
+            transition={{
+              type: "spring",
+              stiffness: 75,
+            }}
             ref={emoji}
             animate={position}
             onAnimationStart={handleAnimationStart}
