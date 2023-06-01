@@ -5,6 +5,7 @@ import { icons } from "../theme/icons";
 import { State, Action, CardType } from "../shared/types";
 import { CardState } from "../shared/interfaces";
 import Input from "../components/Input";
+import { format, startOfDay, startOfToday } from "date-fns";
 
 const defaultCardState = {
   CARD_HAPPY: false,
@@ -63,7 +64,7 @@ export default function Log() {
   return (
     <main className="flex flex-col max-w-[1280px] mx-auto px-6 mb-4">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
-        {getDate()}
+        {format(startOfToday(), "MMMM do, yyy")}
       </h3>
       <h4 className="text-primary-content text-3xl font-bold mx-auto my-16">
         How are you feeling?

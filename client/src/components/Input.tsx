@@ -21,7 +21,6 @@ export default function Input({ card_title }: InputProps) {
   const [position, setPosition] = useState({
     x: 0,
   });
-  const [isAnimation, setIsAnimating] = useState(false);
   const emoji = useRef<HTMLDivElement>(null);
 
   function changeInput(e: React.MouseEvent) {

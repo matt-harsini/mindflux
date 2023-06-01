@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -8,11 +8,14 @@ import {
 } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 import {
+  add,
   eachDayOfInterval,
   endOfMonth,
   format,
+  parse,
   startOfMonth,
   startOfToday,
+  sub,
 } from "date-fns";
 
 const days = [
@@ -142,33 +145,60 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 
 export default function Example() {
   const today = startOfToday();
+  const [selectedDay, setSelectedDay] = useState(today);
+  const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   console.log(today);
   const newDays = eachDayOfInterval({
     start: startOfMonth(today),
     end: endOfMonth(today),
   });
-  console.log(newDays);
+  function nextMonth() {
+    const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
+  }
+
+  function previousMonth() {
+    const firstDayLastMonth = sub(firstDayCurrentMonth, { months: 1 });
+    setCurrentMonth(format(firstDayLastMonth, "MMM-yyyy"));
+  }
+
+  function resetMonth() {
+    setCurrentMonth(format(today, "MMM-yyyy"));
+  }
+  console.log(currentMonth);
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
       <header className="flex items-center justify-between border-base-300 px-6 py-4 lg:flex-none bg-base-200">
         <h1 className="font-semibold leading-6 text-primary-content text-2xl">
-          <time dateTime="2022-01">{format(today, "MMMM yyyy")}</time>
+          <time dateTime="2022-01">
+            {format(firstDayCurrentMonth, "MMMM yyyy")}
+          </time>
         </h1>
         <div className="flex items-center">
           <div className="relative flex items-center rounded-md bg-accent shadow-sm md:items-stretch">
-            <button type="button" className="btn btn-accent flex gap-2">
+            <button
+              type="button"
+              className="btn btn-accent flex gap-2"
+              onClick={previousMonth}
+            >
               <span className="sr-only">Previous month</span>
               <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
             </button>
             <button
               type="button"
               className="hidden px-3.5 text-sm font-semibold text-primary-content bg-accent uppercase focus:relative md:block"
+              onClick={resetMonth}
             >
               Today
             </button>
             <span className="relative -mx-px h-5 w-px bg-gray-300 md:hidden" />
-            <button type="button" className="btn btn-accent flex gap-2">
+            <button
+              type="button"
+              className="btn btn-accent flex gap-2"
+              onClick={nextMonth}
+            >
               <span className="sr-only">Next month</span>
               <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -428,7 +458,7 @@ export default function Example() {
                 </time>
                 {day.events.length > 0 && (
                   <ol className="mt-2">
-                    {day.events.slice(0, 2).map((event) => (
+                    {/* {day.events.slice(0, 2).map((event) => (
                       <li key={event.id}>
                         <a href={event.href} className="group flex">
                           <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
@@ -442,12 +472,12 @@ export default function Example() {
                           </time>
                         </a>
                       </li>
-                    ))}
-                    {day.events.length > 2 && (
+                    ))} */}
+                    {/* {day.events.length > 2 && (
                       <li className="text-gray-500">
                         + {day.events.length - 2} more
                       </li>
-                    )}
+                    )} */}
                   </ol>
                 )}
               </div>
@@ -502,7 +532,7 @@ export default function Example() {
           </div>
         </div>
       </div>
-      {selectedDay && selectedDay.events.length > 0 && (
+      {selectedDay.events?.length && selectedDay.events?.length > 0 && (
         <div className="px-4 py-10 sm:px-6 lg:hidden">
           <ol className="divide-y divide-base-300 overflow-hidden rounded-lg bg-base-100 text-sm shadow ring-1 ring-black ring-opacity-5">
             {selectedDay?.events.map((event) => (
