@@ -13,6 +13,8 @@ import {
   endOfMonth,
   format,
   getDay,
+  isSameMonth,
+  isToday,
   parse,
   startOfToday,
   startOfWeek,
@@ -158,6 +160,7 @@ export default function Example() {
     start,
     end: add(end, { days: 41 - difference }),
   });
+  console.log(newDays);
 
   function nextMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
@@ -453,7 +456,7 @@ export default function Example() {
               <div
                 key={day.toString()}
                 className={classNames(
-                  day.isCurrentMonth
+                  isSameMonth(day, firstDayCurrentMonth)
                     ? "bg-base-100"
                     : "bg-base-200 text-gray-400",
                   `relative px-3 py-2 ${
@@ -464,7 +467,7 @@ export default function Example() {
                 <time
                   dateTime={day.toString()}
                   className={
-                    day.isToday
+                    isToday(day)
                       ? "flex h-6 w-6 items-center justify-center rounded-full bg-accent font-semibold text-white"
                       : undefined
                   }
