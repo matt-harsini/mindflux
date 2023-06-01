@@ -30,6 +30,7 @@ export default function Input({ card_title }: InputProps) {
     if (!emoji.current) return;
     const emojiParent = emoji.current.closest("li");
     if (!emojiParent) return;
+    if (e.target.innerText === input) return;
     const { innerText } = e.target as HTMLElement;
     const target = emoji.current
       .closest("ul")
@@ -42,12 +43,12 @@ export default function Input({ card_title }: InputProps) {
     setInput(innerText);
   }
 
-  function handleAnimationEnd() {
-    setIsAnimating(false);
-  }
-  function handleAnimationStart() {
-    setIsAnimating(true);
-  }
+  // function handleAnimationEnd() {
+  //   setIsAnimating(false);
+  // }
+  // function handleAnimationStart() {
+  //   setIsAnimating(true);
+  // }
 
   return (
     <div className="flex flex-col gap-4 ">
@@ -72,8 +73,6 @@ export default function Input({ card_title }: InputProps) {
             }}
             ref={emoji}
             animate={position}
-            onAnimationStart={handleAnimationStart}
-            onAnimationComplete={handleAnimationEnd}
             className={`z-30 flex items-center justify-center w-full h-full absolute pointer-events-none`}
           >
             <span
