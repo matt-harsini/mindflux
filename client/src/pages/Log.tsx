@@ -1,11 +1,10 @@
+import { format, startOfToday } from "date-fns";
 import { Key, useReducer } from "react";
 import { Card } from "../components";
-import { getDate } from "../utils/dates";
-import { icons } from "../theme/icons";
-import { State, Action, CardType } from "../shared/types";
-import { CardState } from "../shared/interfaces";
 import Input from "../components/Input";
-import { format, startOfDay, startOfToday } from "date-fns";
+import { CardState } from "../shared/interfaces";
+import { Action, CardType, State } from "../shared/types";
+import { icons } from "../theme/icons";
 
 const defaultCardState = {
   CARD_HAPPY: false,

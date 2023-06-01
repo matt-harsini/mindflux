@@ -8,9 +8,9 @@ import {
 } from "@heroicons/react/20/solid";
 import {
   add,
+  differenceInDays,
   eachDayOfInterval,
   endOfMonth,
-  endOfWeek,
   format,
   getDay,
   parse,
@@ -150,14 +150,14 @@ export default function Example() {
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-  console.log(today);
+  const start = startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 });
+  const end = endOfMonth(firstDayCurrentMonth);
+  const difference = differenceInDays(end, start);
+
   const newDays = eachDayOfInterval({
-    start: startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 }),
-    end: add(endOfMonth(firstDayCurrentMonth), { days: 5 }),
+    start,
+    end: add(end, { days: 41 - difference }),
   });
-  
-  console.log(newDays);
-  console.log(endOfMonth(firstDayCurrentMonth));
 
   function nextMonth() {
     const firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 });
@@ -172,7 +172,6 @@ export default function Example() {
   function resetMonth() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
-  console.log(currentMonth);
   const colStartClasses = [
     "col-start-7",
     "col-start-1",
