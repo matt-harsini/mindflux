@@ -9,20 +9,11 @@ const feelings: Feelings = {
   CARD_ANXIOUS: "Anxiety",
   CARD_ANGRY: "Anger",
 };
-type Position = {
-  x: number;
-  transition: {
-    type: string;
-  };
-};
 
 export default function Input({ card_title }: InputProps) {
   const [input, setInput] = useState("1");
-  const [position, setPosition] = useState<Position>({
+  const [position, setPosition] = useState({
     x: 0,
-    transition: {
-      type: "spring",
-    },
   });
   const emoji = useRef<HTMLDivElement>(null);
 
@@ -34,11 +25,10 @@ export default function Input({ card_title }: InputProps) {
     if (!emojiParent) return;
     const { innerText } = e.target as HTMLElement;
     const target = emoji.current
-      ?.closest("ul")
+      .closest("ul")
       ?.querySelector(`[data-value='${innerText}']`) as HTMLElement;
     const targetDimensions = target.getBoundingClientRect();
     const emojiParentDimensions: DOMRect = emojiParent.getBoundingClientRect();
-
     setPosition({
       x: targetDimensions.left - emojiParentDimensions.left,
     });
@@ -57,9 +47,10 @@ export default function Input({ card_title }: InputProps) {
         >
           <span>1</span>
           <motion.div
+            transition={{ type: "spring", duration: 1 }}
             ref={emoji}
             animate={position}
-            className="z-30 flex items-center justify-center w-full h-full absolute transition-transform duration-1000 pointer-events-none"
+            className="z-30 flex items-center justify-center w-full h-full absolute pointer-events-none"
           >
             <span className="fa-solid fa-face-smile scale-[2.1] lg:scale-[3.7] text-accent" />
           </motion.div>
