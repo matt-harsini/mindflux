@@ -397,7 +397,7 @@ export default function Example() {
                 className={classNames(
                   day.isCurrentMonth
                     ? "bg-base-100"
-                    : "bg-base-200 text-gray-200",
+                    : "bg-base-200 text-gray-400",
                   "relative px-3 py-2"
                 )}
               >
@@ -416,12 +416,12 @@ export default function Example() {
                     {day.events.slice(0, 2).map((event) => (
                       <li key={event.id}>
                         <a href={event.href} className="group flex">
-                          <p className="flex-auto truncate font-medium text-primary-content group-hover:text-indigo-600">
+                          <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                             {event.name}
                           </p>
                           <time
                             dateTime={event.datetime}
-                            className="ml-3 hidden flex-none text-gray-300 group-hover:text-indigo-600 xl:block"
+                            className="ml-3 hidden flex-none text-gray-300 group-hover:text-accent xl:block"
                           >
                             {event.time}
                           </time>
