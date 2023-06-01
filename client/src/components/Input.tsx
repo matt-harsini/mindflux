@@ -37,7 +37,7 @@ export default function Input({ card_title }: InputProps) {
   }
 
   function appendEmoji() {
-    console.log(input);
+    console.log(input + 1);
   }
   return (
     <div className="flex flex-col gap-4 ">
