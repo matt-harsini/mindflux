@@ -11,6 +11,11 @@ const feelings: Feelings = {
   CARD_ANGRY: "Anger",
 };
 
+const variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
 export default function Input({ card_title }: InputProps) {
   const [input, setInput] = useState<string>("1");
   const [position, setPosition] = useState({
@@ -38,7 +43,6 @@ export default function Input({ card_title }: InputProps) {
   }
 
   function handleAnimationEnd() {
-    console.log(input + 1);
     setIsAnimating(false);
   }
   function handleAnimationStart() {
@@ -55,12 +59,17 @@ export default function Input({ card_title }: InputProps) {
           data-value="1"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span className={isAnimation ? "hidden" : "visible"}>1</span>
+          <motion.span
+            variants={variants}
+            animate={input === "1" ? "hidden" : "visible"}
+          >
+            1
+          </motion.span>
           <motion.div
             transition={{ ease: [0.42, 0, 0.58, 1] }}
             ref={emoji}
-            onAnimationStart={handleAnimationStart}
             animate={position}
+            onAnimationStart={handleAnimationStart}
             onAnimationComplete={handleAnimationEnd}
             className={`z-30 flex items-center justify-center w-full h-full absolute pointer-events-none`}
           >
@@ -73,25 +82,45 @@ export default function Input({ card_title }: InputProps) {
           data-value="2"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span className={isAnimation ? "hidden" : "visible"}>2</span>
+          <motion.span
+            variants={variants}
+            animate={input === "2" ? "hidden" : "visible"}
+          >
+            2
+          </motion.span>
         </li>
         <li
           data-value="3"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span className={isAnimation ? "hidden" : "visible"}>3</span>
+          <motion.span
+            variants={variants}
+            animate={input === "3" ? "hidden" : "visible"}
+          >
+            3
+          </motion.span>
         </li>
         <li
           data-value="4"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span className={isAnimation ? "hidden" : "visible"}>4</span>
+          <motion.span
+            variants={variants}
+            animate={input === "4" ? "hidden" : "visible"}
+          >
+            4
+          </motion.span>
         </li>
         <li
           data-value="5"
           className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
-          <span className={isAnimation ? "hidden" : "visible"}>5</span>
+          <motion.span
+            variants={variants}
+            animate={input === "5" ? "hidden" : "visible"}
+          >
+            5
+          </motion.span>
         </li>
       </ul>
     </div>
