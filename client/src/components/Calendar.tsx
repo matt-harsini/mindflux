@@ -188,7 +188,7 @@ export default function Example() {
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
       <header className="flex items-center justify-between border-base-300 px-6 py-4 lg:flex-none bg-base-200 rounded-md">
-        <h1 className="font-semibold leading-6 text-primary-content text-2xl">
+        <h1 className="font-semibold leading-6 text-primary-content text-md lg:text-xl xl:text-2xl">
           <time dateTime="2022-01">
             {format(firstDayCurrentMonth, "MMMM yyyy")}
           </time>
