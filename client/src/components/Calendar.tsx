@@ -13,6 +13,7 @@ import {
   endOfMonth,
   format,
   getDay,
+  isEqual,
   isSameMonth,
   isToday,
   parse,
@@ -159,7 +160,7 @@ const colStartClasses = [
 
 export default function Example() {
   const today = startOfToday();
-  // const [selectedDay, setSelectedDay] = useState(today);
+  const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const start = startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 });
@@ -460,7 +461,8 @@ export default function Example() {
                   isSameMonth(day, firstDayCurrentMonth)
                     ? "bg-base-100"
                     : "bg-base-200 text-gray-400",
-                  i === 35 || i === 41 ? "rounded-md" : "",
+                  i === 35 ? "rounded-bl-md" : "",
+                  i === 41 ? "rounded-br-md" : "",
                   `relative px-3 py-2 ${
                     i === 0 && colStartClasses[getDay(day)]
                   }`
@@ -504,40 +506,47 @@ export default function Example() {
             ))}
           </div>
           <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden bg-base-300">
-            {days.map((day) => (
+            {newDays.map((day) => (
               <button
                 key={day.date}
                 type="button"
                 className={classNames(
-                  day.isCurrentMonth ? "bg-base-100" : "bg-base-200",
-                  (day.isSelected || day.isToday) && "font-semibold",
-                  day.isSelected && "text-white",
-                  !day.isSelected && day.isToday && "text-accent",
-                  !day.isSelected &&
-                    day.isCurrentMonth &&
-                    !day.isToday &&
+                  isSameMonth(day, firstDayCurrentMonth)
+                    ? "bg-base-100"
+                    : "bg-base-200",
+                  (isEqual(day, selectedDay) || isEqual(day, selectedDay)) &&
+                    "font-semibold",
+                  isEqual(day, selectedDay) && "text-white",
+                  !isEqual(day, selectedDay) &&
+                    isEqual(day, selectedDay) &&
+                    "text-accent",
+                  !isEqual(day, selectedDay) &&
+                    isSameMonth(day, firstDayCurrentMonth) &&
+                    !isEqual(day, selectedDay) &&
                     "text-primary-content",
-                  !day.isSelected &&
-                    !day.isCurrentMonth &&
-                    !day.isToday &&
+                  !isEqual(day, selectedDay) &&
+                    !isSameMonth(day, firstDayCurrentMonth) &&
+                    !isEqual(day, selectedDay) &&
                     "text-gray-500",
                   "flex h-14 flex-col px-3 py-2 hover:bg-base-300 focus:primary-content"
                 )}
               >
                 <time
-                  dateTime={day.date}
+                  dateTime={day.toString()}
                   className={classNames(
-                    day.isSelected &&
+                    isEqual(day, selectedDay) &&
                       "flex h-6 w-6 items-center justify-center rounded-full",
-                    day.isSelected && day.isToday && "bg-accent",
-                    day.isSelected && !day.isToday && "bg-secondary",
+                    isEqual(day, selectedDay) && isToday(day) && "bg-accent",
+                    isEqual(day, selectedDay) &&
+                      !isToday(day) &&
+                      "bg-secondary",
                     "ml-auto"
                   )}
                 >
-                  {day?.date?.split("-")?.pop()?.replace(/^0/, "")}
+                  {format(day, "d")}
                 </time>
-                <span className="sr-only">{day.events.length} events</span>
-                {day.events.length > 0 && (
+                {/* <span className="sr-only">{day.events.length} events</span> */}
+                {/* {day.events.length > 0 && (
                   <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
                     {day.events.map((event) => (
                       <span
@@ -546,13 +555,13 @@ export default function Example() {
                       />
                     ))}
                   </span>
-                )}
+                )} */}
               </button>
             ))}
           </div>
         </div>
       </div>
-      {selectedDay?.events.length && selectedDay.events.length > 0 && (
+      {/* {selectedDay?.events.length && selectedDay.events.length > 0 && (
         <div className="px-4 py-10 sm:px-6 lg:hidden">
           <ol className="divide-y divide-base-300 overflow-hidden rounded-lg bg-base-100 text-sm shadow ring-1 ring-black ring-opacity-5">
             {selectedDay?.events.map((event) => (
@@ -585,7 +594,7 @@ export default function Example() {
             ))}
           </ol>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
