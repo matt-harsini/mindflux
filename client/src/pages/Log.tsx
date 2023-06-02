@@ -61,7 +61,7 @@ export default function Log() {
     state.CARD_SAD;
 
   return (
-    <main className="flex flex-col max-w-[1280px] mx-auto px-6 mb-4">
+    <main className="flex flex-col max-w-[1320px] mx-auto px-6 mb-4">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
         {format(startOfToday(), "MMMM do, yyy")}
       </h3>

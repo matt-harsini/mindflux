@@ -187,7 +187,7 @@ export default function Example() {
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
-      <header className="flex items-center justify-between border-base-300 px-6 py-4 lg:flex-none bg-base-200">
+      <header className="flex items-center justify-between border-base-300 px-6 py-4 lg:flex-none bg-base-200 rounded-md">
         <h1 className="font-semibold leading-6 text-primary-content text-2xl">
           <time dateTime="2022-01">
             {format(firstDayCurrentMonth, "MMMM yyyy")}
@@ -427,7 +427,7 @@ export default function Example() {
           </Menu>
         </div>
       </header>
-      <div className="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col">
+      <div className="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col rounded-md">
         <div className="grid grid-cols-7 gap-px border-b border-base-300 text-center text-xs font-semibold leading-6 text-primary-content lg:flex-none bg-base-300">
           <div className="bg-base-100 py-2">
             M<span className="sr-only sm:not-sr-only">on</span>
@@ -451,8 +451,8 @@ export default function Example() {
             S<span className="sr-only sm:not-sr-only">un</span>
           </div>
         </div>
-        <div className="flex bg-gray-200 text-xs leading-6 text-primary-content lg:flex-auto">
-          <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px bg-base-300">
+        <div className="flex bg-base-100 rounded-md text-xs leading-6 text-primary-content lg:flex-auto">
+          <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px bg-base-300 rounded-md">
             {newDays.map((day, i) => (
               <div
                 key={day.toString()}
@@ -460,6 +460,7 @@ export default function Example() {
                   isSameMonth(day, firstDayCurrentMonth)
                     ? "bg-base-100"
                     : "bg-base-200 text-gray-400",
+                  i === 35 || i === 41 ? "rounded-md" : "",
                   `relative px-3 py-2 ${
                     i === 0 && colStartClasses[getDay(day)]
                   }`
