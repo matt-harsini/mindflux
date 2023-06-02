@@ -195,10 +195,10 @@ export default function Example() {
           </time>
         </h1>
         <div className="flex items-center">
-          <div className="relative flex items-center rounded-md bg-accent shadow-sm md:items-stretch">
+          <div className="relative flex items-center rounded-lg bg-accent shadow-sm md:items-stretch">
             <button
               type="button"
-              className="btn btn-accent flex gap-2"
+              className="btn btn-accent flex gap-2 hover:rounded-l-lg"
               onClick={previousMonth}
             >
               <span className="sr-only">Previous month</span>
@@ -508,7 +508,8 @@ export default function Example() {
           <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden bg-base-300">
             {newDays.map((day) => (
               <button
-                key={day.date}
+                key={day.toString()}
+                onClick={() => setSelectedDay(day)}
                 type="button"
                 className={classNames(
                   isSameMonth(day, firstDayCurrentMonth)
