@@ -142,7 +142,6 @@ const days = [
   { date: "2022-02-05", events: [] },
   { date: "2022-02-06", events: [] },
 ];
-const selectedDay = days.find((day) => day.isSelected);
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -464,7 +463,7 @@ export default function Example() {
                   i === 35 ? "rounded-bl-md" : "",
                   i === 41 ? "rounded-br-md" : "",
                   `relative px-3 py-2 ${
-                    i === 0 && colStartClasses[getDay(day)]
+                    i === 0 ? colStartClasses[getDay(day)] : ""
                   }`
                 )}
               >
