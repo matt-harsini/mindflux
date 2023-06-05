@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import validator from "validator";
 
 const Schema = mongoose.Schema;
 
@@ -8,26 +9,42 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    validate: [validator.isEmail, "Must be a valid email"],
   },
   password: {
     type: String,
     required: true,
+    validate: [validator.isStrongPassword, "Weak password"],
   },
 });
 
-// static signup method (virtuals?)
 userSchema.statics.register = async function (email, password) {
-  const exists = await this.findOne({ email });
-  if (exists) {
+  if (!email || !password) {
+    throw Error("All fields must be filled");
+  }
+
+  if (await this.findOne({ email })) {
     throw Error("Email already in use");
   }
-  const salt = await bcrypt.genSalt(12);
-  const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ email, password: hash });
-
-  return user;
+  try {
+    const user = await this.create({ email, password });
+    return user;
+  } catch (error) {
+    throw Error(error);
+  }
 };
-const User = mongoose.model("123meeee", userSchema);
 
+userSchema.pre("save", async function (next) {
+  try {
+    const document = this;
+    const salt = await bcrypt.genSalt(15);
+    const hash = await bcrypt.hash(document.password, salt);
+    document.password = hash;
+  } catch (error) {
+    next(error);
+  }
+});
+
+const User = mongoose.model("User", userSchema);
 export { User };
