@@ -1,12 +1,12 @@
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
-import userRoutes from "./routes/user";
+import { router as userRoutes } from "./routes/user.js";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use("/api/log-mood");
+app.use("/api/log-mood", userRoutes);
 app.use(userRoutes);
 main();
 async function main() {
