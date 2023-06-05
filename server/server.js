@@ -6,11 +6,12 @@ import cors from "cors";
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use("/api/log-mood", userRoutes);
+app.use("/api", userRoutes);
 app.use(userRoutes);
 main();
 async function main() {
   try {
+    await mongoose.connect(process.env.MONGO_URI);
     const port = process.env.PORT || 3000;
     app.listen(port, () => {
       console.log(`Server is listening on port ${port}`);

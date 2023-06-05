@@ -1,3 +1,4 @@
+import StatusCode from "http-status-codes";
 import { User } from "../models/userModel.js";
 
 function login(req, res) {
@@ -5,8 +6,14 @@ function login(req, res) {
   res.json({ msg: "Login User" });
 }
 
-function register(req, res) {
-  res.json({ msg: "Register User" });
+async function register(req, res) {
+  const { email, password } = req.body;
+  try {
+    const user = await User.register(email, password);
+    res.status(StatusCode.OK).json({ email, password });
+  } catch (error) {
+    res.status(StatusCode.BAD_REQUEST).json({ error: error.message });
+  }
 }
 
 export { login, register };
