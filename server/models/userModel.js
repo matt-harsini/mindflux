@@ -14,6 +14,8 @@ const userSchema = new Schema({
   },
 });
 
+// static signup method (virtuals?)
+userSchema.statics.register = async function (email, password) {};
 const User = mongoose.model("User", userSchema);
 
 export { User };
