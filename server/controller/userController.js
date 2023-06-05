@@ -6,7 +6,7 @@ function login(req, res) {
 }
 
 function register(req, res) {
-  res.json({ msg: "Login User" });
+  res.json({ msg: "Register User" });
 }
 
 export { login, register };
