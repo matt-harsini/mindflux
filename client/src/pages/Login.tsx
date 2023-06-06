@@ -1,19 +1,23 @@
 import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
-
+import { authFetch } from "../utils/axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const result = useMutation({
-    mutationFn: () => {
-      return fetch("http://localhost:4000/api/login", {
-
-      });
-    },
+  const { data, mutate, isLoading, isSuccess } = useMutation({
+    mutationFn: () => authFetch.post("/login", { username, password }),
   });
+  const { dispatch } = useAuthContext();
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    mutate();
+    if (isSuccess) {
+      // localStorage.setItem("token", JSON.stringify());
+    }
   };
 
   return (
@@ -46,7 +50,12 @@ export default function Login() {
           />
         </div>
         <div className="mt-4">
-          <button type="submit" className="btn btn-secondary btn-wide">
+          <button
+            type="submit"
+            className={`btn btn-secondary btn-wide ${
+              isLoading ? "btn-disabled" : ""
+            }`}
+          >
             log in
           </button>
         </div>

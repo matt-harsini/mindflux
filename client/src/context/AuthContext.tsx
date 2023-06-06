@@ -1,5 +1,5 @@
 import { createContext, useReducer } from "react";
-import { ContextState, ContextAction } from "../shared/types";
+import { ContextState, ContextAction, ContextValue } from "../shared/types";
 
 function authReducer(state: ContextState, action: ContextAction): ContextState {
   switch (action.type) {
@@ -12,11 +12,13 @@ function authReducer(state: ContextState, action: ContextAction): ContextState {
   }
 }
 
-export const AuthContext = createContext<ContextState | null>(null);
+export const AuthContext = createContext<ContextValue | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, { user: null });
   console.log("AuthContext state: ", state);
   return (
-    <AuthContext.Provider value={{ ...state }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ ...state, dispatch }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
