@@ -4,9 +4,9 @@ import { ContextState, ContextAction, ContextValue } from "../shared/types";
 function authReducer(state: ContextState, action: ContextAction): ContextState {
   switch (action.type) {
     case "LOGIN":
-      return { user: action.payload as string };
+      return { token: action.payload as string };
     case "LOGOUT":
-      return { user: null };
+      return { token: null };
     default:
       return state;
   }
@@ -15,7 +15,7 @@ function authReducer(state: ContextState, action: ContextAction): ContextState {
 export const AuthContext = createContext<ContextValue | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, {
-    user: localStorage.getItem("token") || null,
+    token: localStorage.getItem("token") || null,
   });
   console.log("AuthContext state: ", state);
   return (

@@ -8,9 +8,13 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { data, mutate, isSuccess, isError, error } = useMutation({
+  const { mutate, isError, error } = useMutation({
     mutationFn: () =>
       authFetch.post("/register", { email, username, password }),
+    onSuccess: (data) => {
+      localStorage.setItem("token", JSON.stringify(data.data.token));
+      dispatch({ type: "LOGIN", payload: data.data.token });
+    },
   });
 
   const { dispatch } = useAuthContext();
@@ -18,12 +22,6 @@ export default function Register() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     mutate();
-    if (!isSuccess) {
-      console.log(error);
-      return;
-    }
-    localStorage.setItem("token", JSON.stringify(data.data.token));
-    dispatch({ type: "LOGIN", payload: data.data.token });
   };
 
   return (

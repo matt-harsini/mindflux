@@ -1,5 +1,5 @@
 export type ContextState = {
-  user: null | string;
+  token: null | string;
 };
 
 export type ContextAction = {
@@ -9,6 +9,6 @@ export type ContextAction = {
 
 export type ContextValue = {
   state?: ContextState;
-  user?: null | string;
+  token?: null | string;
   dispatch: React.Dispatch<ContextAction>;
 };
