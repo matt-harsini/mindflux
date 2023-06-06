@@ -5,17 +5,15 @@ import validator from "validator";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: [validator.isEmail, "Must be a valid email"],
-  },
   username: {
     type: String,
     required: true,
     unique: true,
     minLength: 8,
+    validate: [
+      validator.isAlphanumeric,
+      "Username must contain letters and numbers",
+    ],
   },
   password: {
     type: String,
@@ -24,13 +22,9 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.statics.register = async function (email, username, password) {
-  if (!email || !password || !username) {
+userSchema.statics.register = async function (username, password) {
+  if (!username || !password) {
     throw Error("All fields must be filled");
-  }
-
-  if (await this.findOne({ email })) {
-    throw Error("Email already in use");
   }
 
   if (await this.findOne({ username })) {
@@ -38,7 +32,7 @@ userSchema.statics.register = async function (email, username, password) {
   }
 
   try {
-    const user = await this.create({ email, username, password });
+    const user = await this.create({ username, password });
     return user;
   } catch (error) {
     throw Error(error);
