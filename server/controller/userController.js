@@ -19,10 +19,9 @@ async function login(req, res) {
 }
 
 async function register(req, res) {
-  const { username, password } = req.body;
-  console.log(username);
+  const { email, username, password } = req.body;
   try {
-    const user = await User.register(username, password);
+    const user = await User.register(email, username, password);
     const token = createToken(user._id);
     res.status(StatusCode.OK).json({ username, token });
   } catch (error) {

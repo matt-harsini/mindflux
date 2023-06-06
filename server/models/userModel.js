@@ -10,10 +10,17 @@ const userSchema = new Schema({
     required: true,
     unique: true,
     minLength: 8,
+    maxLength: 30,
     validate: [
       validator.isAlphanumeric,
-      "Username must contain letters and numbers",
+      "Username must contain letters or numbers",
     ],
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: [validator.isEmail, "Must be a valid email"],
   },
   password: {
     type: String,
@@ -22,8 +29,8 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.statics.register = async function (username, password) {
-  if (!username || !password) {
+userSchema.statics.register = async function (email, username, password) {
+  if (!username || !password || !email) {
     throw Error("All fields must be filled");
   }
 
@@ -31,8 +38,12 @@ userSchema.statics.register = async function (username, password) {
     throw Error("Username already in use");
   }
 
+  if (await this.findOne({ email })) {
+    throw Error("Email already in use");
+  }
+
   try {
-    const user = await this.create({ username, password });
+    const user = await this.create({ email, username, password });
     return user;
   } catch (error) {
     throw Error(error);

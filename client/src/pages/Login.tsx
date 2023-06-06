@@ -36,6 +36,9 @@ export default function Login() {
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            minLength={8}
+            maxLength={30}
+            required
           />
         </div>
         <div>
@@ -47,6 +50,7 @@ export default function Login() {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            required
           />
         </div>
         <div className="mt-4">
