@@ -35,10 +35,29 @@ userSchema.statics.register = async function (email, password) {
   }
 };
 
+userSchema.statics.login = async function (email, password) {
+  console.log(email, password);
+  if (!email || !password) {
+    throw Error("All fields must be filled");
+  }
+
+  const user = await this.findOne({ email });
+  if (!user) {
+    throw Error("Incorrect email");
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) {
+    throw Error("Incorrect password");
+  }
+
+  return user;
+};
+
 userSchema.pre("save", async function (next) {
   try {
     const document = this;
-    const salt = await bcrypt.genSalt(15);
+    const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(document.password, salt);
     document.password = hash;
     next();
