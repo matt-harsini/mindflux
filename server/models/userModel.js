@@ -25,7 +25,10 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
-    validate: [validator.isStrongPassword, "Weak password"],
+    validate: [
+      validator.isStrongPassword,
+      "Password must contain at least one symbol, number, uppercase, and lowercase characters",
+    ],
   },
 });
 
