@@ -4,7 +4,7 @@ export type ContextState = {
 
 export type ContextAction = {
   type: string;
-  payload: unknown;
+  payload?: unknown;
 };
 
 export type ContextValue = {

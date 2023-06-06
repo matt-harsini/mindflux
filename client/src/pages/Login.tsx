@@ -6,18 +6,19 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { data, mutate, isLoading, isSuccess } = useMutation({
+  const { data, mutate, isLoading, isSuccess, error } = useMutation({
     mutationFn: () => authFetch.post("/login", { username, password }),
   });
   const { dispatch } = useAuthContext();
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     mutate();
-    if (isSuccess) {
-      // localStorage.setItem("token", JSON.stringify());
+    if (!isSuccess) {
+      return;
     }
+    localStorage.setItem("token", JSON.stringify(data.data.token));
+    dispatch({ type: "LOGIN", payload: data.data.token });
   };
 
   return (

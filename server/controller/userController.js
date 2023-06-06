@@ -25,7 +25,7 @@ async function login(req, res) {
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);
-    res.status(200).json({ email, token });
+    res.status(200).json({ username, token });
   } catch (error) {
     res.status(StatusCode.BAD_REQUEST).json({ error: error.message });
   }

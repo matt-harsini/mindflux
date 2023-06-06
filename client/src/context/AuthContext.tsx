@@ -14,7 +14,9 @@ function authReducer(state: ContextState, action: ContextAction): ContextState {
 
 export const AuthContext = createContext<ContextValue | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
-  const [state, dispatch] = useReducer(authReducer, { user: null });
+  const [state, dispatch] = useReducer(authReducer, {
+    user: JSON.stringify(localStorage.getItem("token")) || null,
+  });
   console.log("AuthContext state: ", state);
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

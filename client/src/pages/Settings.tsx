@@ -1,4 +1,12 @@
+import { useAuthContext } from "../hooks/useAuthContext";
+
 export default function Settings() {
+  const { dispatch } = useAuthContext();
+  const handleLogout = (e: MouseEvent<HTMLButtonElement>) => {
+    localStorage.removeItem("token");
+    dispatch({ type: "LOGOUT" });
+  };
+  
   return (
     <main className="flex flex-col max-w-[1320px] mx-auto gap-10 px-6 mb-4">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
@@ -64,7 +72,11 @@ export default function Settings() {
           </div>
         </div>
       </form>
-      <button type="button" className="btn btn-secondary self-center">
+      <button
+        onClick={handleLogout}
+        type="button"
+        className="btn btn-secondary self-center"
+      >
         log out
       </button>
     </main>
