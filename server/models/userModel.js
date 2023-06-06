@@ -36,7 +36,6 @@ userSchema.statics.register = async function (email, password) {
 };
 
 userSchema.statics.login = async function (email, password) {
-  console.log(email, password);
   if (!email || !password) {
     throw Error("All fields must be filled");
   }
