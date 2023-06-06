@@ -1,13 +1,21 @@
+import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const result = useMutation({
+    mutationFn: () => {
+      return fetch("http://localhost:4000/api/login", {
+
+      });
+    },
+  });
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
   };
-  
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent">mindflux</h4>
