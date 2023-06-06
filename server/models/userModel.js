@@ -38,7 +38,7 @@ userSchema.statics.register = async function (email, username, password) {
   }
 
   try {
-    const user = await this.create({ email, password });
+    const user = await this.create({ email, username, password });
     return user;
   } catch (error) {
     throw Error(error);

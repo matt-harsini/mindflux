@@ -1,14 +1,34 @@
-import { useState } from "react";
+import { useMutation } from "react-query";
+import { FormEvent, useState } from "react";
+import { authFetch } from "../utils/axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { data, mutate, isLoading, isSuccess } = useMutation({
+    mutationFn: () => authFetch.post("/login", { username, password }),
+  });
+  const { dispatch } = useAuthContext();
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    mutate();
+    if (isSuccess) {
+      localStorage.setItem("token", JSON.stringify());
+
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent">mindflux</h4>
-      <form className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-8">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-8"
+      >
         <div>
           <input
             type="email"
