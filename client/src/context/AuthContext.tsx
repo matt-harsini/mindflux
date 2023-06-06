@@ -1,10 +1,7 @@
 import { createContext, useReducer } from "react";
 import { ContextState, ContextAction } from "../shared/types";
 
-const authReducer = (
-  state: ContextState,
-  action: ContextAction
-): ContextState => {
+function authReducer(state: ContextState, action: ContextAction): ContextState {
   switch (action.type) {
     case "LOGIN":
       return { user: action.payload as string };
@@ -13,7 +10,7 @@ const authReducer = (
     default:
       return state;
   }
-};
+}
 
 export const AuthContext = createContext<ContextState | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
