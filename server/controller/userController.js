@@ -6,11 +6,11 @@ import { User } from "../models/userModel.js";
 function displayErrorMessage(error) {
   switch (true) {
     case error.includes("username:"):
-      return "Username must contain only letters or numbers";
+      return "Username must contain only letters or numbers.";
     case error.includes("email:"):
-      return "Must be a valid email";
+      return "Must be a valid email.";
     case error.includes("password:"):
-      return "Password must contain at least one symbol, number, uppercase, and lowercase characters";
+      return "Password must contain at least one symbol, number, uppercase, and lowercase characters.";
     default:
       return error;
   }

@@ -34,15 +34,15 @@ const userSchema = new Schema({
 
 userSchema.statics.register = async function (email, username, password) {
   if (!username || !password || !email) {
-    throw Error("All fields must be filled");
+    throw Error("All fields must be filled.");
   }
 
   if (await this.findOne({ username })) {
-    throw Error("Username already in use");
+    throw Error("Username is taken!");
   }
 
   if (await this.findOne({ email })) {
-    throw Error("Email already in use");
+    throw Error("Email is already in use.");
   }
 
   try {
@@ -55,12 +55,12 @@ userSchema.statics.register = async function (email, username, password) {
 
 userSchema.statics.login = async function (username, password) {
   if (!username || !password) {
-    throw Error("All fields must be filled");
+    throw Error("All fields must be filled.");
   }
 
   const user = await this.findOne({ username });
   if (!user) {
-    throw Error("Username does not exist.");
+    throw Error("Username is taken!");
   }
 
   const match = await bcrypt.compare(password, user.password);
