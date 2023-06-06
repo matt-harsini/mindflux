@@ -11,6 +11,12 @@ const userSchema = new Schema({
     unique: true,
     validate: [validator.isEmail, "Must be a valid email"],
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+    minLength: 8,
+  },
   password: {
     type: String,
     required: true,
@@ -18,13 +24,17 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.statics.register = async function (email, password) {
-  if (!email || !password) {
+userSchema.statics.register = async function (email, username, password) {
+  if (!email || !password || !username) {
     throw Error("All fields must be filled");
   }
 
   if (await this.findOne({ email })) {
     throw Error("Email already in use");
+  }
+
+  if (await this.findOne({ username })) {
+    throw Error("Username already in use");
   }
 
   try {
@@ -35,19 +45,19 @@ userSchema.statics.register = async function (email, password) {
   }
 };
 
-userSchema.statics.login = async function (email, password) {
-  if (!email || !password) {
+userSchema.statics.login = async function (username, password) {
+  if (!username || !password) {
     throw Error("All fields must be filled");
   }
 
-  const user = await this.findOne({ email });
+  const user = await this.findOne({ username });
   if (!user) {
-    throw Error("Incorrect email");
+    throw Error("Username does not exist.");
   }
 
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    throw Error("Incorrect password");
+    throw Error("Invalid password.");
   }
 
   return user;

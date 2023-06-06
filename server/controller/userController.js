@@ -8,9 +8,9 @@ function createToken(_id) {
 }
 
 async function login(req, res) {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   try {
-    const user = await User.login(email, password);
+    const user = await User.login(username, password);
     const token = createToken(user._id);
     res.status(200).json({ email, token });
   } catch (error) {
@@ -19,9 +19,9 @@ async function login(req, res) {
 }
 
 async function register(req, res) {
-  const { email, password } = req.body;
+  const { email, username, password } = req.body;
   try {
-    const user = await User.register(email, password);
+    const user = await User.register(email, username, password);
     const token = createToken(user._id);
     res.status(StatusCode.OK).json({ email, token });
   } catch (error) {
