@@ -7,6 +7,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { dispatch } = useAuthContext();
 
   const { mutate, isError, error } = useMutation({
     mutationFn: () =>
@@ -17,8 +18,6 @@ export default function Register() {
     },
   });
 
-  const { dispatch } = useAuthContext();
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     mutate();
@@ -28,7 +27,7 @@ export default function Register() {
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent">mindflux</h4>
       <div
-        className={`max-w-max alert alert-error mt-8 ${
+        className={`max-w-max alert alert-error mt-2 py-3 ${
           !isError && "invisible"
         }`}
       >
@@ -49,7 +48,7 @@ export default function Register() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-8"
+        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-4"
       >
         <div>
           <input
