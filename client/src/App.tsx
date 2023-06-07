@@ -28,7 +28,10 @@ export default function App() {
           path="register"
           element={!isAuth ? <Register /> : <Navigate to="/dashboard" />}
         />
-        <Route path="dashboard" element={<NavbarOutlet />}>
+        <Route
+          path="dashboard"
+          element={isAuth ? <NavbarOutlet /> : <Navigate to="/" />}
+        >
           <Route index element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
           <Route
             path="calendar"

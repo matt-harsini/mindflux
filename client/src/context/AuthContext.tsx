@@ -13,7 +13,11 @@ function authReducer(state, action) {
     case "LOGOUT":
       return { token: null, username: null, isAuth: false };
     case "SET_AUTH":
-      return { ...state, isAuth: action.payload };
+      return {
+        ...state,
+        isAuth: action.payload.isAuth,
+        username: action.payload.username,
+      };
     default:
       return state;
   }
@@ -34,7 +38,10 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
         token: localStorage.getItem("token"),
       }),
     onSuccess: (data) => {
-      dispatch({ type: "SET_AUTH", payload: data.data.authorized });
+      dispatch({
+        type: "SET_AUTH",
+        payload: { isAuth: data.data.authorized, username: data.data.username },
+      });
     },
   });
   if (!mount) {
