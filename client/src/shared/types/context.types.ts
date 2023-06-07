@@ -16,6 +16,8 @@ export type ContextAction = {
 };
 
 export type ContextValue = {
-  state?: ContextState;
+  isAuth: boolean;
+  username: string | null;
+  token: string | null;
   dispatch: Dispatch<ContextAction>;
 };
