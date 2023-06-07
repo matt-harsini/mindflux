@@ -2,6 +2,7 @@ import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
 import { authFetch } from "../utils/axios";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Error } from "../shared/interfaces";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -9,14 +10,19 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const { dispatch } = useAuthContext();
 
-  const { mutate, isError, error } = useMutation({
-    mutationFn: () =>
-      authFetch.post("/register", { email, username, password }),
-    onSuccess: (data) => {
-      localStorage.setItem("token", JSON.stringify(data.data.token));
-      dispatch({ type: "LOGIN", payload: data.data.token });
-    },
-  });
+  const {
+    mutate,
+    isError,
+    error,
+  }: { mutate: () => void; isError: boolean; error: Error | null } =
+    useMutation({
+      mutationFn: () =>
+        authFetch.post("/register", { email, username, password }),
+      onSuccess: (data) => {
+        localStorage.setItem("token", JSON.stringify(data.data.token));
+        dispatch({ type: "LOGIN", payload: data.data.token });
+      },
+    });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +50,7 @@ export default function Register() {
             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <span>{error?.response?.data?.error}</span>
+        <span>{error?.response.data.error}</span>
       </div>
       <form
         onSubmit={handleSubmit}

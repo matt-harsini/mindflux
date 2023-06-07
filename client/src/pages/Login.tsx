@@ -2,11 +2,22 @@ import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
 import { authFetch } from "../utils/axios";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Error } from "../shared/interfaces";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { error, mutate, isLoading, isError } = useMutation({
+  const {
+    error,
+    mutate,
+    isLoading,
+    isError,
+  }: {
+    error: Error | null;
+    mutate: () => void;
+    isLoading: boolean;
+    isError: boolean;
+  } = useMutation({
     mutationFn: () => authFetch.post("/login", { username, password }),
     onSuccess: async (data) => {
       localStorage.setItem("token", JSON.stringify(data.data.token));
@@ -19,6 +30,7 @@ export default function Login() {
     e.preventDefault();
     mutate();
   };
+  console.log(error);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
@@ -41,7 +53,7 @@ export default function Login() {
             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <span>{error?.response?.data?.error}</span>
+        <span>{error?.response.data.error}</span>
       </div>
       <form
         className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-4"
