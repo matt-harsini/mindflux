@@ -25,7 +25,7 @@ async function login(req, res) {
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);
-    res.status(200).json({ username, token });
+    res.status(200).json({ username, token, email: user.email });
   } catch (error) {
     res.status(StatusCode.BAD_REQUEST).json({ error: error.message });
   }
@@ -44,13 +44,18 @@ async function register(req, res) {
   }
 }
 
-function verify(req, res) {
+async function verify(req, res) {
   if (!req.headers.authorization) return;
   const authHeader = req.headers.authorization;
   const token = authHeader.split(" ")[1];
   try {
-    jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
-    return res.json({ authorized: true });
+    const { _id } = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
+    const user = await User.findOne({ _id });
+    return res.json({
+      authorized: true,
+      username: user.username,
+      email: user.email,
+    });
   } catch (error) {
     return res.json({ authorized: false });
   }

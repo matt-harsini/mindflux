@@ -1,4 +1,5 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import { useAuthContext } from "../hooks/useAuthContext";
 const data = [{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }];
 
 const renderLineChart = (
@@ -10,10 +11,13 @@ const renderLineChart = (
 );
 
 export default function Dashboard() {
+  const { username } = useAuthContext();
+  console.log(username);
+
   return (
     <main className="flex flex-col max-w-[1320px] mx-auto gap-10 px-6 mb-4">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
-        Hello Matthew!
+        Hello {username}!
       </h3>
       {renderLineChart}
     </main>

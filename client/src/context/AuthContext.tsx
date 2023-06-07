@@ -6,16 +6,16 @@ function authReducer(state, action) {
   switch (action.type) {
     case "LOGIN":
       return {
-        token: action.payload.token,
+        email: action.payload.email,
         username: action.payload.username,
         isAuth: true,
       };
     case "LOGOUT":
-      return { token: null, username: null, isAuth: false };
+      return { username: null, isAuth: false, email: null };
     case "SET_AUTH":
       return {
-        ...state,
         isAuth: action.payload.isAuth,
+        email: action.payload.email,
         username: action.payload.username,
       };
     default:
@@ -23,12 +23,11 @@ function authReducer(state, action) {
   }
 }
 
-export const AuthContext = createContext<ContextValue | null>(null);
+export const AuthContext = createContext(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
-  const token = localStorage.getItem("token") || null;
   const [state, dispatch] = useReducer(authReducer, {
-    token,
     username: null,
+    email: null,
     isAuth: false,
   });
   const [mount, setMount] = useState(false);
@@ -36,12 +35,13 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const { mutate } = useMutation({
     mutationFn: () => authFetch.get("/verify"),
     onSuccess: (data) => {
+      console.log(data);
       dispatch({
         type: "SET_AUTH",
         payload: {
-          token,
           isAuth: data.data.authorized,
           username: data.data.username,
+          email: data.data.email,
         },
       });
     },

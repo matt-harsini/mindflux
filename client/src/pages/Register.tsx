@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, useState } from "react";
 import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
@@ -9,7 +9,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { dispatch } = useAuthContext();
+  const { dispatch }: {dispatch: Dispatch<object>} = useAuthContext();
 
   const {
     mutate,
@@ -24,9 +24,9 @@ export default function Register() {
         dispatch({
           type: "LOGIN",
           payload: {
-            token: data.data.token,
-            username: data.data.username,
             isAuth: true,
+            username: data.data.username,
+            email: data.data.email,
           },
         });
       },
