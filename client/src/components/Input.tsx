@@ -42,13 +42,6 @@ export default function Input({ card_title }: InputProps) {
     setInput(innerText);
   }
 
-  // function handleAnimationEnd() {
-  //   setIsAnimating(false);
-  // }
-  // function handleAnimationStart() {
-  //   setIsAnimating(true);
-  // }
-
   return (
     <div className="flex flex-col gap-4 ">
       <h6 className="text-center font-semibold text-lg">

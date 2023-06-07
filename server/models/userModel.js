@@ -60,7 +60,7 @@ userSchema.statics.login = async function (username, password) {
 
   const user = await this.findOne({ username });
   if (!user) {
-    throw Error("Username is taken!");
+    throw Error("User does not exist!");
   }
 
   const match = await bcrypt.compare(password, user.password);
