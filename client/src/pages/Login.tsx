@@ -4,7 +4,6 @@ import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
-import { Loading } from "../components";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -25,7 +24,11 @@ export default function Login() {
       localStorage.setItem("token", JSON.stringify(data.data.token));
       dispatch({
         type: "LOGIN",
-        payload: { token: data.data.token, username: data.data.username },
+        payload: {
+          token: data.data.token,
+          username: data.data.username,
+          isAuth: true,
+        },
       });
     },
   });
@@ -38,7 +41,7 @@ export default function Login() {
   const { isAuth } = useAuthContext();
 
   if (!isAuth && localStorage.getItem("token")) {
-    return <Loading />;
+    return <div />;
   }
 
   return (

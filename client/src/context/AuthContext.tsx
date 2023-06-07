@@ -1,9 +1,8 @@
 import { createContext, useReducer, useState } from "react";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
-import { ContextState, ContextAction, ContextValue } from "../shared/types";
 
-function authReducer(state: ContextState, action: ContextAction) {
+function authReducer(state, action) {
   switch (action.type) {
     case "LOGIN":
       return {
@@ -35,10 +34,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [mount, setMount] = useState(false);
   console.log("AuthContext state: ", state);
   const { mutate } = useMutation({
-    mutationFn: () =>
-      authFetch.post("/verify", {
-        token: localStorage.getItem("token"),
-      }),
+    mutationFn: () => authFetch.get("/verify"),
     onSuccess: (data) => {
       dispatch({
         type: "SET_AUTH",

@@ -8,6 +8,6 @@ router.post("/login", login);
 
 router.post("/register", register);
 
-router.post("/verify", verify);
+router.get("/verify", verify);
 
 export { router };
