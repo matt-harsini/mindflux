@@ -1,7 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
+import {Loading} from "../components";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { isAuth } = useAuthContext();
+
+  if (!isAuth && localStorage.getItem("token")) {
+    return <Loading />;
+  }
+
   return (
     <>
       <header className="hero min-h-screen bg-base-200">

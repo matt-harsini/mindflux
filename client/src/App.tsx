@@ -18,15 +18,15 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={!isAuth ? <Home /> : <Navigate to="/dashboard" />}
+          element={isAuth ? <Navigate to="/dashboard" /> : <Home />}
         />
         <Route
           path="login"
-          element={!isAuth ? <Login /> : <Navigate to="/dashboard" />}
+          element={isAuth ? <Navigate to="/dashboard" /> : <Login />}
         />
         <Route
           path="register"
-          element={!isAuth ? <Register /> : <Navigate to="/dashboard" />}
+          element={isAuth ? <Navigate to="/dashboard" /> : <Register />}
         />
         <Route
           path="dashboard"

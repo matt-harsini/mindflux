@@ -4,6 +4,7 @@ import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
+import { Loading } from "../components";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -32,6 +33,12 @@ export default function Register() {
     e.preventDefault();
     mutate();
   };
+
+  const { isAuth } = useAuthContext();
+
+  if (!isAuth && localStorage.getItem("token")) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
