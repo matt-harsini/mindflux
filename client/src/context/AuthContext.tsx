@@ -1,13 +1,14 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 import { ContextState, ContextAction, ContextValue } from "../shared/types";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
+
 function authReducer(state: ContextState, action: ContextAction): ContextState {
   switch (action.type) {
     case "LOGIN":
-      return { token: action.payload as string };
+      return { token: action.payload as string, isAuth: true };
     case "LOGOUT":
-      return { token: null };
+      return { token: null, isAuth: false };
     case "SET_AUTH":
       return { ...state, isAuth: action.payload as boolean };
     default:
@@ -20,6 +21,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, {
     token: localStorage.getItem("token") || null,
   });
+  const [mount, setMount] = useState(false);
   console.log("AuthContext state: ", state);
   const { mutate } = useMutation({
     mutationFn: () =>
@@ -27,12 +29,13 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
         token: localStorage.getItem("token"),
       }),
     onSuccess: (data) => {
-      console.log(data);
-
-      dispatch({ type: "SET_AUTH", payload: data });
+      dispatch({ type: "SET_AUTH", payload: data.data.authorized });
     },
   });
-  mutate();
+  if (!mount) {
+    setMount(true);
+    mutate();
+  }
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}

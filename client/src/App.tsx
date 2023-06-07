@@ -12,33 +12,32 @@ import { NavbarOutlet } from "./components";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 export default function App() {
-  const { token } = useAuthContext();
-
+  const { isAuth } = useAuthContext();
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={!token ? <Home /> : <Navigate to="/dashboard" />}
+          element={!isAuth ? <Home /> : <Navigate to="/dashboard" />}
         />
         <Route
           path="login"
-          element={!token ? <Login /> : <Navigate to="/dashboard" />}
+          element={!isAuth ? <Login /> : <Navigate to="/dashboard" />}
         />
         <Route
           path="register"
-          element={!token ? <Register /> : <Navigate to="/dashboard" />}
+          element={!isAuth ? <Register /> : <Navigate to="/dashboard" />}
         />
         <Route path="dashboard" element={<NavbarOutlet />}>
-          <Route index element={token ? <Dashboard /> : <Navigate to="/" />} />
+          <Route index element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
           <Route
             path="calendar"
-            element={token ? <CalendarPage /> : <Navigate to="/" />}
+            element={isAuth ? <CalendarPage /> : <Navigate to="/" />}
           />
-          <Route path="log" element={token ? <Log /> : <Navigate to="/" />} />
+          <Route path="log" element={isAuth ? <Log /> : <Navigate to="/" />} />
           <Route
             path="settings"
-            element={token ? <Settings /> : <Navigate to="/" />}
+            element={isAuth ? <Settings /> : <Navigate to="/" />}
           />
         </Route>
       </Routes>

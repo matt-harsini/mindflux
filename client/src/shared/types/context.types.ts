@@ -11,5 +11,6 @@ export type ContextAction = {
 export type ContextValue = {
   state?: ContextState;
   token?: null | string;
+  isAuth?: boolean;
   dispatch: React.Dispatch<ContextAction>;
 };
