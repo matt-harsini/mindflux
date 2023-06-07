@@ -1,6 +1,6 @@
 import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
-import { authFetch } from "../utils/axios";
+import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 export default function Login() {
@@ -30,7 +30,6 @@ export default function Login() {
     e.preventDefault();
     mutate();
   };
-  console.log(error);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">

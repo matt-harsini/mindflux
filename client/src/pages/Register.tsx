@@ -1,6 +1,6 @@
 import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
-import { authFetch } from "../utils/axios";
+import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 
