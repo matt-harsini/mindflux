@@ -19,4 +19,7 @@ const logSchema = new Schema({
   notes: {
     type: String,
   },
+  user_id: {
+    type: String,
+  },
 });
