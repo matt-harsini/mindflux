@@ -49,7 +49,7 @@ function verify(req, res) {
   const authHeader = req.headers.authorization;
   const token = authHeader.split(" ")[1];
   try {
-    jwt.verify(token, process.env.JWT_SECRET);
+    jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
     return res.json({ authorized: true });
   } catch (error) {
     return res.json({ authorized: false });

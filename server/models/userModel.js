@@ -30,6 +30,12 @@ const userSchema = new Schema({
       "Password must contain at least one symbol, number, uppercase, and lowercase characters",
     ],
   },
+  first_name: {
+    type: String,
+  },
+  last_name: {
+    type: String,
+  },
 });
 
 userSchema.statics.register = async function (email, username, password) {

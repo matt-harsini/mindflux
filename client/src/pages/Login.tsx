@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -21,7 +22,10 @@ export default function Login() {
     mutationFn: () => authFetch.post("/login", { username, password }),
     onSuccess: (data) => {
       localStorage.setItem("token", JSON.stringify(data.data.token));
-      dispatch({ type: "LOGIN", payload: data.data.token });
+      dispatch({
+        type: "LOGIN",
+        payload: { token: data.data.token, username: data.data.username },
+      });
     },
   });
   const { dispatch } = useAuthContext();
@@ -95,6 +99,9 @@ export default function Login() {
           </button>
         </div>
       </form>
+      <Link to="/register" className="text-accent text-md mt-5">
+        Don't have an account? Sign up
+      </Link>
     </div>
   );
 }

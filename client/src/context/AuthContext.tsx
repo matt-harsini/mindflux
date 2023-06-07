@@ -1,16 +1,19 @@
 import { createContext, useReducer, useState } from "react";
-import { ContextState, ContextAction, ContextValue } from "../shared/types";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
 
-function authReducer(state: ContextState, action: ContextAction): ContextState {
+function authReducer(state, action) {
   switch (action.type) {
     case "LOGIN":
-      return { token: action.payload as string, isAuth: true };
+      return {
+        token: action.payload.token,
+        username: action.payload.username,
+        isAuth: true,
+      };
     case "LOGOUT":
-      return { token: null, isAuth: false };
+      return { token: null, username: null, isAuth: false };
     case "SET_AUTH":
-      return { ...state, isAuth: action.payload as boolean };
+      return { ...state, isAuth: action.payload };
     default:
       return state;
   }
@@ -20,6 +23,8 @@ export const AuthContext = createContext<ContextValue | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, {
     token: localStorage.getItem("token") || null,
+    username: null,
+    isAuth: false,
   });
   const [mount, setMount] = useState(false);
   console.log("AuthContext state: ", state);
