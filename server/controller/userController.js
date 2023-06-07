@@ -44,4 +44,22 @@ async function register(req, res) {
   }
 }
 
-export { login, register };
+async function verify(req, res) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res
+      .status(StatusCode.UNAUTHORIZED)
+      .json({ error: "Not authorized to access this route" });
+  }
+  const token = authHeader.split(" ")[1];
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return res.status(StatusCode.OK).json({ authorized: true });
+  } catch (error) {
+    return res
+      .status(StatusCode.UNAUTHORIZED)
+      .json({ error: "Not authorized to access this route" });
+  }
+}
+
+export { login, register, verify };

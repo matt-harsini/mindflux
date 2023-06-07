@@ -1,5 +1,6 @@
 export type ContextState = {
   token: null | string;
+  isAuth?: boolean;
 };
 
 export type ContextAction = {

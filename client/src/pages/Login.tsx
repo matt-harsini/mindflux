@@ -19,7 +19,7 @@ export default function Login() {
     isError: boolean;
   } = useMutation({
     mutationFn: () => authFetch.post("/login", { username, password }),
-    onSuccess: async (data) => {
+    onSuccess: (data) => {
       localStorage.setItem("token", JSON.stringify(data.data.token));
       dispatch({ type: "LOGIN", payload: data.data.token });
     },
