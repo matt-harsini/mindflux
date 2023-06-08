@@ -3,9 +3,9 @@ import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { isAuth } = useAuthContext();
+  const { isAuth, isFetching } = useAuthContext();
 
-  if (!isAuth && localStorage.getItem("token")) {
+  if (!isAuth && localStorage.getItem("token") && isFetching) {
     return <div />;
   }
 

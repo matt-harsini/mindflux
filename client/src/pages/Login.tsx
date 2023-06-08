@@ -38,9 +38,9 @@ export default function Login() {
     e.preventDefault();
     mutate();
   };
-  const { isAuth } = useAuthContext();
+  const { isAuth, isFetching } = useAuthContext();
 
-  if (!isAuth && localStorage.getItem("token")) {
+  if (!isAuth && localStorage.getItem("token") && isFetching) {
     return <div />;
   }
 

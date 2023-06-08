@@ -31,11 +31,12 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     isAuth: false,
   });
   const [mount, setMount] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   console.log("AuthContext state: ", state);
   const { mutate } = useMutation({
     mutationFn: () => authFetch.get("/verify"),
     onSuccess: (data) => {
-      console.log(data);
+      setIsFetching(false);
       dispatch({
         type: "SET_AUTH",
         payload: {
@@ -47,11 +48,11 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     },
   });
   if (!mount) {
-    setMount(true);
     mutate();
+    setMount(true);
   }
   return (
-    <AuthContext.Provider value={{ ...state, dispatch }}>
+    <AuthContext.Provider value={{ ...state, dispatch, isFetching }}>
       {children}
     </AuthContext.Provider>
   );

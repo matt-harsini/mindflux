@@ -1,12 +1,13 @@
+import { Dispatch } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function Settings() {
-  const { dispatch } = useAuthContext();
+  const { dispatch }: { dispatch: Dispatch<object> } = useAuthContext();
   const handleLogout = () => {
     localStorage.removeItem("token");
     dispatch({ type: "LOGOUT" });
   };
-
+  const { username, email } = useAuthContext();
   return (
     <main className="flex flex-col max-w-[1320px] mx-auto gap-10 px-6 mb-4">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
@@ -16,12 +17,15 @@ export default function Settings() {
         <div className="lg:max-w-[70%] flex flex-col gap-6">
           <div className="flex flex-col gap-3">
             <label className="text-primary-content" htmlFor="username">
-              Username
+              Username (permanent)
             </label>
             <input
               id="username"
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
+              value={username}
+              disabled
+              readOnly
             />
           </div>
         </div>
@@ -58,6 +62,7 @@ export default function Settings() {
               id="email"
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
+              value={email}
             />
           </div>
           <div className="flex flex-col gap-3">

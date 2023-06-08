@@ -9,7 +9,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { dispatch }: {dispatch: Dispatch<object>} = useAuthContext();
+  const { dispatch }: { dispatch: Dispatch<object> } = useAuthContext();
 
   const {
     mutate,
@@ -37,9 +37,9 @@ export default function Register() {
     mutate();
   };
 
-  const { isAuth } = useAuthContext();
+  const { isAuth, isFetching } = useAuthContext();
 
-  if (!isAuth && localStorage.getItem("token")) {
+  if (!isAuth && localStorage.getItem("token") && isFetching) {
     return <div />;
   }
 
