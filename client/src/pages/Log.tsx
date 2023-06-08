@@ -5,6 +5,8 @@ import Input from "../components/Input";
 import { CardState } from "../shared/interfaces";
 import { Action, CardType, State } from "../shared/types";
 import { icons } from "../theme/icons";
+import { useMutation } from "react-query";
+import { authFetch } from "../utils";
 
 const defaultCardState = {
   CARD_HAPPY: false,
@@ -48,8 +50,7 @@ export default function Log() {
     CARD_ANGRY: null,
     CARD_ANXIOUS: null,
   });
-  console.log(moodMeter);
-  
+
   const stateData = Object.keys(state).map((key: string) => [
     key,
     state[key as CardType],
@@ -67,6 +68,19 @@ export default function Log() {
     state.CARD_ANXIOUS ||
     state.CARD_HAPPY ||
     state.CARD_SAD;
+
+  const handleLog = () => {
+    mutate();
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: () =>
+      authFetch.post("/log-mood", {
+        moodMeter,
+        log,
+        date: format(new Date(), "yyyy-MM-dd hh:mm aaaaa'm'"),
+      }),
+  });
 
   return (
     <main className="flex flex-col max-w-[1320px] mx-auto px-6 mb-4">
@@ -121,7 +135,11 @@ export default function Log() {
             }}
             className="textarea resize-none text-md w-full max-w-[780px] mx-auto text-primary-content bg-base-300"
           />
-          <button type="button" className="btn btn-secondary self-center mt-12">
+          <button
+            onClick={handleLog}
+            type="button"
+            className="btn btn-secondary self-center mt-12"
+          >
             Log Mood
           </button>
         </>

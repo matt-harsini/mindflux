@@ -24,7 +24,6 @@ export default function Settings() {
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
               value={username}
-              disabled
               readOnly
             />
           </div>

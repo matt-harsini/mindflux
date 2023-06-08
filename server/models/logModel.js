@@ -5,21 +5,29 @@ const Schema = mongoose.Schema;
 
 const logSchema = new Schema({
   happiness: {
-    type: Number,
+    type: String,
+    default: null,
   },
   anxiety: {
-    type: Number,
+    type: String,
+    default: null,
   },
   sadness: {
-    type: Number,
+    type: String,
+    default: null,
   },
   anger: {
-    type: Number,
+    type: String,
+    default: null,
   },
   notes: {
     type: String,
   },
   user_id: {
     type: String,
+  },
+  date: {
+    type: String,
+    required: true,
   },
 });

@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { rateLimit } from "express-rate-limit";
 import { router as userRoutes } from "./routes/user.js";
+import { router as logRoutes } from "./routes/log.js";
 import cors from "cors";
 const app = express();
 const limiter = rateLimit({
@@ -14,6 +15,7 @@ app.use("/api", limiter);
 app.use(express.json());
 app.use(cors());
 app.use("/api", userRoutes);
+app.use("/api", logRoutes);
 app.use(userRoutes);
 main();
 async function main() {
