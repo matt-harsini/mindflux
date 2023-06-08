@@ -14,4 +14,10 @@ async function createLog(req, res) {
   }
 }
 
-export { createLog };
+async function getAllLogs(req, res) {
+  const { _id: user_id } = req.user;
+  const logs = await Log.find({ user_id });
+  res.status(StatusCodes.OK).json({ logs });
+}
+
+export { createLog, getAllLogs };
