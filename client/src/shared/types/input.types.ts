@@ -1,16 +1,17 @@
 import { Dispatch, Key, SetStateAction } from "react";
 
-export type SetMoodMeter = {
-  CARD_HAPPY: null | string;
-  CARD_SAD: null | string;
-  CARD_ANGRY: null | string;
-  CARD_ANXIOUS: null | string;
+export type MoodMeter = {
+  CARD_HAPPY: null;
+  CARD_SAD: null;
+  CARD_ANGRY: null;
+  CARD_ANXIOUS: null;
 };
 
 export type InputProps = {
   card_title: string;
   key: Key;
-  setMoodMeter: Dispatch<SetStateAction<SetMoodMeter>>;
+  setMoodMeter: Dispatch<SetStateAction<MoodMeter>>;
+  moodMeter: MoodMeter;
 };
 
-export type MoodMeterKey = keyof SetMoodMeter;
+export type MoodMeterKey = keyof MoodMeter;

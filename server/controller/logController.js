@@ -17,7 +17,13 @@ async function createLog(req, res) {
 async function getAllLogs(req, res) {
   const { _id: user_id } = req.user;
   const logs = await Log.find({ user_id });
+  console.log(logs);
   res.status(StatusCodes.OK).json({ logs });
+}
+
+async function deleteLog(req, res) {
+  const { id: log_id } = req.params;
+  console.log(req.params);
 }
 
 export { createLog, getAllLogs };
