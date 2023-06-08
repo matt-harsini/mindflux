@@ -16,7 +16,7 @@ const variants = {
   visible: { opacity: 1 },
 };
 
-export default function Input({ card_title }: InputProps) {
+export default function Input({ card_title, setMoodMeter }: InputProps) {
   const [input, setInput] = useState<string>("1");
   const [position, setPosition] = useState({
     x: 0,

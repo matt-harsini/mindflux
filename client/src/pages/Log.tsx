@@ -1,5 +1,5 @@
 import { format, startOfToday } from "date-fns";
-import { Key, useReducer } from "react";
+import { Key, useReducer, useState } from "react";
 import { Card } from "../components";
 import Input from "../components/Input";
 import { CardState } from "../shared/interfaces";
@@ -41,6 +41,13 @@ function reducer(state: State, action: Action) {
 
 export default function Log() {
   const [state, dispatch] = useReducer(reducer, defaultCardState);
+  const [log, setLog] = useState("");
+  const [moodMeter, setMoodMeter] = useState({
+    CARD_HAPPY: null,
+    CARD_SAD: null,
+    CARD_ANGRY: null,
+    CARD_ANXIOUS: null,
+  });
 
   const stateData = Object.keys(state).map((key: string) => [
     key,
@@ -94,6 +101,7 @@ export default function Log() {
               <Input
                 key={card_title as Key}
                 card_title={card_title as string}
+                setMoodMeter={setMoodMeter}
               />
             )
           );
@@ -104,7 +112,13 @@ export default function Log() {
           <h4 className="text-primary-content text-3xl font-bold mx-auto my-16">
             What has you feeling this way?
           </h4>
-          <textarea className="textarea resize-none text-md w-full max-w-[780px] mx-auto text-primary-content bg-base-300" />
+          <textarea
+            value={log}
+            onChange={(e) => {
+              setLog(e.target.value);
+            }}
+            className="textarea resize-none text-md w-full max-w-[780px] mx-auto text-primary-content bg-base-300"
+          />
           <button type="button" className="btn btn-secondary self-center mt-12">
             Log Mood
           </button>
