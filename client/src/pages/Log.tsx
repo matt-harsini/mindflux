@@ -48,7 +48,8 @@ export default function Log() {
     CARD_ANGRY: null,
     CARD_ANXIOUS: null,
   });
-
+  console.log(moodMeter);
+  
   const stateData = Object.keys(state).map((key: string) => [
     key,
     state[key as CardType],
@@ -102,6 +103,7 @@ export default function Log() {
                 key={card_title as Key}
                 card_title={card_title as string}
                 setMoodMeter={setMoodMeter}
+                moodMeter={moodMeter}
               />
             )
           );

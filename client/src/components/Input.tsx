@@ -40,6 +40,9 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
       x: targetDimensions.left - emojiParentDimensions.left,
     });
     setInput(innerText);
+    setMoodMeter((prevState) => {
+      return { ...prevState, [card_title]: innerText };
+    });
   }
 
   return (
