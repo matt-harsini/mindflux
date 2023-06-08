@@ -50,6 +50,7 @@ export default function Log() {
     CARD_ANGRY: null,
     CARD_ANXIOUS: null,
   });
+  const [btnLogClicked, setBtnLogClicked] = useState(false);
 
   const stateData = Object.keys(state).map((key: string) => [
     key,
@@ -80,7 +81,10 @@ export default function Log() {
         log,
         date: format(new Date(), "yyyy-MM-dd hh:mm aaaaa'm'"),
       }),
+    onSuccess: () => setBtnLogClicked(true),
   });
+
+  if (btnLogClicked) console.log("do logic here");
 
   return (
     <main className="flex flex-col max-w-[1320px] mx-auto px-6 mb-4">

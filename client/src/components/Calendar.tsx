@@ -22,6 +22,9 @@ import {
   sub,
 } from "date-fns";
 import { Fragment, useState } from "react";
+import { useQuery } from "react-query";
+import { authFetch } from "../utils";
+import { inputIcons } from "../theme/icons";
 
 const days = [
   { date: "2021-12-27", events: [] },
@@ -165,10 +168,11 @@ export default function Example() {
   const start = startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 });
   const end = endOfMonth(firstDayCurrentMonth);
   const difference = differenceInDays(end, start);
+  const MAX_CALENDAR_DAYS = 41;
 
   const newDays = eachDayOfInterval({
     start,
-    end: add(end, { days: 41 - difference }),
+    end: add(end, { days: MAX_CALENDAR_DAYS - difference }),
   });
 
   function nextMonth() {
@@ -184,6 +188,11 @@ export default function Example() {
   function resetMonth() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
+
+  const { data } = useQuery(["moodData"], {
+    queryFn: () => authFetch.get("/get-logs"),
+  });
+  console.log(data);
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
@@ -464,7 +473,8 @@ export default function Example() {
                   i === 41 ? "rounded-br-md" : "",
                   `relative px-3 py-2 ${
                     i === 0 ? colStartClasses[getDay(day)] : ""
-                  }`
+                  }`,
+                  "h-28"
                 )}
               >
                 <time
