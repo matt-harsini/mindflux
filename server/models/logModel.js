@@ -4,30 +4,23 @@ import validator from "validator";
 const Schema = mongoose.Schema;
 
 const logSchema = new Schema({
-  happiness: {
-    type: String,
-    default: null,
+  moodMeter: {
+    type: Map,
+    of: Schema.Types.Mixed,
   },
-  anxiety: {
-    type: String,
-    default: null,
-  },
-  sadness: {
-    type: String,
-    default: null,
-  },
-  anger: {
-    type: String,
-    default: null,
-  },
-  notes: {
+  log: {
     type: String,
   },
   user_id: {
     type: String,
+    required: true,
   },
   date: {
     type: String,
     required: true,
   },
 });
+
+const Log = mongoose.model("Log", logSchema);
+
+export { Log };
