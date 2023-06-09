@@ -160,6 +160,8 @@ const colStartClasses = [
   "col-start-6",
 ];
 
+const MAX_CALENDAR_DAYS = 41;
+
 export default function Example() {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -168,7 +170,6 @@ export default function Example() {
   const start = startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 });
   const end = endOfMonth(firstDayCurrentMonth);
   const difference = differenceInDays(end, start);
-  const MAX_CALENDAR_DAYS = 41;
 
   const newDays = eachDayOfInterval({
     start,
@@ -487,6 +488,7 @@ export default function Example() {
                 >
                   {format(day, "d")}
                 </time>
+                {}
                 {/* {day.events.length > 0 && (
                   <ol className="mt-2">
                     {day.events.slice(0, 2).map((event) => (
