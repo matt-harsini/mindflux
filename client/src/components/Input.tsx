@@ -53,7 +53,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
       <ul onClick={changeInput} className="flex justify-evenly">
         <li
           data-value="1"
-          className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
+          className="bg-base-200 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
           <motion.span
             variants={variants}
@@ -77,7 +77,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
         </li>
         <li
           data-value="2"
-          className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
+          className="bg-base-200 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
           <motion.span
             variants={variants}
@@ -88,7 +88,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
         </li>
         <li
           data-value="3"
-          className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
+          className="bg-base-200 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
           <motion.span
             variants={variants}
@@ -99,7 +99,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
         </li>
         <li
           data-value="4"
-          className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
+          className="bg-base-200 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
           <motion.span
             variants={variants}
@@ -110,7 +110,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
         </li>
         <li
           data-value="5"
-          className="bg-base-300 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
+          className="bg-base-200 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
         >
           <motion.span
             variants={variants}
