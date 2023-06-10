@@ -1,13 +1,35 @@
-import { Dispatch } from "react";
+import { Dispatch, useReducer } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 
+function reducer(state, action) {
+  switch (action.type) {
+    case "FIRST_NAME":
+      return { ...state, firstName: action.payload };
+    case "LAST_NAME":
+      return { ...state, lastName: action.payload };
+    case "EMAIL":
+      return { ...state, email: action.payload };
+    case "PHONE_NUMBER":
+      return { ...state, phoneNumber: action.payload };
+  }
+}
+
 export default function Settings() {
-  const { dispatch }: { dispatch: Dispatch<object> } = useAuthContext();
+  const { dispatch: authDispatch }: { dispatch: Dispatch<object> } =
+    useAuthContext();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    dispatch({ type: "LOGOUT" });
+    authDispatch({ type: "LOGOUT" });
   };
+  const [state, dispatch] = useReducer(reducer, {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  });
+
   const { username, email } = useAuthContext();
+
   return (
     <main className="flex flex-col max-w-[1320px] mx-auto gap-10 px-6 mb-4">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
@@ -38,6 +60,10 @@ export default function Settings() {
               id="first-name"
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
+              value={state.firstName}
+              onChange={(e) =>
+                dispatch({ type: "FIRST_NAME", payload: e.target.value })
+              }
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -48,6 +74,10 @@ export default function Settings() {
               id="last-name"
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
+              value={state.lastName}
+              onChange={(e) => {
+                dispatch({ type: "LAST_NAME", payload: e.target.value });
+              }}
             />
           </div>
         </div>
@@ -61,7 +91,10 @@ export default function Settings() {
               id="email"
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
-              value={email}
+              value={state.email}
+              onChange={(e) => {
+                dispatch({ type: "EMAIL", payload: e.target.value });
+              }}
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -72,6 +105,10 @@ export default function Settings() {
               id="phone-number"
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
+              value={state.phoneNumber}
+              onChange={(e) => {
+                dispatch({ type: "PHONE_NUMBER", payload: e.target.value });
+              }}
             />
           </div>
         </div>

@@ -257,7 +257,7 @@ export default function Example() {
                           href="#"
                           className={classNames(
                             active
-                              ? "bg-base-200 text-primary-content"
+                              ? "bg-base-300 text-primary-content"
                               : "bg-base-100 text-primary-content",
                             "block px-4 py-2 text-sm"
                           )}
@@ -272,7 +272,7 @@ export default function Example() {
                           href="#"
                           className={classNames(
                             active
-                              ? "bg-base-200 text-primary-content"
+                              ? "bg-base-300 text-primary-content"
                               : "bg-base-100 text-primary-content",
                             "block px-4 py-2 text-sm"
                           )}
@@ -287,7 +287,7 @@ export default function Example() {
                           href="#"
                           className={classNames(
                             active
-                              ? "bg-base-200 text-primary-content"
+                              ? "bg-base-300 text-primary-content"
                               : "bg-base-100 text-primary-content",
                             "block px-4 py-2 text-sm"
                           )}
@@ -302,7 +302,7 @@ export default function Example() {
                           href="#"
                           className={classNames(
                             active
-                              ? "bg-base-200 text-primary-content"
+                              ? "bg-base-300 text-primary-content"
                               : "bg-base-100 text-primary-content",
                             "block px-4 py-2 text-sm"
                           )}
@@ -360,7 +360,7 @@ export default function Example() {
                         href="#"
                         className={classNames(
                           active
-                            ? "bg-base-200 text-primary-content"
+                            ? "bg-base-300 text-primary-content"
                             : "bg-base-100 text-primary-content",
                           "block px-4 py-2 text-sm"
                         )}
@@ -438,7 +438,7 @@ export default function Example() {
         </div>
       </header>
       <div className="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col rounded-md">
-        <div className="grid grid-cols-7 gap-px border-b border-base-300 text-center text-xs font-semibold leading-6 text-primary-content lg:flex-none bg-base-200">
+        <div className="grid grid-cols-7 gap-px border-b border-base-300 text-center text-xs font-semibold leading-6 text-primary-content lg:flex-none bg-base-300">
           <div className="bg-base-100 py-2">
             M<span className="sr-only sm:not-sr-only">on</span>
           </div>
@@ -462,7 +462,7 @@ export default function Example() {
           </div>
         </div>
         <div className="flex bg-base-100 rounded-md text-xs leading-6 text-primary-content lg:flex-auto">
-          <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px bg-base-200 rounded-md">
+          <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px bg-base-300 rounded-md">
             {newDays.map((day, i) => (
               <div
                 key={day.toString()}
@@ -516,7 +516,7 @@ export default function Example() {
               </div>
             ))}
           </div>
-          <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden bg-base-200">
+          <div className="isolate grid w-full grid-cols-7 grid-rows-6 gap-px lg:hidden bg-base-300">
             {newDays.map((day) => (
               <button
                 key={day.toString()}
@@ -540,7 +540,7 @@ export default function Example() {
                     !isSameMonth(day, firstDayCurrentMonth) &&
                     !isEqual(day, selectedDay) &&
                     "text-gray-500",
-                  "flex h-14 flex-col px-3 py-2 hover:bg-base-200 focus:primary-content"
+                  "flex h-14 flex-col px-3 py-2 hover:bg-base-300 focus:primary-content"
                 )}
               >
                 <time
@@ -579,7 +579,7 @@ export default function Example() {
             {selectedDay?.events.map((event) => (
               <li
                 key={event.id}
-                className="group flex p-4 pr-6 focus-within:bg-base-200 hover:bg-base-200"
+                className="group flex p-4 pr-6 focus-within:bg-base-300 hover:bg-base-300"
               >
                 <div className="flex-auto">
                   <p className="font-semibold text-primary-content">
