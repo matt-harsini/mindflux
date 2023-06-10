@@ -35,7 +35,7 @@ export default function Settings() {
   });
 
   return (
-    <main className="flex flex-col max-w-[1320px] mx-auto gap-10 px-6 mb-4">
+    <div className="flex flex-col max-w-[1320px] mx-auto gap-10 px-6 mb-4">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
         Settings
       </h3>
@@ -124,6 +124,6 @@ export default function Settings() {
       >
         log out
       </button>
-    </main>
+    </div>
   );
 }
