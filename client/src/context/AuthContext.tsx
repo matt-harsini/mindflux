@@ -10,7 +10,7 @@ interface AuthState {
 
 interface AuthAction {
   type: string;
-  payload: AuthState | undefined;
+  payload?: AuthState | undefined;
 }
 
 export interface AuthContext {

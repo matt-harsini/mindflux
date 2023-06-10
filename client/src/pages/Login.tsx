@@ -1,14 +1,15 @@
 import { useMutation } from "react-query";
-import { Dispatch, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { dispatch }: { dispatch: Dispatch<object> } = useAuthContext();
+  const { dispatch }: AuthContext = useAuthContext();
   const {
     error,
     mutate,
