@@ -4,7 +4,7 @@ import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../shared/interfaces";
 
 export default function Login() {
   const [username, setUsername] = useState("");

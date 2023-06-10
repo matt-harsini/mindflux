@@ -1,25 +1,7 @@
 import { createContext, useReducer, useState } from "react";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
-
-interface AuthState {
-  email: string | null | undefined;
-  username: string | null | undefined;
-  isAuth: boolean | undefined;
-}
-
-interface AuthAction {
-  type: string;
-  payload?: AuthState | undefined;
-}
-
-export interface AuthContext {
-  isFetching: boolean;
-  isAuth: boolean | undefined;
-  username: string | null | undefined;
-  email: string | null | undefined;
-  dispatch: React.Dispatch<AuthAction>;
-}
+import { AuthAction, AuthState, AuthContext as AuthContextType } from "../shared/interfaces";
 
 enum AuthActionTypes {
   LOGIN = "LOGIN",
@@ -47,7 +29,7 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
   throw new Error(`No matching ${action.type}`);
 }
 
-export const AuthContext = createContext<AuthContext | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, {
     username: null,

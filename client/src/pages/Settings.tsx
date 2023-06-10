@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { SettingsActionType } from "../shared/types";
 import { SettingsAction, SettingsState } from "../shared/interfaces";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../shared/interfaces";
 
 function reducer(state: SettingsState, action: SettingsAction) {
   switch (action.type) {
