@@ -9,7 +9,7 @@ enum AuthActionTypes {
   SET_AUTH = "SET_AUTH",
 }
 
-function authReducer(state: AuthState, action: AuthAction): AuthState {
+function authReducer(_state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionTypes.LOGIN:
       return {
