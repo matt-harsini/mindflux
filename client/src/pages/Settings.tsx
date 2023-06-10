@@ -1,34 +1,38 @@
-import { Dispatch, useReducer } from "react";
+import { useReducer } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { SettingsActionType } from "../shared/types";
+import { SettingsAction, SettingsState } from "../shared/interfaces";
+import { AuthContext } from "../context/AuthContext";
 
-function reducer(state, action) {
+function reducer(state: SettingsState, action: SettingsAction) {
   switch (action.type) {
-    case "FIRST_NAME":
+    case SettingsActionType.FIRST_NAME:
       return { ...state, firstName: action.payload };
-    case "LAST_NAME":
+    case SettingsActionType.LAST_NAME:
       return { ...state, lastName: action.payload };
-    case "EMAIL":
+    case SettingsActionType.EMAIL:
       return { ...state, email: action.payload };
-    case "PHONE_NUMBER":
+    case SettingsActionType.PHONE_NUMBER:
       return { ...state, phoneNumber: action.payload };
   }
+  throw new Error(`No matching ${action.type}`);
 }
 
 export default function Settings() {
-  const { dispatch: authDispatch }: { dispatch: Dispatch<object> } =
-    useAuthContext();
+  const { dispatch: authDispatch }: AuthContext = useAuthContext();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    authDispatch({ type: "LOGOUT" });
+    authDispatch({
+      type: "LOGOUT",
+    });
   };
+  const { username, email: initialEmail } = useAuthContext();
   const [state, dispatch] = useReducer(reducer, {
     firstName: "",
     lastName: "",
-    email: "",
+    email: initialEmail as string,
     phoneNumber: "",
   });
-
-  const { username, email } = useAuthContext();
 
   return (
     <main className="flex flex-col max-w-[1320px] mx-auto gap-10 px-6 mb-4">
@@ -45,7 +49,7 @@ export default function Settings() {
               id="username"
               className="input bg-base-200 input-bordered text-primary-content"
               type="text"
-              value={username}
+              value={username as string}
               readOnly
             />
           </div>

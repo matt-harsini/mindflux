@@ -2,28 +2,52 @@ import { createContext, useReducer, useState } from "react";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
 
-function authReducer(state, action) {
-  switch (action.type) {
-    case "LOGIN":
-      return {
-        email: action.payload.email,
-        username: action.payload.username,
-        isAuth: true,
-      };
-    case "LOGOUT":
-      return { username: null, isAuth: false, email: null };
-    case "SET_AUTH":
-      return {
-        isAuth: action.payload.isAuth,
-        email: action.payload.email,
-        username: action.payload.username,
-      };
-    default:
-      return state;
-  }
+interface AuthState {
+  email: string | null | undefined;
+  username: string | null | undefined;
+  isAuth: boolean | undefined;
 }
 
-export const AuthContext = createContext(null);
+interface AuthAction {
+  type: string;
+  payload: AuthState | undefined;
+}
+
+export interface AuthContext {
+  isFetching: boolean;
+  isAuth: boolean | undefined;
+  username: string | null | undefined;
+  email: string | null | undefined;
+  dispatch: React.Dispatch<AuthAction>;
+}
+
+enum AuthActionTypes {
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
+  SET_AUTH = "SET_AUTH",
+}
+
+function authReducer(state: AuthState, action: AuthAction): AuthState {
+  switch (action.type) {
+    case AuthActionTypes.LOGIN:
+      return {
+        email: action.payload?.email,
+        username: action.payload?.username,
+        isAuth: true,
+      };
+    case AuthActionTypes.LOGOUT:
+      return { username: null, isAuth: false, email: null };
+    case AuthActionTypes.SET_AUTH:
+      return {
+        isAuth: action.payload?.isAuth,
+        email: action.payload?.email,
+        username: action.payload?.username,
+      };
+  }
+  throw new Error(`No matching ${action.type}`);
+}
+
+export const AuthContext = createContext<AuthContext | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, {
     username: null,
