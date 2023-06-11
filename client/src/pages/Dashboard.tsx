@@ -14,10 +14,11 @@ export default function Dashboard() {
   const { username } = useAuthContext();
 
   return (
-    <div className="flex flex-col mx-auto gap-10">
-      <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
+    <>
+      <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold mb-8">
         Hello {username}
       </h3>
-    </div>
+      <div className="flex flex-col mx-auto gap-10"></div>
+    </>
   );
 }

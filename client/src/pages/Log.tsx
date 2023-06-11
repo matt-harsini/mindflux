@@ -87,67 +87,69 @@ export default function Log() {
   if (btnLogClicked) console.log("do logic here");
 
   return (
-    <div className="flex flex-col mx-auto">
-      <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
+    <>
+      <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold mb-8">
         {format(startOfToday(), "MMMM do, yyy")}
       </h3>
-      <h4 className="text-primary-content text-3xl font-bold mx-auto my-16">
-        How are you feeling?
-      </h4>
-      <div className="flex flex-col items-center gap-12 md:flex-row justify-between md:gap-4 max-w-[1320px] w-full mx-auto">
-        {icons.map(({ icon, title, id }, i) => {
-          return (
-            <Card
-              key={i}
-              icon={icon}
-              title={title}
-              state={cardState[i]}
-              dispatch={dispatch}
-              id={id}
-            />
-          );
-        })}
-      </div>
-      {cardClicked && (
-        <h4 className="text-primary-content text-3xl font-bold mx-auto my-16">
-          How strong are these feelings?
+      <div className="flex flex-col mx-auto gap-10 pb-10">
+        <h4 className="text-primary-content text-3xl font-bold mx-auto my-8">
+          How are you feeling?
         </h4>
-      )}
-      <div className="flex flex-col gap-12">
-        {stateData.map(([card_title, flag]) => {
-          return (
-            flag && (
-              <Input
-                key={card_title as Key}
-                card_title={card_title as string}
-                setMoodMeter={setMoodMeter}
-                moodMeter={moodMeter}
+        <div className="flex flex-col items-center gap-12 md:flex-row justify-between md:gap-4 max-w-[1320px] w-full mx-auto">
+          {icons.map(({ icon, title, id }, i) => {
+            return (
+              <Card
+                key={i}
+                icon={icon}
+                title={title}
+                state={cardState[i]}
+                dispatch={dispatch}
+                id={id}
               />
-            )
-          );
-        })}
-      </div>
-      {cardClicked && (
-        <>
-          <h4 className="text-primary-content text-3xl font-bold mx-auto my-16">
-            What has you feeling this way?
+            );
+          })}
+        </div>
+        {cardClicked && (
+          <h4 className="text-primary-content text-3xl font-bold mx-auto my-8">
+            How strong are these feelings?
           </h4>
-          <textarea
-            value={log}
-            onChange={(e) => {
-              setLog(e.target.value);
-            }}
-            className="textarea resize-none text-md w-full max-w-[780px] mx-auto text-primary-content bg-base-200"
-          />
-          <button
-            onClick={handleLog}
-            type="button"
-            className="btn btn-secondary self-center mt-12"
-          >
-            Log Mood
-          </button>
-        </>
-      )}
-    </div>
+        )}
+        <div className="flex flex-col gap-12">
+          {stateData.map(([card_title, flag]) => {
+            return (
+              flag && (
+                <Input
+                  key={card_title as Key}
+                  card_title={card_title as string}
+                  setMoodMeter={setMoodMeter}
+                  moodMeter={moodMeter}
+                />
+              )
+            );
+          })}
+        </div>
+        {cardClicked && (
+          <>
+            <h4 className="text-primary-content text-3xl font-bold mx-auto my-8">
+              What has you feeling this way?
+            </h4>
+            <textarea
+              value={log}
+              onChange={(e) => {
+                setLog(e.target.value);
+              }}
+              className="textarea resize-none text-md w-full max-w-[780px] mx-auto text-primary-content bg-base-200"
+            />
+            <button
+              onClick={handleLog}
+              type="button"
+              className="btn btn-secondary self-center mt-12"
+            >
+              Log Mood
+            </button>
+          </>
+        )}
+      </div>
+    </>
   );
 }

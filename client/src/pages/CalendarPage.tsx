@@ -2,11 +2,13 @@ import { Calendar } from "../components";
 
 export default function CalendarPage() {
   return (
-    <div className="flex flex-col mx-auto gap-5">
-      <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
+    <>
+      <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold mb-8">
         Here is your month
       </h3>
-      <Calendar />
-    </div>
+      <div className="flex flex-col mx-auto gap-10">
+        <Calendar />
+      </div>
+    </>
   );
 }
