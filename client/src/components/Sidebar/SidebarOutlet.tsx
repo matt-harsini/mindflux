@@ -103,13 +103,12 @@ export default function SidebarOutlet() {
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
-                    <div className="flex h-16 shrink-0 items-center">
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                        alt="Your Company"
-                      />
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-base-200 px-6 pb-4">
+                    <div className="flex h-16 shrink-0 items-end relative">
+                      <span className="text-primary fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
+                      <span className="text-secondary fa-solid fa-face-worried text-4xl absolute z-20 left-[30px]" />
+                      <span className="text-accent fa-solid fa-face-disappointed text-4xl absolute z-10 left-[60px]" />
+                      <span className="text-red-500 fa-solid fa-face-angry text-4xl absolute left-[90px]" />
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -157,7 +156,7 @@ export default function SidebarOutlet() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-base-200 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-end relative">
-              <span className="text-green-500 fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
+              <span className="text-primary fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
               <span className="text-secondary fa-solid fa-face-worried text-4xl absolute z-20 left-[30px]" />
               <span className="text-accent fa-solid fa-face-disappointed text-4xl absolute z-10 left-[60px]" />
               <span className="text-red-500 fa-solid fa-face-angry text-4xl absolute left-[90px]" />
@@ -199,7 +198,7 @@ export default function SidebarOutlet() {
           </div>
         </div>
         <div className="lg:pl-72">
-          <div className="bg-base-200 lg:bg-transparent sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+          <div className="mb-8 bg-base-200 lg:bg-transparent sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
             <button
               type="button"
               className="-m-2.5 p-2.5 text-gray-700 lg:hidden"
