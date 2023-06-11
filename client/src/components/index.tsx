@@ -1,6 +1,6 @@
-import NavbarOutlet from "./Navbar/NavbarOutlet";
+import SidebarOutlet from "./Navbar/SidebarOutlet";
 import Calendar from "./Calendar";
 import Card from "./Card";
 import Loading from "./Loading";
 
-export { NavbarOutlet, Calendar, Card, Loading };
+export { SidebarOutlet, Calendar, Card, Loading };

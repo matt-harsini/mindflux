@@ -8,7 +8,7 @@ import {
   Log,
   Settings,
 } from "./pages";
-import { NavbarOutlet } from "./components";
+import { SidebarOutlet } from "./components";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 export default function App() {
@@ -30,7 +30,7 @@ export default function App() {
         />
         <Route
           path="dashboard"
-          element={isAuth ? <NavbarOutlet /> : <Navigate to="/" />}
+          element={isAuth ? <SidebarOutlet /> : <Navigate to="/" />}
         >
           <Route index element={isAuth ? <Dashboard /> : <Navigate to="/" />} />
           <Route
