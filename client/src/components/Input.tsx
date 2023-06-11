@@ -47,7 +47,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
 
   return (
     <div className="flex flex-col gap-4 ">
-      <h6 className="text-center font-semibold text-lg">
+      <h6 className="text-md text-center font-semibold md:text-lg">
         {feelings[card_title]}
       </h6>
       <ul onClick={changeInput} className="flex justify-evenly">
