@@ -94,7 +94,7 @@ export default function Log() {
       <h4 className="text-primary-content text-3xl font-bold mx-auto my-16">
         How are you feeling?
       </h4>
-      <div className="flex flex-col items-center gap-12 md:flex-row justify-between md:gap-4 max-w-[1320px] w-full">
+      <div className="flex flex-col items-center gap-12 md:flex-row justify-between md:gap-4 max-w-[1320px] w-full mx-auto">
         {icons.map(({ icon, title, id }, i) => {
           return (
             <Card

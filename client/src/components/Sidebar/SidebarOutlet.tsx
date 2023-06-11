@@ -1,16 +1,11 @@
-import { icons } from "../../theme/icons";
 import { Fragment, useState } from "react";
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  BellIcon,
   CalendarIcon,
   ChartPieIcon,
   Cog6ToothIcon,
   DocumentDuplicateIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
@@ -35,15 +30,6 @@ const navigation = [
     icon: Cog6ToothIcon,
     current: false,
   },
-];
-const teams = [
-  { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-  { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-  { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
-];
-const userNavigation = [
-  { name: "Your profile", href: "#" },
-  { name: "Sign out", href: "#" },
 ];
 
 function classNames(...classes: string[]) {
@@ -171,7 +157,7 @@ export default function SidebarOutlet() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-base-200 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-end relative">
-              <span className="text-primary fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
+              <span className="text-green-500 fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
               <span className="text-secondary fa-solid fa-face-worried text-4xl absolute z-20 left-[30px]" />
               <span className="text-accent fa-solid fa-face-disappointed text-4xl absolute z-10 left-[60px]" />
               <span className="text-red-500 fa-solid fa-face-angry text-4xl absolute left-[90px]" />
