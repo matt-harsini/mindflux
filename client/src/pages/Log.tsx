@@ -87,14 +87,14 @@ export default function Log() {
 
   return (
     <>
-      <h3 className="text-center text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
+      <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
         {format(startOfToday(), "MMMM do, yyy")}
       </h3>
       <div className="flex flex-col mx-auto gap-10 pb-10">
         <h4 className="text-lg text-primary-content lg:text-3xl font-bold mx-auto">
           How are you feeling?
         </h4>
-        <div className="flex flex-col items-center gap-12 md:flex-row justify-between md:gap-4 max-w-[1280px] w-full mx-auto">
+        <div className="flex flex-col items-center gap-16 md:flex-row justify-between md:gap-4 max-w-[1280px] w-full mx-auto">
           {icons.map(({ icon, title, id }, i) => {
             return (
               <Card
@@ -109,7 +109,7 @@ export default function Log() {
           })}
         </div>
         {cardClicked && (
-          <h4 className="text-primary-content text-3xl font-bold mx-auto">
+          <h4 className="text-lg text-primary-content lg:text-3xl font-bold mx-auto text-center">
             How strong are these feelings?
           </h4>
         )}
@@ -129,7 +129,7 @@ export default function Log() {
         </div>
         {cardClicked && (
           <>
-            <h4 className="text-primary-content text-3xl font-bold mx-auto">
+            <h4 className="text-lg text-primary-content lg:text-3xl font-bold mx-auto text-center px-8 lg:px-0">
               What has you feeling this way?
             </h4>
             <textarea
@@ -142,7 +142,7 @@ export default function Log() {
             <button
               onClick={handleLog}
               type="button"
-              className="btn btn-secondary self-center mt-12"
+              className="btn btn-secondary self-center"
             >
               Log Mood
             </button>
