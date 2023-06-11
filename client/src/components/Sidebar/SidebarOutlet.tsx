@@ -105,10 +105,9 @@ export default function SidebarOutlet() {
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-base-200 px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-end relative">
-                      <span className="text-primary fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
-                      <span className="text-secondary fa-solid fa-face-worried text-4xl absolute z-20 left-[30px]" />
-                      <span className="text-accent fa-solid fa-face-disappointed text-4xl absolute z-10 left-[60px]" />
-                      <span className="text-red-500 fa-solid fa-face-angry text-4xl absolute left-[90px]" />
+                      <span className="text-3xl text-accent text-center w-full">
+                        mindflux
+                      </span>
                     </div>
                     <nav className="flex flex-1 flex-col">
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -156,10 +155,9 @@ export default function SidebarOutlet() {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-base-200 px-6 pb-4">
             <div className="flex h-16 shrink-0 items-end relative">
-              <span className="text-primary fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
-              <span className="text-secondary fa-solid fa-face-worried text-4xl absolute z-20 left-[30px]" />
-              <span className="text-accent fa-solid fa-face-disappointed text-4xl absolute z-10 left-[60px]" />
-              <span className="text-red-500 fa-solid fa-face-angry text-4xl absolute left-[90px]" />
+              <span className="text-3xl text-accent text-center w-full">
+                mindflux
+              </span>
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
