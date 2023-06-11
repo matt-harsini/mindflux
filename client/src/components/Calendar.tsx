@@ -25,6 +25,7 @@ import { Fragment, useState } from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { inputIcons } from "../theme/icons";
+import { useNavigate } from "react-router-dom";
 
 const days = [
   { date: "2021-12-27", events: [] },
@@ -162,7 +163,8 @@ const colStartClasses = [
 
 const MAX_CALENDAR_DAYS = 41;
 
-export default function Example() {
+export default function Calendar() {
+  const navigate = useNavigate();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -207,7 +209,7 @@ export default function Example() {
           <div className="relative flex items-center rounded-lg bg-accent shadow-sm md:items-stretch">
             <button
               type="button"
-              className="btn btn-accent flex gap-2 hover:rounded-l-lg"
+              className="btn btn-accent flex gap-2 p-2"
               onClick={previousMonth}
             >
               <span className="sr-only">Previous month</span>
@@ -223,218 +225,23 @@ export default function Example() {
             <span className="relative -mx-px h-5 w-px bg-gray-300 md:hidden" />
             <button
               type="button"
-              className="btn btn-accent flex gap-2"
+              className="btn btn-accent flex gap-2 p-2"
               onClick={nextMonth}
             >
               <span className="sr-only">Next month</span>
               <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
-          <div className="hidden md:ml-4 md:flex md:items-center">
-            <Menu as="div" className="relative">
-              <Menu.Button type="button" className="btn btn-accent flex gap-2">
-                Month view
-                <ChevronDownIcon
-                  className="-mr-1 h-5 w-5 text-base-100"
-                  aria-hidden="true"
-                />
-              </Menu.Button>
-
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right overflow-hidden rounded-md bg- shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none bg-base-100">
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-base-300 text-primary-content"
-                              : "bg-base-100 text-primary-content",
-                            "block px-4 py-2 text-sm"
-                          )}
-                        >
-                          Day view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-base-300 text-primary-content"
-                              : "bg-base-100 text-primary-content",
-                            "block px-4 py-2 text-sm"
-                          )}
-                        >
-                          Week view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-base-300 text-primary-content"
-                              : "bg-base-100 text-primary-content",
-                            "block px-4 py-2 text-sm"
-                          )}
-                        >
-                          Month view
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? "bg-base-300 text-primary-content"
-                              : "bg-base-100 text-primary-content",
-                            "block px-4 py-2 text-sm"
-                          )}
-                        >
-                          Year view
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
-                </Menu.Items>
-              </Transition>
-            </Menu>
+          <div className="hidden md:flex md:items-center">
             <div className="ml-6 h-6 w-px bg-gray-300" />
-            <button type="button" className="ml-6 btn btn-accent">
-              Add event
+            <button
+              type="button"
+              className="ml-6 btn btn-accent"
+              onClick={() => navigate("/dashboard/log")}
+            >
+              Log mood
             </button>
           </div>
-          <Menu as="div" className="relative ml-6 md:hidden">
-            <Menu.Button className="-mx-2 flex items-center rounded-full border border-transparent p-2 text-gray-400 hover:text-gray-500">
-              <span className="sr-only">Open menu</span>
-              <EllipsisHorizontalIcon className="h-5 w-5" aria-hidden="true" />
-            </Menu.Button>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 z-10 mt-3 w-36 origin-top-right divide-y divide-base-300 overflow-hidden rounded-md bg-base-100 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-base-103 text-primary-content"
-                            : "bg-base-301 text-primary-content",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Create event
-                      </a>
-                    )}
-                  </Menu.Item>
-                </div>
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-base-300 text-primary-content"
-                            : "bg-base-100 text-primary-content",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Go to today
-                      </a>
-                    )}
-                  </Menu.Item>
-                </div>
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-base-103 text-primary-content"
-                            : "bg-base-301 text-primary-content",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Day view
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-base-103 text-primary-content"
-                            : "bg-base-301 text-primary-content",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Week view
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-base-103 text-primary-content"
-                            : "bg-base-301 text-primary-content",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Month view
-                      </a>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active
-                            ? "bg-base-103 text-primary-content"
-                            : "bg-base-301 text-primary-content",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        Year view
-                      </a>
-                    )}
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Transition>
-          </Menu>
         </div>
       </header>
       <div className="shadow ring-1 ring-black ring-opacity-5 lg:flex lg:flex-auto lg:flex-col rounded-md">

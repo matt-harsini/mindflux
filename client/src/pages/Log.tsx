@@ -87,14 +87,14 @@ export default function Log() {
   if (btnLogClicked) console.log("do logic here");
 
   return (
-    <div className="flex flex-col mx-auto px-6">
+    <div className="flex flex-col mx-auto">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
         {format(startOfToday(), "MMMM do, yyy")}
       </h3>
       <h4 className="text-primary-content text-3xl font-bold mx-auto my-16">
         How are you feeling?
       </h4>
-      <div className="flex flex-col items-center gap-12 md:flex-row justify-between md:gap-4">
+      <div className="flex flex-col items-center gap-12 md:flex-row justify-between md:gap-4 max-w-[1320px] w-full">
         {icons.map(({ icon, title, id }, i) => {
           return (
             <Card

@@ -1,17 +1,4 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+import { icons } from "../../theme/icons";
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
@@ -31,15 +18,15 @@ import { NavLink, Outlet } from "react-router-dom";
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: ChartPieIcon, current: false },
   {
-    name: "Log",
-    href: "/dashboard/log",
-    icon: DocumentDuplicateIcon,
-    current: false,
-  },
-  {
     name: "Calendar",
     href: "/dashboard/calendar",
     icon: CalendarIcon,
+    current: false,
+  },
+  {
+    name: "Log",
+    href: "/dashboard/log",
+    icon: DocumentDuplicateIcon,
     current: false,
   },
   {
@@ -183,8 +170,11 @@ export default function SidebarOutlet() {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-base-200 px-6 pb-4">
-            <div className="flex h-16 shrink-0 items-end">
-              <span className="text-primary-content text-2xl">mindflux</span>
+            <div className="flex h-16 shrink-0 items-end relative">
+              <span className="text-primary fa-solid fa-face-smile text-4xl absolute z-30 left-0" />
+              <span className="text-secondary fa-solid fa-face-worried text-4xl absolute z-20 left-[30px]" />
+              <span className="text-accent fa-solid fa-face-disappointed text-4xl absolute z-10 left-[60px]" />
+              <span className="text-red-500 fa-solid fa-face-angry text-4xl absolute left-[90px]" />
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -242,7 +232,7 @@ export default function SidebarOutlet() {
             />
           </div>
 
-          <main className="py-10">
+          <main className="max-w-[1500px] mx-auto">
             <div className="px-4 sm:px-6 lg:px-8">
               <Outlet />
             </div>
