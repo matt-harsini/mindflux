@@ -87,7 +87,7 @@ export default function Log() {
   if (btnLogClicked) console.log("do logic here");
 
   return (
-    <div className="flex flex-col max-w-[1320px] mx-auto px-6 mb-4">
+    <div className="flex flex-col mx-auto px-6">
       <h3 className="mx-auto lg:mx-0 text-primary-content text-4xl font-bold">
         {format(startOfToday(), "MMMM do, yyy")}
       </h3>

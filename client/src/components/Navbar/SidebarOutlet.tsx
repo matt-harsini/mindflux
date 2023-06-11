@@ -29,8 +29,13 @@ import {
 import { NavLink, Outlet } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: HomeIcon, current: true },
-  { name: "Log", href: "/dashboard/log", icon: UsersIcon, current: false },
+  { name: "Dashboard", href: "/dashboard", icon: ChartPieIcon, current: false },
+  {
+    name: "Log",
+    href: "/dashboard/log",
+    icon: DocumentDuplicateIcon,
+    current: false,
+  },
   {
     name: "Calendar",
     href: "/dashboard/calendar",
@@ -40,7 +45,7 @@ const navigation = [
   {
     name: "Settings",
     href: "/dashboard/settings",
-    icon: FolderIcon,
+    icon: Cog6ToothIcon,
     current: false,
   },
 ];
@@ -140,13 +145,15 @@ export default function SidebarOutlet() {
                             {navigation.map((item) => (
                               <li key={item.name}>
                                 <NavLink
+                                  end
                                   to={item.href}
-                                  className={classNames(
-                                    item.current
-                                      ? "bg-indigo-700 text-white"
-                                      : "text-indigo-200 hover:text-white hover:bg-primary",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
-                                  )}
+                                  className={({ isActive }) =>
+                                    `group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
+                                      isActive
+                                        ? "bg-primary text-white"
+                                        : "text-indigo-200 hover:text-white hover:bg-primary"
+                                    }`
+                                  }
                                 >
                                   <item.icon
                                     className={classNames(
@@ -186,13 +193,15 @@ export default function SidebarOutlet() {
                     {navigation.map((item) => (
                       <li key={item.name}>
                         <NavLink
+                          end
                           to={item.href}
-                          className={classNames(
-                            item.current
-                              ? "bg-indigo-700 text-white"
-                              : "text-indigo-200 hover:text-white hover:bg-indigo-700",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
-                          )}
+                          className={({ isActive }) =>
+                            `group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
+                              isActive
+                                ? "bg-primary text-white"
+                                : "text-indigo-200 hover:text-white hover:bg-primary"
+                            }`
+                          }
                         >
                           <item.icon
                             className={classNames(

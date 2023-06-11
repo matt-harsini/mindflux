@@ -1,15 +1,15 @@
 import { useMutation } from "react-query";
-import { Dispatch, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { Error } from "../shared/interfaces";
+import { AuthContext, Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { dispatch }: { dispatch: Dispatch<object> } = useAuthContext();
+  const { dispatch }: AuthContext = useAuthContext();
 
   const {
     mutate,

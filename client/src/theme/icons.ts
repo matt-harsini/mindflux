@@ -22,6 +22,11 @@ export const icons: CardData[] = [
     title: "Angry",
     id: "CARD_ANGRY",
   },
+  {
+    icon: "fa-circle-plus",
+    title: "Custom",
+    id: "CARD_CUSTOM",
+  },
 ];
 
 export const inputIcons: InputIcons = {
