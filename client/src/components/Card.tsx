@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { CardProps } from "../shared/types";
+import { colors } from "../theme/icons";
 
 const variants = {
   hover: {
@@ -29,7 +30,7 @@ export default function Card({ icon, title, state, dispatch, id }: CardProps) {
       }}
     >
       <figure className="card-body">
-        <span className={`fa-solid ${icon} text-accent scale-[3.3]`} />
+        <span className={`fa-solid ${icon} ${colors[id]} scale-[3.3]`} />
       </figure>
       <span className="sm:text-md text-primary-content md:text-lg lg:text-xl">
         {title}

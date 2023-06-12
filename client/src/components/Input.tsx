@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { InputProps } from "../shared/types";
 import { motion } from "framer-motion";
-import { Feelings } from "../shared/interfaces";
-import { inputIcons } from "../theme/icons";
+import { Colors, Feelings } from "../shared/interfaces";
+import { colors, inputIcons } from "../theme/icons";
 
 const feelings: Feelings = {
   CARD_HAPPY: "Happiness",
@@ -36,9 +36,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
       ?.querySelector(`[data-value='${innerText}']`) as HTMLElement;
     const targetDimensions = target.getBoundingClientRect();
     const emojiParentDimensions: DOMRect = emojiParent.getBoundingClientRect();
-    setPosition({
-      x: targetDimensions.left - emojiParentDimensions.left,
-    });
+    target.appendChild(emoji.current);
     setInput(innerText);
     setMoodMeter((prevState) => {
       return { ...prevState, [card_title]: innerText };
@@ -47,7 +45,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
 
   return (
     <div className="flex flex-col gap-4 ">
-      <h6 className="text-md text-center font-semibold md:text-lg">
+      <h6 className="text-center font-semibold text-lg">
         {feelings[card_title]}
       </h6>
       <ul onClick={changeInput} className="flex justify-evenly">
@@ -71,7 +69,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
             className={`z-30 flex items-center justify-center w-full h-full absolute pointer-events-none`}
           >
             <span
-              className={`fa-solid ${inputIcons[card_title][input]} scale-[2.1] lg:scale-[3.7] text-accent`}
+              className={`fa-solid ${inputIcons[card_title][input]} scale-[2.1] lg:scale-[3.7] ${colors[card_title]}`}
             />
           </motion.div>
         </li>

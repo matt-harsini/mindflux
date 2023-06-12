@@ -1,5 +1,5 @@
 import { CardData } from "../shared/types";
-import { InputIcons } from "../shared/interfaces/input.interface";
+import { Colors, InputIcons } from "../shared/interfaces/input.interface";
 
 export const icons: CardData[] = [
   {
@@ -53,4 +53,11 @@ export const inputIcons: InputIcons = {
     4: "fa-face-pouting",
     5: "fa-face-nose-steam",
   },
+};
+
+export const colors: Colors = {
+  CARD_HAPPY: "text-green-500",
+  CARD_SAD: "text-accent",
+  CARD_ANXIOUS: "text-secondary",
+  CARD_ANGRY: "text-red-600",
 };

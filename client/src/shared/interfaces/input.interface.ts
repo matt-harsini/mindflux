@@ -7,3 +7,7 @@ export interface InputIcons {
     [prop: string]: string;
   };
 }
+
+export interface Colors {
+  [prop: string]: string;
+}
