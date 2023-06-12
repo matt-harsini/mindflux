@@ -20,6 +20,7 @@ import {
   isToday,
   lastDayOfMonth,
   parse,
+  parseISO,
   startOfToday,
   startOfWeek,
   sub,
@@ -197,14 +198,11 @@ export default function Calendar() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
 
-  const {
-    data: {
-      data: { documents },
-    },
-  }: any = useQuery([currentMonth], {
+  const data: any = useQuery([currentMonth], {
     queryFn: () =>
       authFetch.get(`/query?f=${firstDateOfMonth}&l=${lastDateOfMonth}`),
   });
+  console.log(data.status !== "loading" && data.data.data.documents.length);
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
@@ -304,34 +302,37 @@ export default function Calendar() {
                 >
                   {format(day, "d")}
                 </time>
-                {documents?.length && (
-                  <ol className="mt-2">
-                    {documents.map((log: any) => {
-                      console.log(log);
-
-                      return (
-                        <li key={event.id}>
-                          <a href={event.href} className="group flex">
-                            <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
-                              {event.name}
-                            </p>
-                            <time
-                              dateTime={event.datetime}
-                              className="ml-3 hidden flex-none text-gray-300 group-hover:text-accent xl:block"
-                            >
-                              {event.time}
-                            </time>
-                          </a>
+                {data.status !== "loading" &&
+                  data.data.data.documents?.length && (
+                    <ol className="mt-2">
+                      {data.data.data.documents?.map((log: any) => {
+                        if (
+                          format(parseISO(log.createdAt), "yyyy-M-d") ===
+                          format(day, "yyyy-M-d")
+                        )
+                          return (
+                            <li key={log.createdAt}>
+                              <a className="group flex">
+                                <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
+                                  {1}
+                                </p>
+                                <time
+                                  dateTime={log.createdAt.toString()}
+                                  className="ml-3 hidden flex-none text-gray-300 group-hover:text-accent xl:block"
+                                >
+                                  {1}
+                                </time>
+                              </a>
+                            </li>
+                          );
+                      })}
+                      {/* {day.events.length > 2 && (
+                        <li className="text-gray-500">
+                          + {day.events.length - 2} more
                         </li>
-                      );
-                    })}
-                    {/* {day.events.length > 2 && (
-                      <li className="text-gray-500">
-                        + {day.events.length - 2} more
-                      </li>
-                    )} */}
-                  </ol>
-                )}
+                      )} */}
+                    </ol>
+                  )}
               </div>
             ))}
           </div>

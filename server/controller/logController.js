@@ -30,6 +30,7 @@ async function getMonthLogs(req, res) {
       $lt: l,
     },
   }).sort({ createdAt: -1 });
+  console.log(documents);
   res.json({ documents });
 }
 
