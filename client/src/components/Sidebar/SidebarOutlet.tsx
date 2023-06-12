@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, Suspense } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -9,6 +9,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
+import { Loading } from "..";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: ChartPieIcon, current: false },
@@ -217,7 +218,9 @@ export default function SidebarOutlet() {
 
           <main className="max-w-[1500px] mx-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              <Outlet />
+              <Suspense fallback={<Loading />}>
+                <Outlet />
+              </Suspense>
             </div>
           </main>
         </div>
