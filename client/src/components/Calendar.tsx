@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Transition } from "@headlessui/react";
 import {
   ChevronDownIcon,
@@ -196,11 +197,14 @@ export default function Calendar() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
 
-  const { data } = useQuery([currentMonth], {
+  const {
+    data: {
+      data: { documents },
+    },
+  }: any = useQuery([currentMonth], {
     queryFn: () =>
       authFetch.get(`/query?f=${firstDateOfMonth}&l=${lastDateOfMonth}`),
   });
-  console.log(data);
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
@@ -300,31 +304,34 @@ export default function Calendar() {
                 >
                   {format(day, "d")}
                 </time>
-                {}
-                {/* {day.events.length > 0 && (
+                {documents?.length && (
                   <ol className="mt-2">
-                    {day.events.slice(0, 2).map((event) => (
-                      <li key={event.id}>
-                        <a href={event.href} className="group flex">
-                          <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
-                            {event.name}
-                          </p>
-                          <time
-                            dateTime={event.datetime}
-                            className="ml-3 hidden flex-none text-gray-300 group-hover:text-accent xl:block"
-                          >
-                            {event.time}
-                          </time>
-                        </a>
-                      </li>
-                    ))}
-                    {day.events.length > 2 && (
+                    {documents.map((log: any) => {
+                      console.log(log);
+
+                      return (
+                        <li key={event.id}>
+                          <a href={event.href} className="group flex">
+                            <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
+                              {event.name}
+                            </p>
+                            <time
+                              dateTime={event.datetime}
+                              className="ml-3 hidden flex-none text-gray-300 group-hover:text-accent xl:block"
+                            >
+                              {event.time}
+                            </time>
+                          </a>
+                        </li>
+                      );
+                    })}
+                    {/* {day.events.length > 2 && (
                       <li className="text-gray-500">
                         + {day.events.length - 2} more
                       </li>
-                    )}
+                    )} */}
                   </ol>
-                )} */}
+                )}
               </div>
             ))}
           </div>

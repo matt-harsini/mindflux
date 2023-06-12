@@ -4,6 +4,7 @@ import { Log } from "../models/logModel.js";
 async function createLog(req, res) {
   const { moodMeter, log, date } = req.body;
   const { _id: user_id } = req.user;
+  console.log(user_id, moodMeter, log, date);
   try {
     await Log.create({ moodMeter, log, date, user_id });
     res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
@@ -28,8 +29,7 @@ async function getMonthLogs(req, res) {
       $gte: f,
       $lt: l,
     },
-  });
-  console.log(documents);
+  }).sort({ createdAt: -1 });
   res.json({ documents });
 }
 
