@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { InputProps } from "../shared/types";
 import { motion } from "framer-motion";
-import { Colors, Feelings } from "../shared/interfaces";
+import { Feelings } from "../shared/interfaces";
 import { colors, inputIcons } from "../theme/icons";
 
 const feelings: Feelings = {
@@ -18,29 +18,24 @@ const variants = {
 
 export default function Input({ card_title, setMoodMeter }: InputProps) {
   const [input, setInput] = useState<string>("1");
-  const [position, setPosition] = useState({
-    x: 0,
-  });
   const emoji = useRef<HTMLDivElement>(null);
+  const emojiParent = useRef<HTMLUListElement>(null);
 
   function changeInput(e: React.MouseEvent) {
     if (!(e.target instanceof HTMLElement)) return;
     if (e.target.nodeName === "UL") return;
     if (!emoji.current) return;
-    const emojiParent = emoji.current.closest("li");
     if (!emojiParent) return;
     if (e.target.innerText === input) return;
     const { innerText } = e.target as HTMLElement;
-    const target = emoji.current
-      .closest("ul")
-      ?.querySelector(`[data-value='${innerText}']`) as HTMLElement;
-    const targetDimensions = target.getBoundingClientRect();
-    const emojiParentDimensions: DOMRect = emojiParent.getBoundingClientRect();
-    target.appendChild(emoji.current);
+    const target = emojiParent.current?.querySelector(
+      `[data-value='${innerText}']`
+    ) as HTMLElement;
     setInput(innerText);
     setMoodMeter((prevState) => {
       return { ...prevState, [card_title]: innerText };
     });
+    target.appendChild(emoji.current as Node);
   }
 
   return (
@@ -48,7 +43,11 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
       <h6 className="text-center font-semibold text-lg">
         {feelings[card_title]}
       </h6>
-      <ul onClick={changeInput} className="flex justify-evenly">
+      <ul
+        onClick={changeInput}
+        className="flex justify-evenly"
+        ref={emojiParent}
+      >
         <li
           data-value="1"
           className="bg-base-200 rounded-full text-xl cursor-pointer w-[64px] h-[64px] lg:w-[96px] lg:h-[96px] flex items-center justify-center relative"
@@ -60,12 +59,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
             1
           </motion.span>
           <motion.div
-            transition={{
-              type: "spring",
-              stiffness: 75,
-            }}
             ref={emoji}
-            animate={position}
             className={`z-30 flex items-center justify-center w-full h-full absolute pointer-events-none`}
           >
             <span
