@@ -20,9 +20,22 @@ async function getAllLogs(req, res) {
   res.status(StatusCodes.OK).json({ logs });
 }
 
+async function getMonthLogs(req, res) {
+  const { f, l } = req.query;
+  console.log(f, l);
+  const documents = await Log.find({
+    createdAt: {
+      $gte: f,
+      $lt: l,
+    },
+  });
+  console.log(documents);
+  res.json({ documents });
+}
+
 async function deleteLog(req, res) {
   const { id: log_id } = req.params;
   console.log(req.params);
 }
 
-export { createLog, getAllLogs };
+export { createLog, getAllLogs, getMonthLogs };

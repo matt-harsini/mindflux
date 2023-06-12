@@ -44,7 +44,7 @@ export default function Settings() {
           <div className="lg:max-w-[70%] flex flex-col gap-6">
             <div className="flex flex-col gap-3">
               <label className="text-primary-content" htmlFor="username">
-                Username (permanent)
+                Username
               </label>
               <input
                 id="username"

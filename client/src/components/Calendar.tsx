@@ -12,10 +12,12 @@ import {
   eachDayOfInterval,
   endOfMonth,
   format,
+  formatISO,
   getDay,
   isEqual,
   isSameMonth,
   isToday,
+  lastDayOfMonth,
   parse,
   startOfToday,
   startOfWeek,
@@ -172,6 +174,8 @@ export default function Calendar() {
   const start = startOfWeek(firstDayCurrentMonth, { weekStartsOn: 1 });
   const end = endOfMonth(firstDayCurrentMonth);
   const difference = differenceInDays(end, start);
+  const firstDateOfMonth = formatISO(firstDayCurrentMonth);
+  const lastDateOfMonth = formatISO(lastDayOfMonth(firstDayCurrentMonth));
 
   const newDays = eachDayOfInterval({
     start,
@@ -192,8 +196,9 @@ export default function Calendar() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
 
-  const { data } = useQuery(["moodData"], {
-    queryFn: () => authFetch.get("/get-logs"),
+  const { data } = useQuery([currentMonth], {
+    queryFn: () =>
+      authFetch.get(`/query?f=${firstDateOfMonth}&l=${lastDateOfMonth}`),
   });
   console.log(data);
 
