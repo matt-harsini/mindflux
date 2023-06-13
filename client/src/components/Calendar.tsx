@@ -20,17 +20,15 @@ import {
   isToday,
   lastDayOfMonth,
   parse,
-  parseISO,
   startOfToday,
   startOfWeek,
   sub,
 } from "date-fns";
-import { Fragment, ReactNode, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { inputIcons } from "../theme/icons";
 import { useNavigate } from "react-router-dom";
-import { isThisMonth } from "date-fns";
 
 const days = [
   { date: "2021-12-27", events: [] },
@@ -302,29 +300,36 @@ export default function Calendar() {
                 >
                   {format(day, "d")}
                 </time>
-
                 {data.status !== "loading" &&
-                  data.data.data.payload?.length &&
-                  data.data.data.payload[new Date(day).getDate() - 1]?.length &&
+                  !!data.data.data.payload?.length &&
+                  !!data.data.data.payload[new Date(day).getDate() - 1]
+                    ?.length &&
                   isSameMonth(day, firstDayCurrentMonth) && (
                     <ol className="mt-2">
-                      {console.log(
-                        new Date(day).getDate() - 1,
-                        !data.data.data.payload[new Date(day).getDate()]?.length
-                      )}
                       {data.data.data.payload[new Date(day).getDate() - 1].map(
                         (log: any) => {
+                          console.log(log.moodMeter);
+
                           return (
                             <li key={log.createdAt}>
                               <a className="group flex">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
-                                  test123
+                                  {Object.keys(log.moodMeter).map((key) => {
+                                    if (key === null) return;
+                                    console.log(key);
+
+                                    return (
+                                      <span
+                                        className={`fa-solid ${inputIcons[key][1]}`}
+                                      ></span>
+                                    );
+                                  })}
                                 </p>
                                 <time
                                   dateTime={log.createdAt.toString()}
                                   className="ml-3 hidden flex-none text-gray-300 group-hover:text-accent xl:block"
                                 >
-                                  {1}
+                                  {format(day, "h-a")}
                                 </time>
                               </a>
                             </li>
