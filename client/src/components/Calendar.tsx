@@ -291,16 +291,27 @@ export default function Calendar() {
                   "h-[108px]"
                 )}
               >
-                <time
-                  dateTime={day.toString()}
-                  className={
-                    isToday(day)
-                      ? "flex h-6 w-6 items-center justify-center rounded-full bg-accent font-semibold text-white"
-                      : undefined
-                  }
-                >
-                  {format(day, "d")}
-                </time>
+                <div className="flex justify-between">
+                  <time
+                    dateTime={day.toString()}
+                    className={
+                      isToday(day)
+                        ? "flex h-6 w-6 items-center justify-center rounded-full bg-accent font-semibold text-white"
+                        : undefined
+                    }
+                  >
+                    {format(day, "d")}
+                  </time>
+                  {data.data.data.payload[new Date(day).getDate() - 1]?.length >
+                    2 && (
+                    <li className="text-gray-500 list-none">
+                      +{" "}
+                      {data.data.data.payload[new Date(day).getDate() - 1]
+                        .length - 2}{" "}
+                      more
+                    </li>
+                  )}
+                </div>
                 {data.status !== "loading" &&
                   !!data.data.data.payload?.length &&
                   !!data.data.data.payload[new Date(day).getDate() - 1]
@@ -333,11 +344,6 @@ export default function Calendar() {
                             </li>
                           );
                         })}
-                      {/* {day.events.length > 2 && (
-                        <li className="text-gray-500">
-                          + {day.events.length - 2} more
-                        </li>
-                      )} */}
                     </ol>
                   )}
               </div>
