@@ -25,11 +25,12 @@ import {
   startOfWeek,
   sub,
 } from "date-fns";
-import { Fragment, useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { inputIcons } from "../theme/icons";
 import { useNavigate } from "react-router-dom";
+import { isThisMonth } from "date-fns";
 
 const days = [
   { date: "2021-12-27", events: [] },
@@ -202,7 +203,6 @@ export default function Calendar() {
     queryFn: () =>
       authFetch.get(`/query?f=${firstDateOfMonth}&l=${lastDateOfMonth}`),
   });
-  console.log(data.status !== "loading" && data.data.data.documents.length);
 
   return (
     <div className="lg:flex lg:h-full lg:flex-col">
@@ -302,19 +302,23 @@ export default function Calendar() {
                 >
                   {format(day, "d")}
                 </time>
+
                 {data.status !== "loading" &&
-                  data.data.data.documents?.length && (
+                  data.data.data.payload?.length &&
+                  data.data.data.payload[new Date(day).getDate() - 1]?.length &&
+                  isSameMonth(day, firstDayCurrentMonth) && (
                     <ol className="mt-2">
-                      {data.data.data.documents?.map((log: any) => {
-                        if (
-                          format(parseISO(log.createdAt), "yyyy-M-d") ===
-                          format(day, "yyyy-M-d")
-                        )
+                      {console.log(
+                        new Date(day).getDate() - 1,
+                        !data.data.data.payload[new Date(day).getDate()]?.length
+                      )}
+                      {data.data.data.payload[new Date(day).getDate() - 1].map(
+                        (log: any) => {
                           return (
                             <li key={log.createdAt}>
                               <a className="group flex">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
-                                  {1}
+                                  test123
                                 </p>
                                 <time
                                   dateTime={log.createdAt.toString()}
@@ -325,7 +329,8 @@ export default function Calendar() {
                               </a>
                             </li>
                           );
-                      })}
+                        }
+                      )}
                       {/* {day.events.length > 2 && (
                         <li className="text-gray-500">
                           + {day.events.length - 2} more
