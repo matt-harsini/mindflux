@@ -312,13 +312,13 @@ export default function Calendar() {
                         .map((log: any) => {
                           return (
                             <li key={log.createdAt}>
-                              <a className="group flex">
+                              <a className="group flex items-center">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                   {Object.keys(log.moodMeter).map((key) => {
                                     if (log.moodMeter[key] === null) return;
                                     return (
                                       <span
-                                        className={`${colors[key]} fa-solid ${inputIcons[key][1]} text-lg`}
+                                        className={`${colors[key]} fa-solid ${inputIcons[key][1]} text-lg ml-0.5`}
                                       />
                                     );
                                   })}
