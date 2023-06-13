@@ -20,6 +20,7 @@ import {
   isToday,
   lastDayOfMonth,
   parse,
+  parseISO,
   startOfToday,
   startOfWeek,
   sub,
@@ -314,8 +315,6 @@ export default function Calendar() {
                               <a className="group flex">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                   {Object.keys(log.moodMeter).map((key) => {
-                                    console.log(log.moodMeter);
-
                                     if (log.moodMeter[key] === null) return;
                                     return (
                                       <span
@@ -328,7 +327,7 @@ export default function Calendar() {
                                   dateTime={log.createdAt.toString()}
                                   className="ml-3 hidden flex-none text-gray-300 group-hover:text-accent xl:block"
                                 >
-                                  {format(day, "h-a")}
+                                  {format(parseISO(log.createdAt), "haa")}
                                 </time>
                               </a>
                             </li>
