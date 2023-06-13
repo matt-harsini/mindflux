@@ -302,15 +302,16 @@ export default function Calendar() {
                   >
                     {format(day, "d")}
                   </time>
-                  {data.data.data.payload[new Date(day).getDate() - 1]?.length >
-                    2 && (
-                    <li className="text-gray-500 list-none">
-                      +{" "}
-                      {data.data.data.payload[new Date(day).getDate() - 1]
-                        .length - 2}{" "}
-                      more
-                    </li>
-                  )}
+                  {data.status !== "loading" &&
+                    data.data.data.payload[new Date(day).getDate() - 1]
+                      ?.length > 2 && (
+                      <li className="text-gray-500 list-none">
+                        +{" "}
+                        {data.data.data.payload[new Date(day).getDate() - 1]
+                          .length - 2}{" "}
+                        more
+                      </li>
+                    )}
                 </div>
                 {data.status !== "loading" &&
                   !!data.data.data.payload?.length &&
