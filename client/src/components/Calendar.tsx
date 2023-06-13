@@ -27,7 +27,7 @@ import {
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
-import { inputIcons } from "../theme/icons";
+import { colors, inputIcons } from "../theme/icons";
 import { useNavigate } from "react-router-dom";
 
 const days = [
@@ -306,22 +306,19 @@ export default function Calendar() {
                     ?.length &&
                   isSameMonth(day, firstDayCurrentMonth) && (
                     <ol className="mt-2">
-                      {data.data.data.payload[new Date(day).getDate() - 1].map(
-                        (log: any) => {
-                          console.log(log.moodMeter);
-
+                      {data.data.data.payload[new Date(day).getDate() - 1]
+                        .slice(0, 2)
+                        .map((log: any) => {
                           return (
                             <li key={log.createdAt}>
                               <a className="group flex">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                   {Object.keys(log.moodMeter).map((key) => {
                                     if (key === null) return;
-                                    console.log(key);
-
                                     return (
                                       <span
-                                        className={`fa-solid ${inputIcons[key][1]}`}
-                                      ></span>
+                                        className={`${colors[key]} fa-solid ${inputIcons[key][1]} text-md`}
+                                      />
                                     );
                                   })}
                                 </p>
@@ -334,8 +331,7 @@ export default function Calendar() {
                               </a>
                             </li>
                           );
-                        }
-                      )}
+                        })}
                       {/* {day.events.length > 2 && (
                         <li className="text-gray-500">
                           + {day.events.length - 2} more

@@ -7,6 +7,8 @@ import { Action, CardType, State } from "../shared/types";
 import { icons } from "../theme/icons";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
+import { useNavigate, useNavigation } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const defaultCardState = {
   CARD_HAPPY: false,
@@ -72,7 +74,10 @@ export default function Log() {
 
   const handleLog = () => {
     mutate();
+    setBtnLogClicked(true);
   };
+
+  const navigate = useNavigate();
 
   const { mutate } = useMutation({
     mutationFn: () =>
@@ -81,10 +86,26 @@ export default function Log() {
         log,
         date: formatISO(new Date()),
       }),
-    onSuccess: () => setBtnLogClicked(true),
   });
 
-  if (btnLogClicked) console.log("do logic here");
+  if (btnLogClicked) {
+    setTimeout(() => {
+      navigate("/dashboard/calendar");
+    }, 2000);
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        className="flex flex-col items-center justify-center gap-y-3"
+      >
+        <h4 className="text-4xl text-white">
+          Thanks for
+          <span className="text-accent"> sharing!</span>
+        </h4>
+        <span className="text-accent fa-solid fa-face-smile-beam text-4xl mt-2" />
+      </motion.div>
+    );
+  }
 
   return (
     <>
