@@ -125,6 +125,7 @@ export default function Log() {
                 title={title}
                 state={cardState[i]}
                 dispatch={dispatch}
+                setMoodMeter={setMoodMeter}
                 id={id}
               />
             );

@@ -314,7 +314,9 @@ export default function Calendar() {
                               <a className="group flex">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                   {Object.keys(log.moodMeter).map((key) => {
-                                    if (key === null) return;
+                                    console.log(log.moodMeter);
+
+                                    if (log.moodMeter[key] === null) return;
                                     return (
                                       <span
                                         className={`${colors[key]} fa-solid ${inputIcons[key][1]} text-md`}
