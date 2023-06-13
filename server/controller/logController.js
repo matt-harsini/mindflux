@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { Log } from "../models/logModel.js";
+import { getDifferenceInDates } from "../utils/index.js";
 
 async function createLog(req, res) {
   const { moodMeter, log, date } = req.body;
@@ -23,15 +24,18 @@ async function getAllLogs(req, res) {
 
 async function getMonthLogs(req, res) {
   const { f, l } = req.query;
-  console.log(f, l);
   const documents = await Log.find({
     createdAt: {
       $gte: f,
       $lt: l,
     },
   }).sort({ createdAt: -1 });
-  console.log(documents);
-  res.json({ documents });
+  const payload = new Array(getDifferenceInDates(f, l)).fill().map(() => []);
+  documents.forEach((document) => {
+    const date = +new Date(document.createdAt).getDate();
+    payload[date - 1].push(document);
+  });
+  res.json({ payload });
 }
 
 async function deleteLog(req, res) {
