@@ -119,6 +119,7 @@ export default function SidebarOutlet() {
                                 <NavLink
                                   end
                                   to={item.href}
+                                  onClick={() => setSidebarOpen(false)}
                                   className={({ isActive }) =>
                                     `group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
                                       isActive
