@@ -63,7 +63,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
             className={`z-30 flex items-center justify-center w-full h-full absolute pointer-events-none`}
           >
             <span
-              className={`fa-solid ${inputIcons[card_title][input]} scale-[2.1] lg:scale-[3.7] ${colors[card_title]}`}
+              className={`fa-solid ${inputIcons[card_title][input]} scale-[2.4] md:scale-[2.8] lg:scale-[3.7] ${colors[card_title]}`}
             />
           </motion.div>
         </li>
