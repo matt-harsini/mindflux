@@ -40,7 +40,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
 
   return (
     <div className="flex flex-col gap-4 ">
-      <h6 className="text-center font-semibold text-lg">
+      <h6 className="text-center font-semibold text-md">
         {feelings[card_title]}
       </h6>
       <ul

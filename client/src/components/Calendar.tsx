@@ -274,7 +274,7 @@ export default function Calendar() {
                 </time>
                 {isSameMonth(day, firstDayCurrentMonth) &&
                   data.status !== "loading" &&
-                  data.data.data.payload[new Date(day).getDate() - 1]
+                  !!data.data.data.payload[new Date(day).getDate() - 1]
                     .length && (
                     <span className="sr-only">
                       {
@@ -286,7 +286,7 @@ export default function Calendar() {
                   )}
                 {isSameMonth(day, firstDayCurrentMonth) &&
                   data.status !== "loading" &&
-                  data.data.data.payload[new Date(day).getDate() - 1]
+                  !!data.data.data.payload[new Date(day).getDate() - 1]
                     .length && (
                     <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
                       {isSameMonth(day, firstDayCurrentMonth) &&
@@ -307,40 +307,52 @@ export default function Calendar() {
           </div>
         </div>
       </div>
-      {/* {selectedDay?.events.length && selectedDay.events.length > 0 && (
-        <div className="px-4 py-10 sm:px-6 lg:hidden">
-          <ol className="divide-y divide-base-300 overflow-hidden rounded-lg bg-base-100 text-sm shadow ring-1 ring-black ring-opacity-5">
-            {selectedDay?.events.map((event) => (
-              <li
-                key={event.id}
-                className="group flex p-4 pr-6 focus-within:bg-base-300 hover:bg-base-300"
-              >
-                <div className="flex-auto">
-                  <p className="font-semibold text-primary-content">
-                    {event.name}
-                  </p>
-                  <time
-                    dateTime={event.datetime}
-                    className="mt-2 flex items-center text-gray-300"
-                  >
-                    <ClockIcon
-                      className="mr-2 h-5 w-5 text-gray-300"
-                      aria-hidden="true"
-                    />
-                    {event.time}
-                  </time>
-                </div>
-                <a
-                  href={event.href}
-                  className="ml-6 flex-none self-center rounded-md px-3 py-2 font-semibold text-primary-content opacity-0 shadow-sm focus:opacity-100 group-hover:opacity-100 btn btn-accent"
+      <div className="px-4 py-10 sm:px-6 lg:hidden">
+        <ol className="divide-y divide-base-300 overflow-hidden rounded-lg bg-base-100 text-sm shadow ring-1 ring-black ring-opacity-5">
+          {isSameMonth(selectedDay, firstDayCurrentMonth) &&
+            data.status !== "loading" &&
+            !!data.data.data.payload[
+              new Date(formatISO(selectedDay)).getDate() - 1
+            ].length &&
+            data.data.data.payload[
+              new Date(formatISO(selectedDay)).getDate() - 1
+            ].map((log: any) => {
+              return (
+                <li
+                  key={log.createdAt}
+                  className="group flex p-4 pr-6 focus-within:bg-base-300 hover:bg-base-300"
                 >
-                  Edit<span className="sr-only">, {event.name}</span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </div>
-      )} */}
+                  <div className="flex-auto">
+                    {Object.keys(log.moodMeter).map((mood) => {
+                      if (log.moodMeter[mood] === null) return;
+                      return (
+                        <span
+                          className={`fa-solid ${inputIcons[mood]} text-md`}
+                        />
+                      );
+                    })}
+                    <time
+                      dateTime={log.createdAt.toString()}
+                      className="mt-2 flex items-center text-gray-300"
+                    >
+                      <ClockIcon
+                        className="mr-2 h-5 w-5 text-gray-300"
+                        aria-hidden="true"
+                      />
+                      {format(parseISO(log.createdAt), "haa")}
+                    </time>
+                  </div>
+                  {/* <a
+                    href={event.href}
+                    className="ml-6 flex-none self-center rounded-md px-3 py-2 font-semibold text-primary-content opacity-0 shadow-sm focus:opacity-100 group-hover:opacity-100 btn btn-accent"
+                  >
+                    Edit<span className="sr-only">, {event.name}</span>
+                  </a> */}
+                </li>
+              );
+            })}
+        </ol>
+      </div>
     </div>
   );
 }

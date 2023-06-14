@@ -113,7 +113,7 @@ export default function Log() {
         {format(startOfToday(), "MMMM do, yyy")}
       </h3>
       <div className="flex flex-col mx-auto gap-10 pb-10">
-        <h4 className="text-lg text-primary-content lg:text-3xl font-bold mx-auto">
+        <h4 className="text-xl text-primary-content lg:text-3xl font-bold mx-auto">
           How are you feeling?
         </h4>
         <div className="flex flex-col items-center gap-16 md:flex-row justify-between md:gap-4 max-w-[1280px] w-full mx-auto">
@@ -132,7 +132,7 @@ export default function Log() {
           })}
         </div>
         {cardClicked && (
-          <h4 className="text-lg text-primary-content lg:text-3xl font-bold mx-auto text-center">
+          <h4 className="text-xl text-primary-content lg:text-3xl font-bold mx-auto text-center">
             How strong are these feelings?
           </h4>
         )}
@@ -152,7 +152,7 @@ export default function Log() {
         </div>
         {cardClicked && (
           <>
-            <h4 className="text-lg text-primary-content lg:text-3xl font-bold mx-auto text-center px-8 lg:px-0">
+            <h4 className="text-xl text-primary-content lg:text-3xl font-bold mx-auto text-center px-8 lg:px-0">
               What has you feeling this way?
             </h4>
             <textarea
