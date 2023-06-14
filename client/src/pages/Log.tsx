@@ -7,7 +7,7 @@ import { Action, CardType, State } from "../shared/types";
 import { icons } from "../theme/icons";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const defaultCardState = {

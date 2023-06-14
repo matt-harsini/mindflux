@@ -5,7 +5,6 @@ import { getDifferenceInDates } from "../utils/index.js";
 async function createLog(req, res) {
   const { moodMeter, log, date } = req.body;
   const { _id: user_id } = req.user;
-  console.log(user_id, moodMeter, log, date);
   try {
     await Log.create({ moodMeter, log, date, user_id });
     res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
@@ -43,6 +42,7 @@ async function getMonthLogs(req, res) {
 async function deleteLog(req, res) {
   const { id: log_id } = req.params;
   console.log(req.params);
+  res.json({ ok: 123 });
 }
 
-export { createLog, getAllLogs, getMonthLogs };
+export { createLog, getAllLogs, getMonthLogs, deleteLog };

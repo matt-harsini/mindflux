@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Transition } from "@headlessui/react";
 import {
-  ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ClockIcon,
-  EllipsisHorizontalIcon,
 } from "@heroicons/react/20/solid";
 import {
   add,
@@ -26,7 +24,7 @@ import {
   sub,
 } from "date-fns";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { colors, inputIcons } from "../theme/icons";
 import { useNavigate } from "react-router-dom";
@@ -81,6 +79,10 @@ export default function Calendar() {
   const data: any = useQuery([currentMonth], {
     queryFn: () =>
       authFetch.get(`/query?f=${firstDateOfMonth}&l=${lastDateOfMonth}`),
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: (id: string) => authFetch.delete(`/delete-log:${id}`),
   });
 
   return (
@@ -208,7 +210,6 @@ export default function Calendar() {
                               <a className="group flex items-center">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                   {Object.keys(log.moodMeter).map((key) => {
-                                    console.log(log.moodMeter[key]);
                                     if (log.moodMeter[key] === null) return;
                                     return (
                                       <span
@@ -291,18 +292,25 @@ export default function Calendar() {
                   data.status !== "loading" &&
                   !!data.data.data.payload[new Date(day).getDate() - 1]
                     .length && (
-                    <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
-                      {isSameMonth(day, firstDayCurrentMonth) &&
-                        data.data.data.payload[new Date(day).getDate() - 1]
-                          .length &&
-                        data.data.data.payload[new Date(day).getDate() - 1].map(
-                          (event: any) => (
-                            <span
-                              key={event.id}
-                              className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"
-                            />
-                          )
-                        )}
+                    <span className="relative top-2 right-1.5">
+                      {data.data.data.payload[new Date(day).getDate() - 1]
+                        .slice(0, 1)
+                        .map((log: any) => {
+                          return (
+                            <span className="-mx-0.5 mt-auto flex flex-wrap-reverse relative">
+                              {Object.keys(log.moodMeter).map((key) => {
+                                if (log.moodMeter[key] === null) return;
+                                return (
+                                  <span
+                                    className={`${colors[key]} fa-solid ${
+                                      inputIcons[key][log.moodMeter[key]]
+                                    } text-md ml-0.5`}
+                                  />
+                                );
+                              })}
+                            </span>
+                          );
+                        })}
                     </span>
                   )}
               </button>
@@ -320,8 +328,6 @@ export default function Calendar() {
             data.data.data.payload[
               new Date(formatISO(selectedDay)).getDate() - 1
             ].map((log: any) => {
-              console.log(log);
-
               return (
                 <li
                   key={log.createdAt}
@@ -349,9 +355,12 @@ export default function Calendar() {
                       {format(parseISO(log.createdAt), "haa")}
                     </time>
                   </div>
-                  <a className="ml-6 flex-none self-center rounded-md px-3 py-2 font-semibold text-primary-content opacity-0 shadow-sm focus:opacity-100 group-hover:opacity-100 btn btn-accent">
+                  <button
+                    onClick={() => mutate(log._id)}
+                    className="ml-6 flex-none self-center rounded-md px-3 py-2 font-semibold text-primary-content opacity-0 shadow-sm focus:opacity-100 group-hover:opacity-100 btn btn-accent"
+                  >
                     Remove<span className="sr-only">, {log.log}</span>
-                  </a>
+                  </button>
                 </li>
               );
             })}
