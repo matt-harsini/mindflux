@@ -30,7 +30,9 @@ async function getMonthLogs(req, res) {
       $lt: l,
     },
   }).sort({ createdAt: -1 });
-  const payload = new Array(getDifferenceInDates(f, l)).fill().map(() => []);
+  const payload = new Array(getDifferenceInDates(f, l) + 1)
+    .fill()
+    .map(() => []);
   documents.forEach((document) => {
     const date = +new Date(document.createdAt).getDate();
     payload[date - 1].push(document);

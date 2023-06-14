@@ -303,6 +303,7 @@ export default function Calendar() {
                     {format(day, "d")}
                   </time>
                   {data.status !== "loading" &&
+                    isSameMonth(day, firstDayCurrentMonth) &&
                     data.data.data.payload[new Date(day).getDate() - 1]
                       ?.length > 2 && (
                       <li className="text-gray-500 list-none">
@@ -391,17 +392,36 @@ export default function Calendar() {
                 >
                   {format(day, "d")}
                 </time>
-                {/* <span className="sr-only">{day.events.length} events</span> */}
-                {/* {day.events.length > 0 && (
-                  <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
-                    {day.events.map((event) => (
-                      <span
-                        key={event.id}
-                        className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"
-                      />
-                    ))}
-                  </span>
-                )} */}
+                {isSameMonth(day, firstDayCurrentMonth) &&
+                  data.status !== "loading" &&
+                  data.data.data.payload[new Date(day).getDate() - 1]
+                    .length && (
+                    <span className="sr-only">
+                      {
+                        data.data.data.payload[new Date(day).getDate() - 1]
+                          .length
+                      }{" "}
+                      events
+                    </span>
+                  )}
+                {isSameMonth(day, firstDayCurrentMonth) &&
+                  data.status !== "loading" &&
+                  data.data.data.payload[new Date(day).getDate() - 1]
+                    .length && (
+                    <span className="-mx-0.5 mt-auto flex flex-wrap-reverse">
+                      {isSameMonth(day, firstDayCurrentMonth) &&
+                        data.data.data.payload[new Date(day).getDate() - 1]
+                          .length &&
+                        data.data.data.payload[new Date(day).getDate() - 1].map(
+                          (event: any) => (
+                            <span
+                              key={event.id}
+                              className="mx-0.5 mb-1 h-1.5 w-1.5 rounded-full bg-gray-400"
+                            />
+                          )
+                        )}
+                    </span>
+                  )}
               </button>
             ))}
           </div>
