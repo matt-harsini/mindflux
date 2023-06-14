@@ -208,10 +208,13 @@ export default function Calendar() {
                               <a className="group flex items-center">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                   {Object.keys(log.moodMeter).map((key) => {
+                                    console.log(log.moodMeter[key]);
                                     if (log.moodMeter[key] === null) return;
                                     return (
                                       <span
-                                        className={`${colors[key]} fa-solid ${inputIcons[key][1]} text-lg ml-0.5`}
+                                        className={`${colors[key]} fa-solid ${
+                                          inputIcons[key][log.moodMeter[key]]
+                                        } text-lg ml-0.5`}
                                       />
                                     );
                                   })}
@@ -317,17 +320,21 @@ export default function Calendar() {
             data.data.data.payload[
               new Date(formatISO(selectedDay)).getDate() - 1
             ].map((log: any) => {
+              console.log(log);
+
               return (
                 <li
                   key={log.createdAt}
                   className="group flex p-4 pr-6 focus-within:bg-base-300 hover:bg-base-300"
                 >
                   <div className="flex-auto">
-                    {Object.keys(log.moodMeter).map((mood) => {
-                      if (log.moodMeter[mood] === null) return;
+                    {Object.keys(log.moodMeter).map((key) => {
+                      if (log.moodMeter[key] === null) return;
                       return (
                         <span
-                          className={`fa-solid ${inputIcons[mood]} text-md`}
+                          className={`${colors[key]} fa-solid ${
+                            inputIcons[key][log.moodMeter[key]]
+                          } text-lg ml-0.5`}
                         />
                       );
                     })}
@@ -342,12 +349,9 @@ export default function Calendar() {
                       {format(parseISO(log.createdAt), "haa")}
                     </time>
                   </div>
-                  {/* <a
-                    href={event.href}
-                    className="ml-6 flex-none self-center rounded-md px-3 py-2 font-semibold text-primary-content opacity-0 shadow-sm focus:opacity-100 group-hover:opacity-100 btn btn-accent"
-                  >
-                    Edit<span className="sr-only">, {event.name}</span>
-                  </a> */}
+                  <a className="ml-6 flex-none self-center rounded-md px-3 py-2 font-semibold text-primary-content opacity-0 shadow-sm focus:opacity-100 group-hover:opacity-100 btn btn-accent">
+                    Remove<span className="sr-only">, {log.log}</span>
+                  </a>
                 </li>
               );
             })}
