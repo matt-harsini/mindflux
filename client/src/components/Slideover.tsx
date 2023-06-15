@@ -5,10 +5,14 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 export default function Slideover({
   open,
   setOpen,
+  data,
 }: {
   open: boolean;
   setOpen: Dispatch<boolean>;
+  data: object[];
 }) {
+  console.log(data);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-[999]" onClose={setOpen}>
@@ -37,16 +41,16 @@ export default function Slideover({
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="flex h-full flex-col overflow-y-scroll bg-base-100 py-6 shadow-xl">
                     <div className="px-4 sm:px-6">
-                      <div className="flex items-start justify-between">
-                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                          Panel title
+                      <div className="flex justify-between items-center">
+                        <Dialog.Title className="text-base font-semibold leading-6 text-white">
+                          Logs
                         </Dialog.Title>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
-                            className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="rounded-md bg-base-100 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             onClick={() => setOpen(false)}
                           >
                             <span className="sr-only">Close panel</span>
