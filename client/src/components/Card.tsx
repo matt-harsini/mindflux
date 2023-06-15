@@ -29,7 +29,7 @@ export default function Card({
 }: CardProps) {
   return (
     <motion.div
-      className="card w-full max-w-[256px] md:max-w-none md:w-44 lg:w-64 bg-base-200 shadow-md items-center justify-center p-4 cursor-pointer"
+      className="card w-full max-w-[256px] md:max-w-none md:w-4 lg:w-64 bg-base-200 shadow-md items-center justify-center p-4 cursor-pointer"
       variants={variants}
       animate={state ? "hover" : "default"}
       onClick={() => {

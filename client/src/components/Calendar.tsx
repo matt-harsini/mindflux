@@ -23,11 +23,12 @@ import {
   startOfWeek,
   sub,
 } from "date-fns";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { authFetch } from "../utils";
 import { colors, inputIcons } from "../theme/icons";
 import { useNavigate } from "react-router-dom";
+import { Slideover } from ".";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -45,7 +46,13 @@ const colStartClasses = [
 
 const MAX_CALENDAR_DAYS = 41;
 
-export default function Calendar() {
+export default function Calendar({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: Dispatch<boolean>;
+}) {
   const navigate = useNavigate();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
@@ -56,7 +63,6 @@ export default function Calendar() {
   const difference = differenceInDays(end, start);
   const firstDateOfMonth = formatISO(firstDayCurrentMonth);
   const lastDateOfMonth = formatISO(lastDayOfMonth(firstDayCurrentMonth));
-  const queryClient = useQueryClient();
   const newDays = eachDayOfInterval({
     start,
     end: add(end, { days: MAX_CALENDAR_DAYS - difference }),
@@ -164,13 +170,18 @@ export default function Calendar() {
             {newDays.map((day, i) => (
               <div
                 key={day.toString()}
+                onClick={() => {
+                  if (isSameMonth(day, firstDayCurrentMonth)) {
+                    setOpen(true);
+                  }
+                }}
                 className={classNames(
                   isSameMonth(day, firstDayCurrentMonth)
                     ? "bg-base-100"
                     : "bg-base-200 text-gray-400",
                   i === 35 ? "rounded-bl-md" : "",
                   i === 41 ? "rounded-br-md" : "",
-                  `relative px-3 py-2 ${
+                  `relative px-3 py-2${
                     i === 0 ? colStartClasses[getDay(day)] : ""
                   }`,
                   "h-[108px]"
@@ -366,6 +377,9 @@ export default function Calendar() {
                       />
                       {format(parseISO(log.createdAt), "haa")}
                     </time>
+                    {log.log !== "" && (
+                      <p className="text-md text-white mt-4">{log.log}</p>
+                    )}
                   </div>
                   <button
                     onClick={() => mutate(log._id)}

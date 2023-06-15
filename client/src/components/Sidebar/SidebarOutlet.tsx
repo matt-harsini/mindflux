@@ -9,7 +9,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
-import { Loading } from "..";
+import { Loading, Slideover } from "..";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: ChartPieIcon, current: false },
@@ -39,7 +39,6 @@ function classNames(...classes: string[]) {
 
 export default function SidebarOutlet() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <>
       {/*
