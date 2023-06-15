@@ -4,6 +4,7 @@ import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { AuthContext, Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
+import { getAuthFetch } from "../utils/axios";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -18,7 +19,7 @@ export default function Register() {
   }: { mutate: () => void; isError: boolean; error: Error | null } =
     useMutation({
       mutationFn: () =>
-        authFetch.post("/register", { email, username, password }),
+        getAuthFetch.post("/register", { email, username, password }),
       onSuccess: (data) => {
         localStorage.setItem("token", JSON.stringify(data.data.token));
         dispatch({
@@ -47,15 +48,15 @@ export default function Register() {
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent">mindflux</h4>
       <div
-        className={`max-w-max alert alert-error flex justify-items-center mt-1 py-2.5 ${
+        className={`max-w-max alert alert-error flex justify-items-center py-2.5 ${
           !isError && "invisible"
         }`}
       >
-        <span className="text-center">{error?.response.data.error}</span>
+        <span className="text-center">{error?.response?.data?.error}</span>
       </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-1"
+        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-2.5"
       >
         <div>
           <input
@@ -67,6 +68,7 @@ export default function Register() {
               setEmail(e.target.value);
             }}
             required
+            autoComplete="on"
           />
         </div>
         <div>
@@ -81,6 +83,7 @@ export default function Register() {
             minLength={8}
             maxLength={30}
             required
+            autoComplete="on"
           />
         </div>
         <div>
@@ -93,6 +96,7 @@ export default function Register() {
               setPassword(e.target.value);
             }}
             required
+            autoComplete="on"
           />
         </div>
         <div className="mt-4">

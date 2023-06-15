@@ -7,3 +7,7 @@ export const authFetch = axios.create({
     Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
+
+export const getAuthFetch = axios.create({
+  baseURL: "http://localhost:4000/api",
+});

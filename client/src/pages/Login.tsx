@@ -5,6 +5,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../shared/interfaces";
+import { getAuthFetch } from "../utils/axios";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ export default function Login() {
     isLoading: boolean;
     isError: boolean;
   } = useMutation({
-    mutationFn: () => authFetch.post("/login", { username, password }),
+    mutationFn: () => getAuthFetch.post("/login", { username, password }),
     onSuccess: (data) => {
       localStorage.setItem("token", JSON.stringify(data.data.token));
       dispatch({
@@ -49,14 +50,14 @@ export default function Login() {
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent">mindflux</h4>
       <div
-        className={`max-w-max alert alert-error flex justify-items-center mt-1 py-2.5 ${
+        className={`max-w-max alert alert-error flex justify-items-center py-2.5 ${
           !isError && "invisible"
         }`}
       >
         <span className="text-center">{error?.response.data.error}</span>
       </div>
       <form
-        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-1"
+        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-2.5"
         onSubmit={handleSubmit}
       >
         <div>
@@ -71,6 +72,7 @@ export default function Login() {
             minLength={8}
             maxLength={30}
             required
+            autoComplete="on"
           />
         </div>
         <div>
@@ -83,6 +85,7 @@ export default function Login() {
               setPassword(e.target.value);
             }}
             required
+            autoComplete="on"
           />
         </div>
         <div className="mt-4">

@@ -42,7 +42,6 @@ userSchema.statics.register = async function (email, username, password) {
   if (!username || !password || !email) {
     throw Error("All fields must be filled.");
   }
-
   if (await this.findOne({ username })) {
     throw Error("Username is taken!");
   }
