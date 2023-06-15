@@ -82,7 +82,7 @@ export default function Calendar() {
   });
 
   const { mutate } = useMutation({
-    mutationFn: (id: string) => authFetch.delete(`/delete-log:${id}`),
+    mutationFn: (id: string) => authFetch.delete(`/delete-log/:${id}`),
   });
 
   return (
@@ -328,6 +328,8 @@ export default function Calendar() {
             data.data.data.payload[
               new Date(formatISO(selectedDay)).getDate() - 1
             ].map((log: any) => {
+              console.log(log._id);
+
               return (
                 <li
                   key={log.createdAt}
