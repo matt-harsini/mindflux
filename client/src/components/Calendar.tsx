@@ -24,7 +24,7 @@ import {
   sub,
 } from "date-fns";
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { authFetch } from "../utils";
 import { colors, inputIcons } from "../theme/icons";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function Calendar() {
   const difference = differenceInDays(end, start);
   const firstDateOfMonth = formatISO(firstDayCurrentMonth);
   const lastDateOfMonth = formatISO(lastDayOfMonth(firstDayCurrentMonth));
-
+  const queryClient = useQueryClient();
   const newDays = eachDayOfInterval({
     start,
     end: add(end, { days: MAX_CALENDAR_DAYS - difference }),
@@ -82,7 +82,10 @@ export default function Calendar() {
   });
 
   const { mutate } = useMutation({
-    mutationFn: (id: string) => authFetch.delete(`/delete-log/:${id}`),
+    mutationFn: (id: string) => authFetch.delete(`/delete-log/${id}`),
+    onSuccess: () => {
+      data.refetch();
+    },
   });
 
   return (
@@ -186,6 +189,7 @@ export default function Calendar() {
                   </time>
                   {data.status !== "loading" &&
                     isSameMonth(day, firstDayCurrentMonth) &&
+                    !!data.data.data.payload?.length &&
                     data.data.data.payload[new Date(day).getDate() - 1]
                       ?.length > 2 && (
                       <li className="text-gray-500 list-none">
@@ -206,19 +210,22 @@ export default function Calendar() {
                         .slice(0, 2)
                         .map((log: any) => {
                           return (
-                            <li key={log.createdAt}>
+                            <li key={log._id}>
                               <a className="group flex items-center">
                                 <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
-                                  {Object.keys(log.moodMeter).map((key) => {
-                                    if (log.moodMeter[key] === null) return;
-                                    return (
-                                      <span
-                                        className={`${colors[key]} fa-solid ${
-                                          inputIcons[key][log.moodMeter[key]]
-                                        } text-lg ml-0.5`}
-                                      />
-                                    );
-                                  })}
+                                  {Object.keys(log.moodMeter).map(
+                                    (key, index) => {
+                                      if (log.moodMeter[key] === null) return;
+                                      return (
+                                        <span
+                                          key={log._id + index}
+                                          className={`${colors[key]} fa-solid ${
+                                            inputIcons[key][log.moodMeter[key]]
+                                          } text-lg ml-0.5`}
+                                        />
+                                      );
+                                    }
+                                  )}
                                 </p>
                                 <time
                                   dateTime={log.createdAt.toString()}
@@ -278,13 +285,13 @@ export default function Calendar() {
                 </time>
                 {isSameMonth(day, firstDayCurrentMonth) &&
                   data.status !== "loading" &&
-                  !!data.data.data.payload[new Date(day).getDate() - 1]
-                    .length && (
+                  !!data.data.data?.payload[new Date(day).getDate() - 1]
+                    ?.length && (
                     <span className="sr-only">
                       {
                         data.data.data.payload[new Date(day).getDate() - 1]
                           .length
-                      }{" "}
+                      }
                       events
                     </span>
                   )}
@@ -297,11 +304,15 @@ export default function Calendar() {
                         .slice(0, 1)
                         .map((log: any) => {
                           return (
-                            <span className="-mx-0.5 mt-auto flex flex-wrap-reverse relative">
-                              {Object.keys(log.moodMeter).map((key) => {
+                            <span
+                              key={log._id}
+                              className="-mx-0.5 mt-auto flex flex-wrap-reverse relative"
+                            >
+                              {Object.keys(log.moodMeter).map((key, index) => {
                                 if (log.moodMeter[key] === null) return;
                                 return (
                                   <span
+                                    key={log._id + index}
                                     className={`${colors[key]} fa-solid ${
                                       inputIcons[key][log.moodMeter[key]]
                                     } text-md ml-0.5`}
@@ -328,18 +339,17 @@ export default function Calendar() {
             data.data.data.payload[
               new Date(formatISO(selectedDay)).getDate() - 1
             ].map((log: any) => {
-              console.log(log._id);
-
               return (
                 <li
-                  key={log.createdAt}
+                  key={log._id}
                   className="group flex p-4 pr-6 focus-within:bg-base-300 hover:bg-base-300"
                 >
                   <div className="flex-auto">
-                    {Object.keys(log.moodMeter).map((key) => {
+                    {Object.keys(log.moodMeter).map((key, index) => {
                       if (log.moodMeter[key] === null) return;
                       return (
                         <span
+                          key={log._id + index}
                           className={`${colors[key]} fa-solid ${
                             inputIcons[key][log.moodMeter[key]]
                           } text-lg ml-0.5`}

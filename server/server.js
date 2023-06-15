@@ -7,16 +7,15 @@ import { router as logRoutes } from "./routes/log.js";
 import cors from "cors";
 const app = express();
 app.use(cors());
-// const limiter = rateLimit({
-//   max: 150,
-//   windowMs: 60 * 60 * 60,
-//   message: "Too many requests, please try again in an hour",
-// });
-// app.use("/api", limiter);
+const limiter = rateLimit({
+  max: 150,
+  windowMs: 60 * 60 * 60,
+  message: "Too many requests, please try again in an hour",
+});
+app.use("/api", limiter);
 app.use(express.json());
 app.use("/api", userRoutes);
 app.use("/api", logRoutes);
-app.use(userRoutes);
 main();
 async function main() {
   try {

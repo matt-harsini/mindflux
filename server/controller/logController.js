@@ -53,9 +53,9 @@ async function getMonthLogs(req, res) {
 
 async function deleteLog(req, res) {
   try {
-    await Log.deleteOne({ _id: req.params.id });
-    console.log(task);
-    res.status(StatusCodes.NO_CONTENT).json({ task });
+    await Log.findByIdAndDelete(req.params.id);
+    const payload = await Log.find({});
+    res.json({ payload });
   } catch (error) {
     console.log(error);
     res
