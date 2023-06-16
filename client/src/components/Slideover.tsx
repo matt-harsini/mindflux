@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -26,7 +27,7 @@ export default function Slideover({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-base-300 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-70 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-hidden">
@@ -62,8 +63,14 @@ export default function Slideover({
                     </div>
                     <div className="relative mt-6 flex-1 flex flex-col gap-y-12 px-4 sm:px-6">
                       {!!data && data.length ? (
-                        data.map((log) => {
-                          return <LogCard refetch={refetch} log={log} />;
+                        data.map((log: any) => {
+                          return (
+                            <LogCard
+                              refetch={refetch}
+                              log={log}
+                              key={log._id}
+                            />
+                          );
                         })
                       ) : (
                         <span className="text-md text-center">

@@ -12,10 +12,9 @@ export default function LogCard({ log, refetch }: any) {
       refetch();
     },
   });
-  console.log(log._id);
 
   return (
-    <div className="card shadow-md relative p-3" key={log._id}>
+    <div className="card shadow-md relative p-3">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-y-2">
           {Object.keys(log.moodMeter).map((key, index) => {
