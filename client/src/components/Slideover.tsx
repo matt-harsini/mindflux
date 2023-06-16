@@ -19,10 +19,10 @@ export default function Slideover({
       <Dialog as="div" className="relative z-[999]" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
-          enter="ease-in-out duration-300"
+          enter="ease-in-out duration-500"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in-out duration-300"
+          leave="ease-in-out duration-500"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -34,7 +34,7 @@ export default function Slideover({
             <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
               <Transition.Child
                 as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                enter="transform transition ease-in-out duration-100 sm:duration-700"
                 enterFrom="translate-x-full"
                 enterTo="translate-x-0"
                 leave="transform transition ease-in-out duration-500 sm:duration-700"
