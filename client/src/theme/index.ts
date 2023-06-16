@@ -1,5 +1,5 @@
 import { CardData } from "../shared/types";
-import { Colors, InputIcons } from "../shared/interfaces/input.interface";
+import { Colors, Feelings, InputIcons } from "../shared/interfaces/input.interface";
 
 export const icons: CardData[] = [
   {
@@ -67,4 +67,11 @@ export const progressColors: Colors = {
   CARD_SAD: "progress-accent",
   CARD_ANXIOUS: "progress-secondary",
   CARD_ANGRY: "progress-error",
+};
+
+export const feelings: Feelings = {
+  CARD_HAPPY: "Happiness",
+  CARD_SAD: "Sadness",
+  CARD_ANXIOUS: "Anxiety",
+  CARD_ANGRY: "Anger",
 };

@@ -5,10 +5,14 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  Pie,
+  PieChart,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import { inputIcons, colors, feelings } from "../theme";
+
 const fakeData = [
   {
     name: "Page A",
@@ -53,6 +57,58 @@ const fakeData = [
     amt: 2100,
   },
 ];
+const data01 = [
+  {
+    name: "Group A",
+    value: 400,
+  },
+  {
+    name: "Group B",
+    value: 300,
+  },
+  {
+    name: "Group C",
+    value: 300,
+  },
+  {
+    name: "Group D",
+    value: 200,
+  },
+  {
+    name: "Group E",
+    value: 278,
+  },
+  {
+    name: "Group F",
+    value: 189,
+  },
+];
+const data02 = [
+  {
+    name: "Group A",
+    value: 2400,
+  },
+  {
+    name: "Group B",
+    value: 4567,
+  },
+  {
+    name: "Group C",
+    value: 1398,
+  },
+  {
+    name: "Group D",
+    value: 9800,
+  },
+  {
+    name: "Group E",
+    value: 3908,
+  },
+  {
+    name: "Group F",
+    value: 4800,
+  },
+];
 
 export default function Dashboard() {
   const { username } = useAuthContext();
@@ -65,14 +121,35 @@ export default function Dashboard() {
   });
 
   return (
-    <>
+    <div className="flex flex-col gap-y-12">
       <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
         Hello {username}
       </h3>
-      <div className="flex flex-col mx-auto gap-10">
+      <div className="flex self-center gap-x-10">
+        <button className="btn btn-primary w-[100px]">7d</button>
+        <button className="btn btn-primary w-[100px]">30d</button>
+        <button className="btn btn-primary w-[100px]">3m</button>
+        <button className="btn btn-primary w-[100px]">All</button>
+      </div>
+      <div className="flex flex-col gap-y-4">
+        <h4 className="text-lg text-white text-center">Guide</h4>
+        <div className="flex items-center justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
+          {Object.keys(inputIcons).map((icon) => {
+            return (
+              <div className="flex flex-col items-center gap-y-1 p-4">
+                <span
+                  className={`text-4xl fa-solid ${inputIcons[icon][5]} ${colors[icon]}`}
+                />
+                <span className="text-white text-md">{feelings[icon]}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="flex items-center justify-between w-full gap-10">
         <AreaChart
-          width={730}
-          height={250}
+          width={800}
+          height={400}
           data={fakeData}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
@@ -105,7 +182,29 @@ export default function Dashboard() {
             fill="url(#colorPv)"
           />
         </AreaChart>
+        <PieChart width={500} height={250}>
+          <Pie
+            data={data01}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            outerRadius={50}
+            fill="#8884d8"
+          />
+          <Pie
+            data={data02}
+            dataKey="value"
+            nameKey="name"
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            fill="#82ca9d"
+            label
+          />
+        </PieChart>
       </div>
-    </>
+    </div>
   );
 }

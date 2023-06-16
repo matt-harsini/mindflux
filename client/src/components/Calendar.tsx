@@ -25,7 +25,7 @@ import {
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { authFetch } from "../utils";
-import { colors, inputIcons, progressColors } from "../theme/icons";
+import { colors, inputIcons, progressColors } from "../theme";
 import { useNavigate } from "react-router-dom";
 import { Slideover } from ".";
 

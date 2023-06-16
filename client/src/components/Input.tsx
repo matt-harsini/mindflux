@@ -1,15 +1,8 @@
 import { useState, useRef } from "react";
 import { InputProps } from "../shared/types";
 import { motion } from "framer-motion";
-import { Feelings } from "../shared/interfaces";
-import { colors, inputIcons } from "../theme/icons";
-
-const feelings: Feelings = {
-  CARD_HAPPY: "Happiness",
-  CARD_SAD: "Sadness",
-  CARD_ANXIOUS: "Anxiety",
-  CARD_ANGRY: "Anger",
-};
+import { colors, inputIcons } from "../theme";
+import { feelings } from "../theme";
 
 const variants = {
   hidden: { opacity: 0 },

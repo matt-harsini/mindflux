@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { format, parseISO } from "date-fns";
-import { colors, inputIcons, progressColors } from "../theme/icons";
+import { colors, inputIcons, progressColors } from "../theme";
 import { ClockIcon } from "@heroicons/react/20/solid";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";

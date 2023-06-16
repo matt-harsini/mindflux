@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { CardProps } from "../shared/types";
-import { colors } from "../theme/icons";
+import { colors } from "../theme";
 
 const variants = {
   hover: {

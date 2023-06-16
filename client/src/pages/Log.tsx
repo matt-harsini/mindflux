@@ -4,7 +4,7 @@ import { Card } from "../components";
 import Input from "../components/Input";
 import { CardState } from "../shared/interfaces";
 import { Action, CardType, State } from "../shared/types";
-import { icons } from "../theme/icons";
+import { icons } from "../theme";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
 import { useNavigate } from "react-router-dom";
