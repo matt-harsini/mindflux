@@ -61,9 +61,15 @@ export default function Slideover({
                       </div>
                     </div>
                     <div className="relative mt-6 flex-1 flex flex-col gap-y-12 px-4 sm:px-6">
-                      {data.map((log) => {
-                        return <LogCard refetch={refetch} log={log} />;
-                      })}
+                      {data.length ? (
+                        data.map((log) => {
+                          return <LogCard refetch={refetch} log={log} />;
+                        })
+                      ) : (
+                        <span className="text-md text-center">
+                          Nothing to see here, log your mood to fill this area!
+                        </span>
+                      )}
                     </div>
                   </div>
                 </Dialog.Panel>
