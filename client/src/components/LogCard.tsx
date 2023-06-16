@@ -12,6 +12,7 @@ export default function LogCard({ log, refetch }: any) {
       refetch();
     },
   });
+  console.log(log._id);
 
   return (
     <div className="card shadow-md relative p-3" key={log._id}>

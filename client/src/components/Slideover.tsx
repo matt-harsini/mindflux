@@ -61,7 +61,7 @@ export default function Slideover({
                       </div>
                     </div>
                     <div className="relative mt-6 flex-1 flex flex-col gap-y-12 px-4 sm:px-6">
-                      {data.length ? (
+                      {!!data && data.length ? (
                         data.map((log) => {
                           return <LogCard refetch={refetch} log={log} />;
                         })

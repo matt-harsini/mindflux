@@ -28,6 +28,9 @@ function authReducer(_state: AuthState, action: AuthAction): AuthState {
       delete authFetch.defaults.headers.common["Authorization"];
       return { username: null, isAuth: false, email: null };
     case AuthActionTypes.SET_AUTH:
+      authFetch.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${localStorage.getItem("token")}`;
       return {
         isAuth: action.payload?.isAuth,
         email: action.payload?.email,

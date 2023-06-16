@@ -195,6 +195,7 @@ export default function Calendar() {
                       {format(day, "d")}
                     </time>
                     {data.status !== "loading" &&
+                      data?.data?.data &&
                       isSameMonth(day, firstDayCurrentMonth) &&
                       !!data.data.data.payload?.length &&
                       data.data.data.payload[new Date(day).getDate() - 1]
@@ -208,6 +209,7 @@ export default function Calendar() {
                       )}
                   </div>
                   {data.status !== "loading" &&
+                    data?.data?.data &&
                     !!data.data.data.payload?.length &&
                     !!data.data.data.payload[new Date(day).getDate() - 1]
                       ?.length &&
@@ -296,6 +298,7 @@ export default function Calendar() {
                   </time>
                   {isSameMonth(day, firstDayCurrentMonth) &&
                     data.status !== "loading" &&
+                    data?.data?.data &&
                     !!data.data.data?.payload[new Date(day).getDate() - 1]
                       ?.length && (
                       <span className="sr-only">
@@ -308,6 +311,7 @@ export default function Calendar() {
                     )}
                   {isSameMonth(day, firstDayCurrentMonth) &&
                     data.status !== "loading" &&
+                    data?.data?.data &&
                     !!data.data.data.payload[new Date(day).getDate() - 1]
                       .length && (
                       <span className="relative top-2 right-1.5">
@@ -346,6 +350,7 @@ export default function Calendar() {
           <ol className="divide-y divide-base-300 overflow-hidden rounded-lg bg-base-100 text-sm shadow ring-1 ring-black ring-opacity-5">
             {isSameMonth(selectedDay, firstDayCurrentMonth) &&
               data.status !== "loading" &&
+              data?.data?.data &&
               !!data.data.data.payload[
                 new Date(formatISO(selectedDay)).getDate() - 1
               ].length &&
@@ -428,7 +433,7 @@ export default function Calendar() {
         <Slideover
           open={open}
           setOpen={setOpen}
-          data={data.data.data.payload[new Date(selectedDay).getDate() - 1]}
+          data={data?.data?.data?.payload[new Date(selectedDay).getDate() - 1]}
           refetch={data.refetch}
         />
       )}
