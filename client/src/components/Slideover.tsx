@@ -1,18 +1,19 @@
 import { Dispatch, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import LogCard from "./LogCard";
 
 export default function Slideover({
   open,
   setOpen,
   data,
+  refetch,
 }: {
   open: boolean;
   setOpen: Dispatch<boolean>;
   data: object[];
+  refetch: () => void;
 }) {
-  console.log(data);
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-[999]" onClose={setOpen}>
@@ -59,8 +60,10 @@ export default function Slideover({
                         </div>
                       </div>
                     </div>
-                    <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                      {/* Your content */}
+                    <div className="relative mt-6 flex-1 flex flex-col gap-y-12 px-4 sm:px-6">
+                      {data.map((log) => {
+                        return <LogCard refetch={refetch} log={log} />;
+                      })}
                     </div>
                   </div>
                 </Dialog.Panel>

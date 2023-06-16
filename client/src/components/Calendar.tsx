@@ -400,6 +400,7 @@ export default function Calendar() {
           open={open}
           setOpen={setOpen}
           data={data.data.data.payload[new Date(selectedDay).getDate() - 1]}
+          refetch={data.refetch}
         />
       )}
     </>

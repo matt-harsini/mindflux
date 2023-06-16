@@ -9,7 +9,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
-import { Loading, Slideover } from "..";
+import { Loading } from "..";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: ChartPieIcon, current: false },

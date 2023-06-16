@@ -31,7 +31,6 @@ async function getMonthLogs(req, res) {
   try {
     const { f, l } = req.query;
     const { _id: user_id } = req.user;
-    console.log(user_id);
     const documents = await Log.find({
       createdAt: {
         $gte: f,
@@ -60,7 +59,6 @@ async function deleteLog(req, res) {
     const payload = await Log.find({});
     res.json({ payload });
   } catch (error) {
-    console.log(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Something went wrong, please try again" });
