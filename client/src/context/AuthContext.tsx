@@ -16,12 +16,16 @@ enum AuthActionTypes {
 function authReducer(_state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionTypes.LOGIN:
+      authFetch.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${localStorage.getItem("token")}`;
       return {
         email: action.payload?.email,
         username: action.payload?.username,
         isAuth: true,
       };
     case AuthActionTypes.LOGOUT:
+      delete authFetch.defaults.headers.common["Authorization"];
       return { username: null, isAuth: false, email: null };
     case AuthActionTypes.SET_AUTH:
       return {
@@ -47,7 +51,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     queryFn: () =>
       authFetch.get("/verify", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token") || null}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
     onSuccess: (data) => {
@@ -61,6 +65,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
         },
       });
     },
+    queryKey: ["auth"],
   });
   if (!mount) {
     refetch();

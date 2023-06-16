@@ -25,9 +25,6 @@ export default function Login() {
     mutationFn: () => getAuthFetch.post("/login", { username, password }),
     onSuccess: (data) => {
       localStorage.setItem("token", JSON.stringify(data.data.token));
-      authFetch.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${localStorage.getItem("token")}`;
       dispatch({
         type: "LOGIN",
         payload: {

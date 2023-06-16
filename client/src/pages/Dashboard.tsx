@@ -1,7 +1,16 @@
+import { useQuery } from "react-query";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { authFetch } from "../utils";
 
 export default function Dashboard() {
   const { username } = useAuthContext();
+  const { data } = useQuery({
+    queryFn: () => authFetch.get("/get-logs"),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    queryKey: ["all-logs"],
+  });
 
   return (
     <>

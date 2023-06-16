@@ -23,7 +23,6 @@ export default function Settings() {
   const { dispatch: authDispatch }: AuthContext = useAuthContext();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    delete authFetch.defaults.headers.common["Authorization"];
     authDispatch({
       type: "LOGOUT",
     });

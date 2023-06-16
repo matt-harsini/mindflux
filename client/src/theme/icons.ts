@@ -61,3 +61,10 @@ export const colors: Colors = {
   CARD_ANXIOUS: "text-secondary",
   CARD_ANGRY: "text-red-600",
 };
+
+export const progressColors: Colors = {
+  CARD_HAPPY: "progress-success",
+  CARD_SAD: "progress-accent",
+  CARD_ANXIOUS: "progress-secondary",
+  CARD_ANGRY: "progress-error",
+};

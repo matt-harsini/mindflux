@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { format, parseISO } from "date-fns";
-import { colors, inputIcons } from "../theme/icons";
+import { colors, inputIcons, progressColors } from "../theme/icons";
 import { ClockIcon } from "@heroicons/react/20/solid";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
@@ -16,22 +16,28 @@ export default function LogCard({ log, refetch }: any) {
   return (
     <div className="card shadow-md relative p-3" key={log._id}>
       <div className="flex items-center justify-between">
-        <div>
+        <div className="flex flex-col gap-y-2">
           {Object.keys(log.moodMeter).map((key, index) => {
             if (log.moodMeter[key] === null) return;
             return (
-              <span
-                key={index}
-                className={`${colors[key]} fa-solid ${
-                  inputIcons[key][log.moodMeter[key]]
-                } text-3xl ml-0.5`}
-              />
+              <div key={index} className="flex items-center gap-x-4">
+                <span
+                  className={`${colors[key]} fa-solid ${
+                    inputIcons[key][log.moodMeter[key]]
+                  } text-3xl ml-0.5`}
+                />
+                <progress
+                  className={`progress w-56 ${progressColors[key]}`}
+                  value={log.moodMeter[key] * 20}
+                  max="100"
+                ></progress>
+              </div>
             );
           })}
         </div>
         <button
           type="button"
-          className="rounded-full text-white shadow-sm"
+          className="rounded-full text-white shadow-sm self-start"
           onClick={() => {
             mutate(log._id);
           }}

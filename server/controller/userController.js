@@ -50,9 +50,11 @@ async function verify(req, res) {
   if (!req.headers.authorization) return;
   const authHeader = req.headers.authorization;
   const token = authHeader.split(" ")[1];
+  console.log(token, 123);
   try {
     const { _id } = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
     const user = await User.findOne({ _id });
+    if (!user) throw new Error("User does not exist");
     return res.json({
       authorized: true,
       username: user.username,
