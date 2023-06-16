@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Calendar, Slideover } from "../components";
+import { Calendar } from "../components";
 
 export default function CalendarPage() {
   return (

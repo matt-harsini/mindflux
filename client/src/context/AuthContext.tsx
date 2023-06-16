@@ -1,7 +1,11 @@
 import { createContext, useReducer, useState } from "react";
-import { useMutation } from "react-query";
+import { useQuery } from "react-query";
 import { authFetch } from "../utils";
-import { AuthAction, AuthState, AuthContext as AuthContextType } from "../shared/interfaces";
+import {
+  AuthAction,
+  AuthState,
+  AuthContext as AuthContextType,
+} from "../shared/interfaces";
 
 enum AuthActionTypes {
   LOGIN = "LOGIN",
@@ -39,8 +43,13 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [mount, setMount] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   console.log("AuthContext state: ", state);
-  const { mutate } = useMutation({
-    mutationFn: () => authFetch.get("/verify"),
+  const { refetch } = useQuery({
+    queryFn: () =>
+      authFetch.get("/verify", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token") || null}`,
+        },
+      }),
     onSuccess: (data) => {
       setIsFetching(false);
       dispatch({
@@ -54,7 +63,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     },
   });
   if (!mount) {
-    mutate();
+    refetch();
     setMount(true);
   }
   return (

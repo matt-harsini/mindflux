@@ -3,6 +3,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import { SettingsActionType } from "../shared/types";
 import { SettingsAction, SettingsState } from "../shared/interfaces";
 import { AuthContext } from "../shared/interfaces";
+import { authFetch } from "../utils";
 
 function reducer(state: SettingsState, action: SettingsAction) {
   switch (action.type) {
@@ -22,6 +23,7 @@ export default function Settings() {
   const { dispatch: authDispatch }: AuthContext = useAuthContext();
   const handleLogout = () => {
     localStorage.removeItem("token");
+    delete authFetch.defaults.headers.common["Authorization"];
     authDispatch({
       type: "LOGOUT",
     });

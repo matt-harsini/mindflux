@@ -30,11 +30,14 @@ async function getAllLogs(req, res) {
 async function getMonthLogs(req, res) {
   try {
     const { f, l } = req.query;
+    const { _id: user_id } = req.user;
+    console.log(user_id);
     const documents = await Log.find({
       createdAt: {
         $gte: f,
         $lt: l,
       },
+      user_id,
     }).sort({ createdAt: -1 });
     const payload = new Array(getDifferenceInDates(f, l) + 1)
       .fill()

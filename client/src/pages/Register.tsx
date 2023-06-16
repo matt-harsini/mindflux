@@ -22,6 +22,9 @@ export default function Register() {
         getAuthFetch.post("/register", { email, username, password }),
       onSuccess: (data) => {
         localStorage.setItem("token", JSON.stringify(data.data.token));
+        authFetch.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${localStorage.getItem("token")}`;
         dispatch({
           type: "LOGIN",
           payload: {

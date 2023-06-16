@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Menu, Transition } from "@headlessui/react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -23,8 +22,8 @@ import {
   startOfWeek,
   sub,
 } from "date-fns";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { colors, inputIcons } from "../theme/icons";
 import { useNavigate } from "react-router-dom";
