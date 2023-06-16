@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { format, parseISO } from "date-fns";
 import { colors, inputIcons } from "../theme/icons";
 import { ClockIcon } from "@heroicons/react/20/solid";
@@ -28,7 +29,13 @@ export default function LogCard({ log, refetch }: any) {
             );
           })}
         </div>
-        <button type="button" className="rounded-full text-white shadow-sm">
+        <button
+          type="button"
+          className="rounded-full text-white shadow-sm"
+          onClick={() => {
+            mutate(log._id);
+          }}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
