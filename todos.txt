@@ -1,10 +1,11 @@
 Todos:
 
 1. Implement animations for Log, Calendar, and Home page.
-2. Finish calendar functionality.
+2. Finish calendar functionality - DONE
     - Figure out a way to paginate the REST API maybe? When user clicks on next month, query the data for next month.
     - Then need to figure out how to correctly display the payload data with the calendar UI. Need to check if log 
     data is on correct day.
 3. Implement refresh and access tokens maybe?
 4. Implement a feature where user can input custom log, select their own color for charts, etc.
 5. Implement a custom mood input feature
+
