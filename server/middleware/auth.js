@@ -15,7 +15,6 @@ export const auth = async (req, res, next) => {
   const token = authorization.split(" ")[1] || Authorization.split(" ")[1];
 
   try {
-    console.log(JSON.parse(token), token);
     const { _id } = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
     req.user = await User.findOne({ _id }).select("_id");
     next();

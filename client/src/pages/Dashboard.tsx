@@ -12,6 +12,10 @@ import {
   YAxis,
 } from "recharts";
 import { inputIcons, colors, feelings } from "../theme";
+import { useQuery } from "react-query";
+import { authFetch } from "../utils";
+import { useState } from "react";
+import { endOfToday, startOfToday, sub } from "date-fns";
 
 const fakeData = [
   {
@@ -112,7 +116,13 @@ const data02 = [
 
 export default function Dashboard() {
   const { username } = useAuthContext();
+  const [filter, setFilter] = useState(0);
+  const queries = [`?f=${sub(startOfToday(), { days: 7 })}&l=${endOfToday()}`];
 
+  const { data } = useQuery({
+    queryFn: () => authFetch.get(`/chart-data${queries[filter]}`),
+    queryKey: [filter],
+  });
   return (
     <>
       <div className="flex flex-col gap-y-10">

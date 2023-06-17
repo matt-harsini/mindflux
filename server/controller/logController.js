@@ -38,7 +38,6 @@ async function getMonthLogs(req, res) {
       },
       user_id,
     }).sort({ createdAt: -1 });
-    console.log(documents, f, l);
     const payload = new Array(getDifferenceInDates(f, l) + 1)
       .fill()
       .map(() => []);
