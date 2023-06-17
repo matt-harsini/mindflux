@@ -5,14 +5,12 @@ import { User } from "../models/userModel.js";
 
 export const auth = async (req, res, next) => {
   const { authorization, Authorization } = req.headers;
-  console.log(req.headers.Authorization);
   if (!authorization || Authorization) {
     return res
       .status(StatusCodes.UNAUTHORIZED)
       .json({ error: "Authoirzation token required" });
   }
   const token = authorization.split(" ")[1] || Authorization.split(" ")[1];
-  console.log(token);
   try {
     const { _id } = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
     req.user = await User.findOne({ _id }).select("_id");

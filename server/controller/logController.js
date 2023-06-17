@@ -17,6 +17,7 @@ async function createLog(req, res) {
 
 async function getAllLogs(req, res) {
   const { _id: user_id } = req.user;
+  console.log(user_id);
   try {
     const logs = await Log.find({ user_id });
     res.status(StatusCodes.OK).json({ logs });
@@ -38,15 +39,18 @@ async function getMonthLogs(req, res) {
       },
       user_id,
     }).sort({ createdAt: -1 });
+    console.log(documents);
     const payload = new Array(getDifferenceInDates(f, l) + 1)
       .fill()
       .map(() => []);
+    console.log(payload.length);
     documents.forEach((document) => {
       const date = +new Date(document.createdAt).getDate();
       payload[date - 1].push(document);
     });
     res.status(StatusCodes.OK).json({ payload });
   } catch (error) {
+    console.log(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Something went wrong, please try again" });
