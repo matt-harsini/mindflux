@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useReducer, useState } from "react";
-import { useQuery } from "react-query";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { authFetch } from "../utils";
 import {
   Area,
   AreaChart,
@@ -15,7 +12,6 @@ import {
   YAxis,
 } from "recharts";
 import { inputIcons, colors, feelings } from "../theme";
-import { endOfToday, formatISO, startOfToday, sub } from "date-fns";
 
 const fakeData = [
   {
@@ -116,8 +112,6 @@ const data02 = [
 
 export default function Dashboard() {
   const { username } = useAuthContext();
-  const today = formatISO(endOfToday());
-  const prevDate = formatISO(sub(startOfToday(), filter));
 
   return (
     <>
