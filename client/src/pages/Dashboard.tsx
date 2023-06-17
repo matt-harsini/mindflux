@@ -7,6 +7,7 @@ import {
   CartesianGrid,
   Pie,
   PieChart,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -121,90 +122,103 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="flex flex-col gap-y-12">
-      <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
-        Hello {username}
-      </h3>
-      <div className="flex self-center gap-x-10">
-        <button className="btn btn-primary w-[100px]">7d</button>
-        <button className="btn btn-primary w-[100px]">30d</button>
-        <button className="btn btn-primary w-[100px]">3m</button>
-        <button className="btn btn-primary w-[100px]">All</button>
-      </div>
-      <div className="flex flex-col gap-y-4">
-        <h4 className="text-lg text-white text-center">Guide</h4>
-        <div className="flex items-center justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
-          {Object.keys(inputIcons).map((icon) => {
-            return (
-              <div className="flex flex-col items-center gap-y-1 p-4">
-                <span
-                  className={`text-4xl fa-solid ${inputIcons[icon][5]} ${colors[icon]}`}
-                />
-                <span className="text-white text-md">{feelings[icon]}</span>
-              </div>
-            );
-          })}
+    <>
+      <div className="flex flex-col gap-y-12">
+        <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
+          Hello {username}
+        </h3>
+        <div className="flex self-center gap-x-10">
+          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+            7d
+          </button>
+          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+            30d
+          </button>
+          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+            3m
+          </button>
+          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+            All
+          </button>
+        </div>
+        <div className="flex flex-col gap-y-4">
+          <h4 className="text-lg text-white text-center">Guide</h4>
+          <div className="flex items-center justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
+            {Object.keys(inputIcons).map((icon) => {
+              return (
+                <div className="flex flex-col items-center gap-y-1 p-4">
+                  <span
+                    className={`text-4xl fa-solid ${inputIcons[icon][5]} ${colors[icon]}`}
+                  />
+                  <span className="text-white text-md">{feelings[icon]}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
-      <div className="flex items-center justify-between w-full gap-10">
-        <AreaChart
-          width={800}
-          height={400}
-          data={fakeData}
-          margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-        >
-          <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-            </linearGradient>
-            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <XAxis dataKey="name" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Area
-            type="monotone"
-            dataKey="uv"
-            stroke="#8884d8"
-            fillOpacity={1}
-            fill="url(#colorUv)"
-          />
-          <Area
-            type="monotone"
-            dataKey="pv"
-            stroke="#82ca9d"
-            fillOpacity={1}
-            fill="url(#colorPv)"
-          />
-        </AreaChart>
-        <PieChart width={500} height={250}>
-          <Pie
-            data={data01}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={50}
-            fill="#8884d8"
-          />
-          <Pie
-            data={data02}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
-            fill="#82ca9d"
-            label
-          />
-        </PieChart>
+      <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
+        <ResponsiveContainer width="100%" aspect={2}>
+          <AreaChart
+            data={fakeData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis dataKey="name" />
+            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="uv"
+              stroke="#8884d8"
+              fillOpacity={1}
+              fill="url(#colorUv)"
+            />
+            <Area
+              type="monotone"
+              dataKey="pv"
+              stroke="#82ca9d"
+              fillOpacity={1}
+              fill="url(#colorPv)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={250}>
+          <PieChart>
+            <Pie
+              height={250}
+              data={data01}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={50}
+              fill="#8884d8"
+            />
+            <Pie
+              data={data02}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={80}
+              fill="#82ca9d"
+              label
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
-    </div>
+    </>
   );
 }
