@@ -1,6 +1,6 @@
 import express from "express";
-import { auth } from "../middleware/auth";
-import { getChartData } from "../controller/chartsController";
+import { auth } from "../middleware/auth.js";
+import { getChartData } from "../controller/chartsController.js";
 
 const router = express.Router();
 
