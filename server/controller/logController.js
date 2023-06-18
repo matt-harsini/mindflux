@@ -1,15 +1,24 @@
 import { StatusCodes } from "http-status-codes";
 import { Log } from "../models/logModel.js";
 import { getDifferenceInDates } from "../utils/index.js";
+import { Chart } from "../models/chartModel.js";
 
 async function createLog(req, res) {
   const { moodMeter, log, date } = req.body;
   const { _id: user_id } = req.user;
   try {
     await Log.create({ moodMeter, log, date, user_id });
-    res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
+    await Chart.create({
+      name: date,
+      happiness: moodMeter.CARD_HAPPY,
+      sadness: moodMeter.CARD_SAD,
+      anxiety: moodMeter.CARD_ANXIOUS,
+      anger: moodMeter.CARD_ANGRY,
+      user_id,
+    });
+    return res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
   } catch (error) {
-    res
+    return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Something went wrong, please try again" });
   }
@@ -34,7 +43,7 @@ async function getMonthLogs(req, res) {
     const documents = await Log.find({
       createdAt: {
         $gte: f,
-        $lt: l,
+        $lte: l,
       },
       user_id,
     }).sort({ createdAt: -1 });

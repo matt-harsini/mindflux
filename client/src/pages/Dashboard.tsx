@@ -15,7 +15,7 @@ import { inputIcons, colors, feelings } from "../theme";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { useState } from "react";
-import { endOfToday, startOfToday, sub } from "date-fns";
+import { endOfToday, formatISO, startOfToday, sub } from "date-fns";
 
 const fakeData = [
   {
@@ -117,12 +117,25 @@ const data02 = [
 export default function Dashboard() {
   const { username } = useAuthContext();
   const [filter, setFilter] = useState(0);
-  const queries = [`?f=${sub(startOfToday(), { days: 7 })}&l=${endOfToday()}`];
+
+  const queries = [
+    `?f=${formatISO(sub(startOfToday(), { days: 7 }))}&l=${formatISO(
+      endOfToday()
+    )}`,
+    `?f=${formatISO(sub(startOfToday(), { days: 30 }))}&l=${formatISO(
+      endOfToday()
+    )}`,
+    `?f=${formatISO(sub(startOfToday(), { months: 3 }))}&l=${formatISO(
+      endOfToday()
+    )}`,
+    "",
+  ];
 
   const { data } = useQuery({
     queryFn: () => authFetch.get(`/chart-data${queries[filter]}`),
     queryKey: [filter],
   });
+
   return (
     <>
       <div className="flex flex-col gap-y-10">
@@ -130,16 +143,28 @@ export default function Dashboard() {
           Hello {username}
         </h3>
         <div className="flex self-center gap-x-10">
-          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+          <button
+            onClick={() => setFilter(0)}
+            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
+          >
             7d
           </button>
-          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+          <button
+            onClick={() => setFilter(1)}
+            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
+          >
             30d
           </button>
-          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+          <button
+            onClick={() => setFilter(2)}
+            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
+          >
             3m
           </button>
-          <button className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase">
+          <button
+            onClick={() => setFilter(3)}
+            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
+          >
             All
           </button>
         </div>

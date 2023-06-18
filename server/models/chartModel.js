@@ -26,6 +26,10 @@ const chartSchema = new Schema({
     min: 0,
     max: 5,
   },
+  user_id: {
+    type: String,
+    required: true,
+  },
 });
 
 const Chart = mongoose.model("Chart", chartSchema);

@@ -26,7 +26,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
     ) as HTMLElement;
     setInput(innerText);
     setMoodMeter((prevState) => {
-      return { ...prevState, [card_title]: innerText };
+      return { ...prevState, [card_title]: Number(innerText) };
     });
     target.appendChild(emoji.current as Node);
   }

@@ -26,7 +26,7 @@ import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { colors, inputIcons, progressColors } from "../theme";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Slideover } from ".";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
@@ -46,7 +46,6 @@ const colStartClasses = [
 const MAX_CALENDAR_DAYS = 41;
 
 export default function Calendar() {
-  const navigate = useNavigate();
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -126,13 +125,9 @@ export default function Calendar() {
             </div>
             <div className="hidden md:flex md:items-center">
               <div className="ml-6 h-6 w-px bg-gray-300" />
-              <button
-                type="button"
-                className="ml-6 btn btn-accent"
-                onClick={() => navigate("/dashboard/log")}
-              >
+              <Link to="/dashboard/log" className="ml-6 btn btn-accent">
                 Log mood
-              </button>
+              </Link>
             </div>
           </div>
         </header>
