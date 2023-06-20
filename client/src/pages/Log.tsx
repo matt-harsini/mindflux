@@ -119,42 +119,98 @@ export default function Log() {
         <div className="flex flex-col items-center gap-16 md:flex-row justify-between md:gap-4 max-w-[1280px] w-full mx-auto">
           {icons.map(({ icon, title, id }, i) => {
             return (
-              <Card
+              <motion.div
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: -10,
+                  },
+                  visible: (i) => ({
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      delay: i * 0.05,
+                    },
+                  }),
+                }}
+                initial="hidden"
+                animate="visible"
+                custom={i}
                 key={i}
-                icon={icon}
-                title={title}
-                state={cardState[i]}
-                dispatch={dispatch}
-                setMoodMeter={setMoodMeter}
-                id={id}
-              />
+              >
+                <Card
+                  icon={icon}
+                  title={title}
+                  state={cardState[i]}
+                  dispatch={dispatch}
+                  setMoodMeter={setMoodMeter}
+                  id={id}
+                />
+              </motion.div>
             );
           })}
         </div>
         {cardClicked && (
-          <h4 className="text-xl text-primary-content lg:text-3xl font-bold mx-auto text-center">
+          <motion.h4
+            variants={{
+              hidden: {
+                opacity: 0,
+              },
+              visible: {
+                opacity: 1,
+              },
+            }}
+            initial="hidden"
+            animate="visible"
+            className="text-xl text-primary-content lg:text-3xl font-bold mx-auto text-center"
+          >
             How strong are these feelings?
-          </h4>
+          </motion.h4>
         )}
         <div className="flex flex-col gap-12">
           {stateData.map(([card_title, flag]) => {
             return (
               flag && (
-                <Input
-                  key={card_title as Key}
-                  card_title={card_title as string}
-                  setMoodMeter={setMoodMeter}
-                  moodMeter={moodMeter}
-                />
+                <motion.div
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                    },
+                    visible: {
+                      opacity: 1,
+                    },
+                  }}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <Input
+                    key={card_title as Key}
+                    card_title={card_title as string}
+                    setMoodMeter={setMoodMeter}
+                    moodMeter={moodMeter}
+                  />
+                </motion.div>
               )
             );
           })}
         </div>
         {cardClicked && (
           <>
-            <h4 className="text-xl text-primary-content lg:text-3xl font-bold mx-auto text-center px-8 lg:px-0">
+            <motion.h4
+              variants={{
+                hidden: {
+                  opacity: 0,
+                },
+                visible: {
+                  opacity: 1,
+                },
+              }}
+              initial="hidden"
+              animate="visible"
+              className="text-xl text-primary-content lg:text-3xl font-bold mx-auto text-center px-8 lg:px-0"
+            >
               What has you feeling this way?
-            </h4>
+            </motion.h4>
             <textarea
               value={log}
               onChange={(e) => {

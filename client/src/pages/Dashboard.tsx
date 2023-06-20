@@ -16,6 +16,7 @@ import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { useState } from "react";
 import { endOfToday, formatISO, startOfToday, sub } from "date-fns";
+import { motion } from "framer-motion";
 
 const fakeData = [
   {
@@ -114,6 +115,21 @@ const data02 = [
   },
 ];
 
+const buttons = [
+  {
+    text: "7d",
+  },
+  {
+    text: "30d",
+  },
+  {
+    text: "3m",
+  },
+  {
+    text: "all",
+  },
+];
+
 export default function Dashboard() {
   const { username } = useAuthContext();
   const [filter, setFilter] = useState(0);
@@ -143,42 +159,54 @@ export default function Dashboard() {
           Hello {username}
         </h3>
         <div className="flex self-center gap-x-10">
-          <button
-            onClick={() => setFilter(0)}
-            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
-          >
-            7d
-          </button>
-          <button
-            onClick={() => setFilter(1)}
-            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
-          >
-            30d
-          </button>
-          <button
-            onClick={() => setFilter(2)}
-            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
-          >
-            3m
-          </button>
-          <button
-            onClick={() => setFilter(3)}
-            className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
-          >
-            All
-          </button>
+          {buttons.map(({ text }: { text: string }, index) => {
+            return (
+              <motion.button
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                  },
+                  visible: (i) => ({
+                    opacity: 1,
+                    transition: {
+                      delay: i * 0.1,
+                    },
+                  }),
+                }}
+                initial="hidden"
+                animate="visible"
+                custom={index}
+                onClick={() => setFilter(index)}
+                className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
+              >
+                {text}
+              </motion.button>
+            );
+          })}
         </div>
         <div className="flex flex-col gap-y-2">
           <h4 className="text-lg text-white text-center">Guide</h4>
           <div className="flex items-center justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
             {Object.keys(inputIcons).map((icon) => {
               return (
-                <div className="flex flex-col items-center gap-y-1 p-4">
+                <motion.div
+                  variants={{
+                    hidden: {
+                      opacity: 0,
+                    },
+                    visible: {
+                      opacity: 1,
+                    },
+                  }}
+                  initial="hidden"
+                  animate="visible"
+                  className="flex flex-col items-center gap-y-1 p-4"
+                >
                   <span
                     className={`text-4xl fa-solid ${inputIcons[icon][5]} ${colors[icon]}`}
                   />
                   <span className="text-white text-md">{feelings[icon]}</span>
-                </div>
+                </motion.div>
               );
             })}
           </div>
