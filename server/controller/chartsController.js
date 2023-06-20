@@ -1,9 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { Log } from "../models/logModel.js";
 
-const dates = [new Date().setDate()];
-const sevenDaysAgo = new Date();
-sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 async function getChartData(req, res) {
   const { f, l } = req.query;
   const { _id: user_id } = req.user;
@@ -21,16 +18,18 @@ async function getChartData(req, res) {
             },
             {
               date: {
-                $gte: sevenDaysAgo,
+                $gte: f,
+                $lte: l,
               },
             },
           ],
         },
       },
       {
-        $project: {
-          name: new Date().toISOString(),
-          createdAt: "$createdAt",
+        $group: {
+          _id: {
+            $substr: ["$createdAt", 0, 10],
+          },
           Happiness: {
             $sum: {
               $ifNull: ["$moodMeter.CARD_HAPPY", 0],
