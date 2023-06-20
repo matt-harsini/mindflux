@@ -28,7 +28,7 @@ import { authFetch } from "../utils";
 import { colors, inputIcons, progressColors } from "../theme";
 import { Link } from "react-router-dom";
 import { Slideover } from ".";
-import { motion } from "framer-motion";
+import { motion, progress } from "framer-motion";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
@@ -374,7 +374,7 @@ export default function Calendar() {
                                   } text-3xl ml-0.5`}
                                 />
                                 <progress
-                                  className={`progress w-56 ${progressColors[key]}`}
+                                  className={`progress w-56 ${progressColors[key]} ${colors[key]} bg-gray-700`}
                                   value={log.moodMeter[key] * 20}
                                   max="100"
                                 ></progress>

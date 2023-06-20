@@ -3,7 +3,6 @@ import { Chart } from "../models/chartModel.js";
 
 async function getChartData(req, res) {
   const { f, l } = req.query;
-  console.log(f, l);
   const { _id: user_id } = req.user;
   try {
     if (!f && !l) {
@@ -17,7 +16,6 @@ async function getChartData(req, res) {
       },
       user_id,
     });
-    console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
     return res

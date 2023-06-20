@@ -27,7 +27,7 @@ export default function LogCard({ log, refetch }: any) {
                   } text-3xl ml-0.5`}
                 />
                 <progress
-                  className={`progress w-56 ${progressColors[key]}`}
+                  className={`progress w-56 ${progressColors[key]} ${colors[key]} bg-gray-700`}
                   value={log.moodMeter[key] * 20}
                   max="100"
                 ></progress>
