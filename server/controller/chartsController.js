@@ -1,5 +1,8 @@
 import { StatusCodes } from "http-status-codes";
-import { Chart } from "../models/chartModel.js";
+import { Log } from "../models/logModel.js";
+import mongoose from "mongoose";
+
+const ObjectId = mongoose.Types.ObjectId;
 
 async function getChartData(req, res) {
   const { f, l } = req.query;
@@ -9,13 +12,24 @@ async function getChartData(req, res) {
       const documents = await Chart.find({});
       return res.status(StatusCodes.OK).json({ documents });
     }
-    const documents = await Chart.find({
-      name: {
-        $gte: f,
-        $lte: l,
+    const documents = await Log.aggregate([
+      {
+        $match: {
+          $and: [
+            {
+              user_id: user_id.toString(),
+            },
+            {
+              date: {
+                $gte: f,
+                $lte: l,
+              },
+            },
+          ],
+        },
       },
-      user_id,
-    });
+    ]);
+    console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
     return res

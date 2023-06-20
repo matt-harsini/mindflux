@@ -1,21 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 import { Log } from "../models/logModel.js";
 import { getDifferenceInDates } from "../utils/index.js";
-import { Chart } from "../models/chartModel.js";
 
 async function createLog(req, res) {
   const { moodMeter, log, date } = req.body;
   const { _id: user_id } = req.user;
   try {
     await Log.create({ moodMeter, log, date, user_id });
-    await Chart.create({
-      name: date,
-      happiness: moodMeter.CARD_HAPPY,
-      sadness: moodMeter.CARD_SAD,
-      anxiety: moodMeter.CARD_ANXIOUS,
-      anger: moodMeter.CARD_ANGRY,
-      user_id,
-    });
     return res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
   } catch (error) {
     return res
