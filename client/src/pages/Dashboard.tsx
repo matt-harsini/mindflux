@@ -35,8 +35,8 @@ interface pieColors {
 const pieColors: pieColors = {
   Anxiety: "#D926A9",
   Happiness: "#22C55E",
-  Sadness: "#DC2626",
-  Anger: "#1FB2A6",
+  Sadness: "#1FB2A6",
+  Anger: "#DC2626",
 };
 
 const buttons = [
