@@ -3,7 +3,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import {
   Area,
   AreaChart,
-  CartesianGrid,
+  Cell,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -15,62 +15,9 @@ import { inputIcons, colors, feelings } from "../theme";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { useState } from "react";
-import { endOfToday, formatISO, startOfToday, sub } from "date-fns";
+import { formatISO, startOfToday, sub } from "date-fns";
 import { motion } from "framer-motion";
 import { Loading } from "../components";
-
-const data01 = [
-  {
-    name: "Group A",
-    value: 400,
-  },
-  {
-    name: "Group B",
-    value: 300,
-  },
-  {
-    name: "Group C",
-    value: 300,
-  },
-  {
-    name: "Group D",
-    value: 200,
-  },
-  {
-    name: "Group E",
-    value: 278,
-  },
-  {
-    name: "Group F",
-    value: 189,
-  },
-];
-const data02 = [
-  {
-    name: "Group A",
-    value: 2400,
-  },
-  {
-    name: "Group B",
-    value: 4567,
-  },
-  {
-    name: "Group C",
-    value: 1398,
-  },
-  {
-    name: "Group D",
-    value: 9800,
-  },
-  {
-    name: "Group E",
-    value: 3908,
-  },
-  {
-    name: "Group F",
-    value: 4800,
-  },
-];
 
 const buttons = [
   {
@@ -92,22 +39,22 @@ export default function Dashboard() {
   const [filter, setFilter] = useState(0);
 
   const queries = [
-    `?f=${formatISO(sub(startOfToday(), { days: 7 }))}&l=${formatISO(
-      endOfToday()
-    )}`,
-    `?f=${formatISO(sub(startOfToday(), { days: 30 }))}&l=${formatISO(
-      endOfToday()
-    )}`,
-    `?f=${formatISO(sub(startOfToday(), { months: 3 }))}&l=${formatISO(
-      endOfToday()
-    )}`,
+    `?f=${formatISO(sub(startOfToday(), { days: 7 }))}`,
+    `?f=${formatISO(sub(startOfToday(), { days: 30 }))}`,
+    `?f=${formatISO(sub(startOfToday(), { months: 3 }))}`,
     "",
   ];
 
-  const { data, isLoading } = useQuery({
+  const { data: chartData, isLoading: isChartDataLoading } = useQuery({
     queryFn: () => authFetch.get(`/chart-data${queries[filter]}`),
     queryKey: [filter],
   });
+
+  const { data: pieData, isLoading: isPieDataLoading } = useQuery({
+    queryFn: () => authFetch.get(`/pie-data${queries[filter]}`),
+    queryKey: [filter],
+  });
+  console.log(pieData);
 
   return (
     <>
@@ -169,13 +116,13 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      {isLoading ? (
-        <Loading height="max-h-max mt-48" />
-      ) : (
-        <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
-          <ResponsiveContainer width="100%" aspect={2}>
+      <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
+        {isChartDataLoading ? (
+          <Loading height="max-h-max mt-48" />
+        ) : (
+          <ResponsiveContainer width="100%" aspect={3.5}>
             <AreaChart
-              data={data?.data.documents}
+              data={chartData?.data.documents}
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <defs>
@@ -198,7 +145,6 @@ export default function Dashboard() {
               </defs>
               <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
               <YAxis />
-              <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
               <Area
                 type="monotone"
@@ -230,42 +176,27 @@ export default function Dashboard() {
               />
             </AreaChart>
           </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
+        )}
+        {/* {isPieDataLoading ? (
+          <Loading height="max-h-max mt-48" />
+        ) : (
+          <ResponsiveContainer width="100%" aspect={2}>
+            <PieChart width={730} height={250}>
               <Pie
-                height={250}
-                data={data?.data.documents}
-                dataKey="Happiness"
-                nameKey="name"
+                data={pieData?.data.documents}
                 cx="50%"
                 cy="50%"
-                outerRadius={50}
-                fill="#8884d8"
-              />
-              <Pie
-                data={data?.data.documents}
-                dataKey="Sadness"
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
                 outerRadius={80}
-                fill="#82ca9d"
                 label
-              />
-              <Pie
-                data={data?.data.documents}
-                dataKey="Anger"
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={80}
-                fill="#82ca9d"
-                label
-              />
+              >
+                <Cell fill={colors[index]} />
+                <Cell fill={colors[index]} />
+                <Cell fill={colors[index]} />
+              </Pie>
             </PieChart>
           </ResponsiveContainer>
-        </div>
-      )}
+        )} */}
+      </div>
     </>
   );
 }
