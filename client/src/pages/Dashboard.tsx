@@ -193,9 +193,9 @@ export default function Dashboard() {
                 <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="_id" />
+            <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
             <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid />
             <Tooltip />
             <Area
               type="monotone"
