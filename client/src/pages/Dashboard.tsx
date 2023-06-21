@@ -102,7 +102,9 @@ export default function Dashboard() {
                 animate="visible"
                 custom={index}
                 onClick={() => setFilter(index)}
-                className="btn btn-primary w-[50px] sm:w-[75px] md:w-[100px] lowercase"
+                className={`btn w-[50px] sm:w-[75px] md:w-[100px] lowercase ${
+                  index === filter ? "btn-secondary" : "btn-primary"
+                }`}
               >
                 {text}
               </motion.button>
