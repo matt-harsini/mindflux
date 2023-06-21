@@ -37,6 +37,15 @@ const userSchema = new Schema({
   last_name: {
     type: String,
   },
+  password_confirm: {
+    type: String,
+    validate: {
+      validator: function (el) {
+        return el === this.password;
+      },
+      message: "Passwords are not the same!",
+    },
+  },
   password_reset_token: String,
   password_reset_expires: Date,
 });
@@ -90,11 +99,13 @@ userSchema.methods.createPasswordResetToken = function () {
 };
 
 userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return;
   try {
     const document = this;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(document.password, salt);
     document.password = hash;
+    document.password_confirm = undefined;
     next();
   } catch (error) {
     next(error);

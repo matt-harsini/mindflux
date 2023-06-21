@@ -2,6 +2,7 @@ import "dotenv/config";
 import jwt from "jsonwebtoken";
 import StatusCode from "http-status-codes";
 import { User } from "../models/userModel.js";
+import { createToken } from "../utils/index.js";
 
 function displayErrorMessage(error) {
   switch (true) {
@@ -14,12 +15,6 @@ function displayErrorMessage(error) {
     default:
       return error;
   }
-}
-
-function createToken(_id) {
-  return jwt.sign({ _id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_LIFETIME,
-  });
 }
 
 async function login(req, res) {
