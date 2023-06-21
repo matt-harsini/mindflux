@@ -52,6 +52,11 @@ async function getChartData(req, res) {
           },
         },
       },
+      {
+        $sort: {
+          _id: 1,
+        },
+      },
     ]);
     console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
