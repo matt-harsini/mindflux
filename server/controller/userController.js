@@ -62,7 +62,7 @@ async function verify(req, res) {
   }
 }
 
-const forgotPassword = async (req, res, next) => {
+async function forgotPassword(req, res, next) {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return next(createAPIError("Cannot find user", 404));
@@ -98,7 +98,7 @@ const forgotPassword = async (req, res, next) => {
     status: "Success",
     message: "Token sent to email",
   });
-};
+}
 
 async function resetPassword(req, res) {
   const hashedToken = crypto

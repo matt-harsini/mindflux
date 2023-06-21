@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../models/userModel.js";
 
-export const auth = async (req, res, next) => {
+async function auth(req, res, next) {
   const { authorization, Authorization } = req.headers;
 
   if (!authorization && !Authorization) {
@@ -23,4 +23,6 @@ export const auth = async (req, res, next) => {
       .status(StatusCodes.UNAUTHORIZED)
       .json({ error: "Request is not authorized" });
   }
-};
+}
+
+export { auth };
