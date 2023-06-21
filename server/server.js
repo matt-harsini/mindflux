@@ -7,7 +7,6 @@ import { router as logRoutes } from "./routes/log.js";
 import { router as chartRoutes } from "./routes/chart.js";
 import cors from "cors";
 import helmet from "helmet";
-import { auth } from "./middleware/auth.js";
 
 const app = express();
 app.use(helmet());
@@ -20,7 +19,6 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 app.use(express.json({ limit: "10kb" }));
 app.use("/api", userRoutes);
-app.use(auth);
 app.use("/api", chartRoutes);
 app.use("/api", logRoutes);
 main();
