@@ -7,6 +7,7 @@ import { router as logRoutes } from "./routes/log.js";
 import { router as chartRoutes } from "./routes/chart.js";
 import cors from "cors";
 const app = express();
+app.use(helmet());
 app.use(cors());
 const limiter = rateLimit({
   max: 150,
@@ -14,7 +15,7 @@ const limiter = rateLimit({
   message: "Too many requests, please try again in an hour",
 });
 app.use("/api", limiter);
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
 app.use("/api", userRoutes);
 app.use("/api", chartRoutes);
 app.use("/api", logRoutes);
