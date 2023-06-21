@@ -6,6 +6,8 @@ import { router as userRoutes } from "./routes/user.js";
 import { router as logRoutes } from "./routes/log.js";
 import { router as chartRoutes } from "./routes/chart.js";
 import cors from "cors";
+import helmet from "helmet";
+
 const app = express();
 app.use(helmet());
 app.use(cors());

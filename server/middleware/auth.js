@@ -31,5 +31,7 @@ export const forgotPassword = async (req, res, next) => {
   if (!user) {
     return next(createAPIError("Cannot find user", 404));
   }
-  // generate the random reset token
+  console.log(user);
+  const resetToken = user.createPasswordResetToken();
+  await user.save();
 };

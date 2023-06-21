@@ -80,7 +80,13 @@ userSchema.statics.login = async function (username, password) {
 
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString("hex");
-  crypto.createHash("sha256").update(resetToken).digest("hex");
+  this.password_reset_token = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.password_reset_expires = Date.now() + 10 * 60 * 1000;
+  return resetToken;
 };
 
 userSchema.pre("save", async function (next) {
