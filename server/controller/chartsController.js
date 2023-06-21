@@ -3,6 +3,7 @@ import { Log } from "../models/logModel.js";
 
 async function getChartData(req, res) {
   const { f, l } = req.query;
+  console.log(f, l);
   const { _id: user_id } = req.user;
   try {
     if (!f && !l) {
@@ -59,9 +60,9 @@ async function getChartData(req, res) {
               user_id: user_id.toString(),
             },
             {
-              date: {
-                $gte: f,
-                $lte: l,
+              createdAt: {
+                $gte: new Date(f),
+                $lte: new Date(l),
               },
             },
           ],
