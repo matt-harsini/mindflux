@@ -149,22 +149,24 @@ async function getPieChartData(req, res) {
         },
         {
           $project: {
-            Happiness: {
-              name: "Happiness",
-              value: "$Happiness",
-            },
-            Sadness: {
-              name: "Sadness",
-              value: "$Sadness",
-            },
-            Anger: {
-              name: "Anger",
-              value: "$Anger",
-            },
-            Anxiety: {
-              name: "Anxiety",
-              value: "$Anxiety",
-            },
+            data: [
+              {
+                name: "Happiness",
+                value: "$Happiness",
+              },
+              {
+                name: "Sadness",
+                value: "$Sadness",
+              },
+              {
+                name: "Anger",
+                value: "$Anger",
+              },
+              {
+                name: "Anxiety",
+                value: "$Anxiety",
+              },
+            ],
           },
         },
         {
@@ -217,22 +219,24 @@ async function getPieChartData(req, res) {
       },
       {
         $project: {
-          Happiness: {
-            name: "Happiness",
-            value: "$Happiness",
-          },
-          Sadness: {
-            name: "Sadness",
-            value: "$Sadness",
-          },
-          Anger: {
-            name: "Anger",
-            value: "$Anger",
-          },
-          Anxiety: {
-            name: "Anxiety",
-            value: "$Anxiety",
-          },
+          data: [
+            {
+              name: "Happiness",
+              value: "$Happiness",
+            },
+            {
+              name: "Sadness",
+              value: "$Sadness",
+            },
+            {
+              name: "Anger",
+              value: "$Anger",
+            },
+            {
+              name: "Anxiety",
+              value: "$Anxiety",
+            },
+          ],
         },
       },
       {

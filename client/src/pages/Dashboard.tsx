@@ -3,7 +3,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import {
   Area,
   AreaChart,
-  Cell,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -54,7 +53,7 @@ export default function Dashboard() {
     queryFn: () => authFetch.get(`/pie-data${queries[filter]}`),
     queryKey: [filter],
   });
-  console.log(pieData);
+  console.log(pieData?.data.documents);
 
   return (
     <>
@@ -120,7 +119,7 @@ export default function Dashboard() {
         {isChartDataLoading ? (
           <Loading height="max-h-max mt-48" />
         ) : (
-          <ResponsiveContainer width="100%" aspect={3.5}>
+          <ResponsiveContainer width="100%" aspect={2.5}>
             <AreaChart
               data={chartData?.data.documents}
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
@@ -177,25 +176,22 @@ export default function Dashboard() {
             </AreaChart>
           </ResponsiveContainer>
         )}
-        {/* {isPieDataLoading ? (
+        {isPieDataLoading ? (
           <Loading height="max-h-max mt-48" />
         ) : (
-          <ResponsiveContainer width="100%" aspect={2}>
+          <ResponsiveContainer width="100%" aspect={2.5}>
             <PieChart width={730} height={250}>
               <Pie
                 data={pieData?.data.documents}
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
+                dataKey="Happiness"
                 label
-              >
-                <Cell fill={colors[index]} />
-                <Cell fill={colors[index]} />
-                <Cell fill={colors[index]} />
-              </Pie>
+              ></Pie>
             </PieChart>
           </ResponsiveContainer>
-        )} */}
+        )}
       </div>
     </>
   );
