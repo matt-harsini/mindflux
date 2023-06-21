@@ -1,6 +1,6 @@
-export default function Loading() {
+export default function Loading({ height }: { height: string }) {
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className={`${height} flex items-center justify-center`}>
       <span className="loading loading-ring loading-lg" />
     </div>
   );

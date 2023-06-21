@@ -3,7 +3,6 @@ import { Log } from "../models/logModel.js";
 
 async function getChartData(req, res) {
   const { f, l } = req.query;
-  console.log(f, l);
   const { _id: user_id } = req.user;
   try {
     if (!f && !l) {
@@ -101,10 +100,8 @@ async function getChartData(req, res) {
         },
       },
     ]);
-    console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    console.log(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: error });

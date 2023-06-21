@@ -210,7 +210,7 @@ export default function SidebarOutlet() {
 
           <main className="max-w-[1500px] mx-auto">
             <div className="px-4 sm:px-6 lg:px-8">
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<Loading height="h-screen" />}>
                 <Outlet />
               </Suspense>
             </div>

@@ -17,6 +17,7 @@ import { authFetch } from "../utils";
 import { useState } from "react";
 import { endOfToday, formatISO, startOfToday, sub } from "date-fns";
 import { motion } from "framer-motion";
+import { Loading } from "../components";
 
 const data01 = [
   {
@@ -103,11 +104,10 @@ export default function Dashboard() {
     "",
   ];
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () => authFetch.get(`/chart-data${queries[filter]}`),
     queryKey: [filter],
   });
-  console.log(data);
 
   return (
     <>
@@ -169,99 +169,103 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
-        <ResponsiveContainer width="100%" aspect={2}>
-          <AreaChart
-            data={data?.data.documents}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="Anxiety" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#D926A9" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#D926A9" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="Happiness" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="Anger" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#DC2626" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="Sadness" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#1FB2A6" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="Anxiety"
-              stroke="#D926A9"
-              fillOpacity={1}
-              fill="url(#Anxiety)"
-            />
-            <Area
-              type="monotone"
-              dataKey="Happiness"
-              stroke="#22C55E"
-              fillOpacity={1}
-              fill="url(#Happiness)"
-            />
-            <Area
-              type="monotone"
-              dataKey="Anger"
-              stroke="#DC2626"
-              fillOpacity={1}
-              fill="url(#Anger)"
-            />
-            <Area
-              type="monotone"
-              dataKey="Sadness"
-              stroke="#1FB2A6"
-              fillOpacity={1}
-              fill="url(#Sadness)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              height={250}
+      {isLoading ? (
+        <Loading height="max-h-max mt-48" />
+      ) : (
+        <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
+          <ResponsiveContainer width="100%" aspect={2}>
+            <AreaChart
               data={data?.data.documents}
-              dataKey="Happiness"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={50}
-              fill="#8884d8"
-            />
-            <Pie
-              data={data?.data.documents}
-              dataKey="Sadness"
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={80}
-              fill="#82ca9d"
-              label
-            />
-            <Pie
-              data={data?.data.documents}
-              dataKey="Anger"
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={80}
-              fill="#82ca9d"
-              label
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="Anxiety" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#D926A9" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#D926A9" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="Happiness" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="Anger" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#DC2626" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="Sadness" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#1FB2A6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="Anxiety"
+                stroke="#D926A9"
+                fillOpacity={1}
+                fill="url(#Anxiety)"
+              />
+              <Area
+                type="monotone"
+                dataKey="Happiness"
+                stroke="#22C55E"
+                fillOpacity={1}
+                fill="url(#Happiness)"
+              />
+              <Area
+                type="monotone"
+                dataKey="Anger"
+                stroke="#DC2626"
+                fillOpacity={1}
+                fill="url(#Anger)"
+              />
+              <Area
+                type="monotone"
+                dataKey="Sadness"
+                stroke="#1FB2A6"
+                fillOpacity={1}
+                fill="url(#Sadness)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                height={250}
+                data={data?.data.documents}
+                dataKey="Happiness"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={50}
+                fill="#8884d8"
+              />
+              <Pie
+                data={data?.data.documents}
+                dataKey="Sadness"
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={80}
+                fill="#82ca9d"
+                label
+              />
+              <Pie
+                data={data?.data.documents}
+                dataKey="Anger"
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={80}
+                fill="#82ca9d"
+                label
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </>
   );
 }
