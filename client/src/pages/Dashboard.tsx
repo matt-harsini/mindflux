@@ -3,6 +3,7 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import {
   Area,
   AreaChart,
+  Cell,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -17,6 +18,26 @@ import { useState } from "react";
 import { formatISO, startOfToday, sub } from "date-fns";
 import { motion } from "framer-motion";
 import { Loading } from "../components";
+
+interface pieData {
+  value: number;
+  name: string;
+}
+
+interface pieColors {
+  Anxiety: string;
+  Happiness: string;
+  Sadness: string;
+  Anger: string;
+  [prop: string]: string;
+}
+
+const pieColors: pieColors = {
+  Anxiety: "#D926A9",
+  Happiness: "#22C55E",
+  Sadness: "#DC2626",
+  Anger: "#1FB2A6",
+};
 
 const buttons = [
   {
@@ -51,9 +72,9 @@ export default function Dashboard() {
 
   const { data: pieData, isLoading: isPieDataLoading } = useQuery({
     queryFn: () => authFetch.get(`/pie-data${queries[filter]}`),
-    queryKey: [filter],
+    queryKey: [filter, "pie-data"],
   });
-  console.log(pieData?.data.documents);
+  console.log(pieData);
 
   return (
     <>
@@ -65,6 +86,7 @@ export default function Dashboard() {
           {buttons.map(({ text }: { text: string }, index) => {
             return (
               <motion.button
+                key={index}
                 variants={{
                   hidden: {
                     opacity: 0,
@@ -90,9 +112,10 @@ export default function Dashboard() {
         <div className="flex flex-col gap-y-2">
           <h4 className="text-lg text-white text-center">Guide</h4>
           <div className="flex items-center justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
-            {Object.keys(inputIcons).map((icon) => {
+            {Object.keys(inputIcons).map((icon, index) => {
               return (
                 <motion.div
+                  key={index}
                   variants={{
                     hidden: {
                       opacity: 0,
@@ -179,16 +202,23 @@ export default function Dashboard() {
         {isPieDataLoading ? (
           <Loading height="max-h-max mt-48" />
         ) : (
-          <ResponsiveContainer width="100%" aspect={2.5}>
+          <ResponsiveContainer width="100%" aspect={2}>
             <PieChart width={730} height={250}>
               <Pie
-                data={pieData?.data.documents}
+                data={pieData?.data.documents[0].data}
                 cx="50%"
                 cy="50%"
                 outerRadius={80}
-                dataKey="Happiness"
+                dataKey="value"
                 label
-              ></Pie>
+              >
+                {pieData?.data.documents[0].data.map(
+                  (values: pieData, index: number) => {
+                    return <Cell key={index} fill={pieColors[values.name]} />;
+                  }
+                )}
+              </Pie>
+              <Tooltip />
             </PieChart>
           </ResponsiveContainer>
         )}
