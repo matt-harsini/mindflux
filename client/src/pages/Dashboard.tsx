@@ -170,28 +170,28 @@ export default function Dashboard() {
               type="monotone"
               dataKey="Anxiety"
               stroke="#D926A9"
-              fillOpacity={1}
+              fillOpacity={0.9}
               fill="url(#Anxiety)"
             />
             <Area
               type="monotone"
               dataKey="Happiness"
               stroke="#22C55E"
-              fillOpacity={1}
+              fillOpacity={0.9}
               fill="url(#Happiness)"
             />
             <Area
               type="monotone"
               dataKey="Anger"
               stroke="#DC2626"
-              fillOpacity={1}
+              fillOpacity={0.9}
               fill="url(#Anger)"
             />
             <Area
               type="monotone"
               dataKey="Sadness"
               stroke="#1FB2A6"
-              fillOpacity={1}
+              fillOpacity={0.9}
               fill="url(#Sadness)"
             />
           </AreaChart>
@@ -206,6 +206,7 @@ export default function Dashboard() {
               dataKey="value"
               label
               stroke="none"
+              fillOpacity={0.9}
             >
               {pieData?.data.documents[0].data.map(
                 (values: pieData, index: number) => {
