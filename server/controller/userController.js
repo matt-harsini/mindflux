@@ -27,7 +27,12 @@ async function login(req, res, next) {
     const token = createToken(user._id);
     res.status(StatusCodes.OK).json({ username, token, email: user.email });
   } catch (error) {
-    next(createAPIError(error.message, StatusCodes.BAD_REQUEST));
+    next(
+      createAPIError(
+        displayErrorMessage(error.message),
+        StatusCodes.BAD_REQUEST
+      )
+    );
   }
 }
 
@@ -38,7 +43,12 @@ async function register(req, res, next) {
     const token = createToken(user._id);
     res.status(StatusCodes.OK).json({ username, token });
   } catch (error) {
-    next(createAPIError(error.message, StatusCodes.BAD_REQUEST));
+    next(
+      createAPIError(
+        displayErrorMessage(error.message),
+        StatusCodes.BAD_REQUEST
+      )
+    );
   }
 }
 
