@@ -19,14 +19,14 @@ async function auth(req, res, next) {
     const { _id, iat } = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
     const user = await User.findById({ _id });
     if (user.changedPasswordAfter(iat)) {
-      return next(
+      next(
         createAPIError(
-          "User recently changed their password, please try again!",
+          "Password has recently changed, please try again",
           StatusCodes.UNAUTHORIZED
         )
       );
     }
-    req.user = user.select("_id");
+    req.user = await User.findOne({ _id }).select("_id");
     next();
   } catch (error) {
     next(createAPIError("Request is not authorized", StatusCodes.UNAUTHORIZED));

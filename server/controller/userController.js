@@ -59,7 +59,7 @@ async function verify(req, res) {
   try {
     const { _id } = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
     const user = await User.findOne({ _id });
-    if (!user) throw new Error("User does not exist");
+    if (!user) throw new Error("User does not exist");    
     return res.json({
       authorized: true,
       username: user.username,

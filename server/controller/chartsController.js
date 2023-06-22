@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { Log } from "../models/logModel.js";
+import { createAPIError } from "../errors/errorHandler.js";
 
 async function getChartData(req, res, next) {
   const { f } = req.query;
