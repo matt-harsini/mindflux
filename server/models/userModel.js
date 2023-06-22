@@ -99,6 +99,18 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
+userSchema.methods.changedPasswordAfter = function (timestamp) {
+  if (this.password_changed_at) {
+    const changed_timestamp = parseInt(
+      this.password_changed_at.getTime() / 1000,
+      10
+    );
+
+    return timestamp < changed_timestamp;
+  }
+  return false;
+};
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return;
   try {
@@ -114,7 +126,7 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.pre("save", function (next) {
-  if (!this.isModified("password") || this.isNew()) return next();
+  if (!this.isModified("password") || this.isNew) return next();
 
   this.password_changed_at = Date.now() - 1000;
   next();
