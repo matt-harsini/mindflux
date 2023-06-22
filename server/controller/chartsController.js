@@ -101,7 +101,7 @@ async function getChartData(req, res, next) {
     ]);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 
@@ -245,7 +245,7 @@ async function getPieChartData(req, res, next) {
     ]);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 

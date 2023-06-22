@@ -25,9 +25,9 @@ async function login(req, res, next) {
   try {
     const user = await User.login(username, password);
     const token = createToken(user._id);
-    res.status(StatusCode.OK).json({ username, token, email: user.email });
+    res.status(StatusCodes.OK).json({ username, token, email: user.email });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.BAD_REQUEST));
+    next(createAPIError(error.message, StatusCodes.BAD_REQUEST));
   }
 }
 
@@ -36,9 +36,9 @@ async function register(req, res, next) {
   try {
     const user = await User.register(email, username, password);
     const token = createToken(user._id);
-    res.status(StatusCode.OK).json({ username, token });
+    res.status(StatusCodes.OK).json({ username, token });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.BAD_REQUEST));
+    next(createAPIError(error.message, StatusCodes.BAD_REQUEST));
   }
 }
 
@@ -56,7 +56,10 @@ async function verify(req, res) {
       email: user.email,
     });
   } catch (error) {
-    return res.json({ authorized: false });
+    return res.json({
+      authorized: false,
+      message: error.message,
+    });
   }
 }
 
@@ -87,7 +90,7 @@ async function forgotPassword(req, res, next) {
     return next(
       createAPIError(
         "There was an error sending the email. Please try again later!",
-        500
+        StatusCodes.INTERNAL_SERVER_ERROR
       )
     );
   }
@@ -112,7 +115,9 @@ async function resetPassword(req, res, next) {
   });
 
   if (!user) {
-    return next(createAPIError("Token is invalid or has expired", 400));
+    return next(
+      createAPIError("Token is invalid or has expired", StatusCodes.BAD_REQUEST)
+    );
   }
 
   user.password = req.body.password;

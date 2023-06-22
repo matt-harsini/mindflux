@@ -10,7 +10,7 @@ async function createLog(req, res, next) {
     await Log.create({ moodMeter, log, date, user_id });
     return res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 
@@ -20,7 +20,7 @@ async function getAllLogs(req, res, next) {
     const logs = await Log.find({ user_id });
     res.status(StatusCodes.OK).json({ logs });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 
@@ -44,7 +44,7 @@ async function getMonthLogs(req, res, next) {
     });
     res.status(StatusCodes.OK).json({ payload });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 
@@ -54,7 +54,7 @@ async function deleteLog(req, res, next) {
     const payload = await Log.find({});
     res.json({ payload });
   } catch (error) {
-    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 

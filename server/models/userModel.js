@@ -48,6 +48,7 @@ const userSchema = new Schema({
   },
   password_reset_token: String,
   password_reset_expires: Date,
+  password_changed_at: Date,
 });
 
 userSchema.statics.register = async function (email, username, password) {
@@ -110,6 +111,13 @@ userSchema.pre("save", async function (next) {
   } catch (error) {
     next(error);
   }
+});
+
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew()) return next();
+
+  this.password_changed_at = Date.now() - 1000;
+  next();
 });
 
 const User = mongoose.model("User", userSchema);

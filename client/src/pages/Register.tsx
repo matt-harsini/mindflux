@@ -53,7 +53,7 @@ export default function Register() {
           !isError && "invisible"
         }`}
       >
-        <span className="text-center">{error?.response?.data?.error}</span>
+        <span className="text-center">{error?.response?.data?.message}</span>
       </div>
       <form
         onSubmit={handleSubmit}

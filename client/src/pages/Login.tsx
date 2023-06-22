@@ -42,6 +42,7 @@ export default function Login() {
     mutate();
   };
   const { isAuth, isFetching } = useAuthContext();
+  console.log(error?.response.data);
 
   if (!isAuth && localStorage.getItem("token") && isFetching) {
     return <div />;
@@ -55,7 +56,7 @@ export default function Login() {
           !isError && "invisible"
         }`}
       >
-        <span className="text-center">{error?.response.data.error}</span>
+        <span className="text-center">{error?.response.data.message}</span>
       </div>
       <form
         className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-2.5"
