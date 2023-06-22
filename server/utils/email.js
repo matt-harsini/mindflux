@@ -24,6 +24,7 @@ async function sendEmail(options) {
     subject: options.subject,
     text: options.message,
   };
+  
   try {
     await transporter.sendMail(mailOptions);
   } catch (error) {

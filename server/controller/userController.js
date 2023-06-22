@@ -86,11 +86,11 @@ async function forgotPassword(req, res, next) {
     "host"
   )}/api/forgot-password/${resetToken}`;
 
-  const message = `Forgot password? Submit a PATCH request with your new password and password confirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email`;
+  const message = `Forgot your password? Submit a PATCH request with your new password and password confirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email`;
   try {
     await sendEmail({
       email: user.email,
-      subject: "Your password reset token is valid for 10 minutes",
+      subject: "Mindflux - Reset Password",
       message,
     });
   } catch (error) {
