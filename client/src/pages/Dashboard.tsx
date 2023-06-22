@@ -74,7 +74,6 @@ export default function Dashboard() {
     queryFn: () => authFetch.get(`/pie-data${queries[filter]}`),
     queryKey: [filter, "pie-data"],
   });
-  console.log(pieData);
 
   return (
     <>

@@ -65,7 +65,7 @@ async function forgotPassword(req, res, next) {
   if (!user) {
     return next(createAPIError("Cannot find user", 404));
   }
-  console.log(user);
+
   const resetToken = user.createPasswordResetToken();
   await user.save();
 
@@ -103,7 +103,7 @@ async function resetPassword(req, res, next) {
     .createHash("sha256")
     .update(req.params.token)
     .digest("hex");
-  console.log(hashedToken);
+
   const user = await User.findOne({
     password_reset_token: hashedToken,
     password_reset_expires: {
@@ -119,7 +119,12 @@ async function resetPassword(req, res, next) {
   user.password_confirm = req.body.passwordConfirm;
   user.password_reset_token = undefined;
   user.password_reset_expires = undefined;
-  await user.save();
+
+  try {
+    await user.save();
+  } catch (error) {
+    return next(createAPIError(error.message, StatusCodes.BAD_REQUEST));
+  }
 
   const token = createToken(user._id);
 
