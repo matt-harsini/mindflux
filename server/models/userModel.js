@@ -99,14 +99,14 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-userSchema.methods.changedPasswordAfter = function (timestamp) {
+userSchema.methods.changedPasswordAfter = function (jwt_timestamp) {
   if (this.password_changed_at) {
-    const changed_timestamp = parseInt(
+    const password_changed_timestamp = parseInt(
       this.password_changed_at.getTime() / 1000,
       10
     );
 
-    return timestamp < changed_timestamp;
+    return jwt_timestamp < password_changed_timestamp;
   }
   return false;
 };
