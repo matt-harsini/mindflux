@@ -1,6 +1,5 @@
 import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
-import { authFetch } from "../utils";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";

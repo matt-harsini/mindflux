@@ -140,89 +140,82 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
-        {isChartDataLoading ? (
-          <Loading height="max-h-max mt-48" />
-        ) : (
-          <ResponsiveContainer width="100%" aspect={2.5}>
-            <AreaChart
-              data={chartData?.data.documents}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+        <ResponsiveContainer width="100%" aspect={2.5}>
+          <AreaChart
+            data={chartData?.data.documents}
+            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="Anxiety" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#D926A9" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#D926A9" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="Happiness" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="Anger" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#DC2626" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="Sadness" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#1FB2A6" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
+            <YAxis />
+            <Tooltip />
+            <Area
+              type="monotone"
+              dataKey="Anxiety"
+              stroke="#D926A9"
+              fillOpacity={1}
+              fill="url(#Anxiety)"
+            />
+            <Area
+              type="monotone"
+              dataKey="Happiness"
+              stroke="#22C55E"
+              fillOpacity={1}
+              fill="url(#Happiness)"
+            />
+            <Area
+              type="monotone"
+              dataKey="Anger"
+              stroke="#DC2626"
+              fillOpacity={1}
+              fill="url(#Anger)"
+            />
+            <Area
+              type="monotone"
+              dataKey="Sadness"
+              stroke="#1FB2A6"
+              fillOpacity={1}
+              fill="url(#Sadness)"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+        <ResponsiveContainer width="100%" aspect={2}>
+          <PieChart width={730} height={250}>
+            <Pie
+              data={pieData?.data.documents[0].data}
+              cx="50%"
+              cy="50%"
+              outerRadius={80}
+              dataKey="value"
+              label
+              stroke="none"
             >
-              <defs>
-                <linearGradient id="Anxiety" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#D926A9" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#D926A9" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="Happiness" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="Anger" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#DC2626" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="Sadness" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#1FB2A6" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
-              <YAxis />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="Anxiety"
-                stroke="#D926A9"
-                fillOpacity={1}
-                fill="url(#Anxiety)"
-              />
-              <Area
-                type="monotone"
-                dataKey="Happiness"
-                stroke="#22C55E"
-                fillOpacity={1}
-                fill="url(#Happiness)"
-              />
-              <Area
-                type="monotone"
-                dataKey="Anger"
-                stroke="#DC2626"
-                fillOpacity={1}
-                fill="url(#Anger)"
-              />
-              <Area
-                type="monotone"
-                dataKey="Sadness"
-                stroke="#1FB2A6"
-                fillOpacity={1}
-                fill="url(#Sadness)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        )}
-        {isPieDataLoading ? (
-          <Loading height="max-h-max mt-48" />
-        ) : (
-          <ResponsiveContainer width="100%" aspect={2}>
-            <PieChart width={730} height={250}>
-              <Pie
-                data={pieData?.data.documents[0].data}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                dataKey="value"
-                label
-              >
-                {pieData?.data.documents[0].data.map(
-                  (values: pieData, index: number) => {
-                    return <Cell key={index} fill={pieColors[values.name]} />;
-                  }
-                )}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        )}
+              {pieData?.data.documents[0].data.map(
+                (values: pieData, index: number) => {
+                  return <Cell key={index} fill={pieColors[values.name]} />;
+                }
+              )}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     </>
   );
