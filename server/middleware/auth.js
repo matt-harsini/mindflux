@@ -19,9 +19,7 @@ async function auth(req, res, next) {
     req.user = await User.findOne({ _id }).select("_id");
     next();
   } catch (error) {
-    return res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ error: "Request is not authorized" });
+    next(createAPIError("Request is not authorized", StatusCodes.UNAUTHORIZED));
   }
 }
 

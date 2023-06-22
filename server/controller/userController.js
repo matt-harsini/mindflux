@@ -1,6 +1,6 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
-import StatusCode from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
 import { User } from "../models/userModel.js";
 import { createToken } from "../utils/index.js";
 import crypto from "crypto";
@@ -27,7 +27,7 @@ async function login(req, res) {
     const token = createToken(user._id);
     res.status(StatusCode.OK).json({ username, token, email: user.email });
   } catch (error) {
-    res.status(StatusCode.BAD_REQUEST).json({ error: error.message });
+    next(createAPIError(err.message, StatusCodes.BAD_REQUEST));
   }
 }
 
@@ -38,9 +38,7 @@ async function register(req, res) {
     const token = createToken(user._id);
     res.status(StatusCode.OK).json({ username, token });
   } catch (error) {
-    res
-      .status(StatusCode.BAD_REQUEST)
-      .json({ error: displayErrorMessage(error.message) });
+    next(createAPIError(err.message, StatusCodes.BAD_REQUEST));
   }
 }
 
