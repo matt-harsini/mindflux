@@ -1,17 +1,16 @@
 import { StatusCodes } from "http-status-codes";
 import { Log } from "../models/logModel.js";
 import { getDifferenceInDates } from "../utils/index.js";
+import { createAPIError } from "../errors/errorHandler.js";
 
-async function createLog(req, res) {
+async function createLog(req, res, next) {
   const { moodMeter, log, date } = req.body;
   const { _id: user_id } = req.user;
   try {
     await Log.create({ moodMeter, log, date, user_id });
     return res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Something went wrong, please try again" });
+    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 
@@ -21,9 +20,7 @@ async function getAllLogs(req, res) {
     const logs = await Log.find({ user_id });
     res.status(StatusCodes.OK).json({ logs });
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Something went wrong, please try again" });
+    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 
@@ -47,9 +44,7 @@ async function getMonthLogs(req, res) {
     });
     res.status(StatusCodes.OK).json({ payload });
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Something went wrong, please try again" });
+    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 
@@ -59,9 +54,7 @@ async function deleteLog(req, res) {
     const payload = await Log.find({});
     res.json({ payload });
   } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Something went wrong, please try again" });
+    next(createAPIError(err.message, StatusCodes.INTERNAL_SERVER_ERROR));
   }
 }
 

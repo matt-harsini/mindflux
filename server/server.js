@@ -7,6 +7,8 @@ import { router as logRoutes } from "./routes/log.js";
 import { router as chartRoutes } from "./routes/chart.js";
 import cors from "cors";
 import helmet from "helmet";
+import { createAPIError, handleError } from "./errors/errorHandler.js";
+import { StatusCodes } from "http-status-codes";
 
 const app = express();
 app.use(helmet());
@@ -21,6 +23,10 @@ app.use(express.json({ limit: "10kb" }));
 app.use("/api", userRoutes);
 app.use("/api", chartRoutes);
 app.use("/api", logRoutes);
+app.all("*", function (req, res, next) {
+  next(createAPIError("No route exists", StatusCodes.NOT_FOUND));
+});
+app.use(handleError);
 main();
 async function main() {
   try {
