@@ -20,7 +20,7 @@ function displayErrorMessage(error) {
   }
 }
 
-async function login(req, res) {
+async function login(req, res, next) {
   const { username, password } = req.body;
   try {
     const user = await User.login(username, password);
@@ -31,7 +31,7 @@ async function login(req, res) {
   }
 }
 
-async function register(req, res) {
+async function register(req, res, next) {
   const { email, username, password } = req.body;
   try {
     const user = await User.register(email, username, password);
@@ -98,7 +98,7 @@ async function forgotPassword(req, res, next) {
   });
 }
 
-async function resetPassword(req, res) {
+async function resetPassword(req, res, next) {
   const hashedToken = crypto
     .createHash("sha256")
     .update(req.params.token)

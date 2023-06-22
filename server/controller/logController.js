@@ -14,7 +14,7 @@ async function createLog(req, res, next) {
   }
 }
 
-async function getAllLogs(req, res) {
+async function getAllLogs(req, res, next) {
   const { _id: user_id } = req.user;
   try {
     const logs = await Log.find({ user_id });
@@ -24,7 +24,7 @@ async function getAllLogs(req, res) {
   }
 }
 
-async function getMonthLogs(req, res) {
+async function getMonthLogs(req, res, next) {
   try {
     const { f, l } = req.query;
     const { _id: user_id } = req.user;
@@ -48,7 +48,7 @@ async function getMonthLogs(req, res) {
   }
 }
 
-async function deleteLog(req, res) {
+async function deleteLog(req, res, next) {
   try {
     await Log.findByIdAndDelete(req.params.id);
     const payload = await Log.find({});

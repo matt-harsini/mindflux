@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { Log } from "../models/logModel.js";
 
-async function getChartData(req, res) {
+async function getChartData(req, res, next) {
   const { f } = req.query;
   const { _id: user_id } = req.user;
   try {
@@ -105,7 +105,7 @@ async function getChartData(req, res) {
   }
 }
 
-async function getPieChartData(req, res) {
+async function getPieChartData(req, res, next) {
   const { f } = req.query;
   const { _id: user_id } = req.user;
   try {
