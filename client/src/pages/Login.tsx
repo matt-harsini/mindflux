@@ -79,9 +79,14 @@ export default function Login() {
           />
         </div>
         <div className="relative flex flex-col gap-y-2">
-          <label htmlFor="password" className="text-white">
-            Password
-          </label>
+          <div className="flex justify-between">
+            <label htmlFor="password" className="text-white">
+              Password
+            </label>
+            <Link to="/forgot" className="text-secondary font-bold">
+              Forgot password?
+            </Link>
+          </div>
           <input
             type={showPassword ? "text" : "password"}
             className="input input-bordered w-full"
