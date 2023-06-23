@@ -89,6 +89,8 @@ export default function Log() {
   });
 
   useEffect(() => {
+    if (!btnLogClicked) return;
+    
     const id = setTimeout(() => {
       navigate.current("/dashboard/calendar");
     }, 2000);
