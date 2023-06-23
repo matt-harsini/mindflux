@@ -17,7 +17,6 @@ import { authFetch } from "../utils";
 import { useState } from "react";
 import { formatISO, startOfToday, sub } from "date-fns";
 import { motion } from "framer-motion";
-import { Loading } from "../components";
 
 interface pieData {
   value: number;

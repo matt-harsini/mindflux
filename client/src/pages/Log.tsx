@@ -1,5 +1,12 @@
 import { format, formatISO, startOfToday } from "date-fns";
-import { Key, useReducer, useState } from "react";
+import {
+  Key,
+  useReducer,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 import { Card } from "../components";
 import Input from "../components/Input";
 import { CardState } from "../shared/interfaces";
@@ -77,7 +84,7 @@ export default function Log() {
     setBtnLogClicked(true);
   };
 
-  const navigate = useNavigate();
+  const navigate = useRef(useNavigate());
 
   const { mutate } = useMutation({
     mutationFn: () =>
@@ -88,10 +95,17 @@ export default function Log() {
       }),
   });
 
-  if (btnLogClicked) {
-    setTimeout(() => {
-      navigate("/dashboard/calendar");
+  useEffect(() => {
+    const id = setTimeout(() => {
+      navigate.current("/dashboard/calendar");
     }, 2000);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [btnLogClicked]);
+
+  if (btnLogClicked) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
