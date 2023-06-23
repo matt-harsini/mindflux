@@ -49,7 +49,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <h4 className="text-3xl font-bold text-accent">mindflux</h4>
+      <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
       <div
         className={`max-w-max alert alert-error flex justify-items-center py-2.5 ${
           !isError && "invisible"
@@ -58,14 +58,17 @@ export default function Login() {
         <span className="text-center">{error?.response.data.message}</span>
       </div>
       <form
-        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-2.5 relative"
+        className="py-6 px-8 flex flex-col gap-8 max-w-lg w-full relative"
         onSubmit={handleSubmit}
       >
-        <div>
+        <div className="flex flex-col gap-y-2">
+          <label htmlFor="username" className="text-white">
+            Username
+          </label>
           <input
             type="text"
             placeholder="username"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full"
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
@@ -74,23 +77,28 @@ export default function Login() {
             maxLength={30}
             required
             autoComplete="on"
+            id="username"
           />
         </div>
-        <div className="relative">
+        <div className="relative flex flex-col">
+          <label htmlFor="password" className="text-white">
+            Password
+          </label>
           <input
             type={showPassword ? "text" : "password"}
             placeholder="password"
-            className="input input-bordered w-full max-w-xs"
+            className="input input-bordered w-full"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
             required
             autoComplete="on"
+            id="password"
           />
           {!showPassword ? (
             <button
-              className="scale-[0.8] absolute top-3 right-3"
+              className="scale-[0.8] absolute top-[35px] right-3"
               type="button"
               onClick={() => setShowPassword((prevState) => !prevState)}
             >
@@ -140,7 +148,7 @@ export default function Login() {
         <div className="mt-4">
           <button
             type="submit"
-            className={`btn btn-secondary btn-wide ${
+            className={`btn btn-secondary w-full ${
               isLoading ? "btn-disabled" : ""
             }`}
           >
