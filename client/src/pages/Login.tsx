@@ -41,7 +41,6 @@ export default function Login() {
     mutate();
   };
   const { isAuth, isFetching } = useAuthContext();
-  console.log(error?.response.data);
 
   if (!isAuth && localStorage.getItem("token") && isFetching) {
     return <div />;
@@ -58,7 +57,7 @@ export default function Login() {
         <span className="text-center">{error?.response.data.message}</span>
       </div>
       <form
-        className="py-6 px-8 flex flex-col gap-8 max-w-lg w-full relative"
+        className="py-6 px-8 pt-8 flex flex-col gap-8 max-w-lg w-full relative"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-y-2">
@@ -67,7 +66,6 @@ export default function Login() {
           </label>
           <input
             type="text"
-            placeholder="username"
             className="input input-bordered w-full"
             value={username}
             onChange={(e) => {
@@ -80,13 +78,12 @@ export default function Login() {
             id="username"
           />
         </div>
-        <div className="relative flex flex-col">
+        <div className="relative flex flex-col gap-y-2">
           <label htmlFor="password" className="text-white">
             Password
           </label>
           <input
             type={showPassword ? "text" : "password"}
-            placeholder="password"
             className="input input-bordered w-full"
             value={password}
             onChange={(e) => {
@@ -98,7 +95,7 @@ export default function Login() {
           />
           {!showPassword ? (
             <button
-              className="scale-[0.8] absolute top-[35px] right-3"
+              className="scale-[0.8] absolute top-[43px] right-3"
               type="button"
               onClick={() => setShowPassword((prevState) => !prevState)}
             >
@@ -120,7 +117,7 @@ export default function Login() {
           ) : (
             <button
               type="button"
-              className="scale-[0.8] absolute top-3 right-3"
+              className="scale-[0.8] absolute top-[43px] right-3"
               onClick={() => setShowPassword((prevState) => !prevState)}
             >
               <svg
