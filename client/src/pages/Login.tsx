@@ -58,7 +58,7 @@ export default function Login() {
         <span className="text-center">{error?.response.data.message}</span>
       </div>
       <form
-        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-2.5"
+        className="bg-neutral shadow-md rounded py-12 px-8 flex flex-col gap-8 max-w-md mt-2.5 relative"
         onSubmit={handleSubmit}
       >
         <div>
@@ -119,6 +119,12 @@ export default function Login() {
             log in
           </button>
         </div>
+        <Link
+          to="/forgot"
+          className="text-center text-white absolute bottom-3.5 left-0 right-0 mx-auto"
+        >
+          forgot password?
+        </Link>
       </form>
       <Link to="/register" className="text-white text-md mt-5">
         Don't have an account? Sign up
