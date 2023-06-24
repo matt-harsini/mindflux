@@ -59,7 +59,7 @@ async function verify(req, res) {
   try {
     const { _id } = jwt.verify(JSON.parse(token), process.env.JWT_SECRET);
     const user = await User.findOne({ _id });
-    if (!user) throw new Error("User does not exist");    
+    if (!user) throw new Error("User does not exist");
     return res.json({
       authorized: true,
       username: user.username,
@@ -78,13 +78,11 @@ async function forgotPassword(req, res, next) {
   if (!user) {
     return next(createAPIError("Cannot find user", 404));
   }
-
+  console.log(req.get("origin"));
   const resetToken = user.createPasswordResetToken();
   await user.save();
 
-  const resetURL = `${req.protocol}://${req.get(
-    "host"
-  )}/api/forgot-password/${resetToken}`;
+  const resetURL = `${req.protocol}://${req.get("origin")}/${resetToken}`;
 
   const message = `Forgot your password? Submit a PATCH request with your new password and password confirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email`;
   try {
