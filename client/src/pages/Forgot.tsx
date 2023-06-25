@@ -2,10 +2,12 @@ import { FormEvent, useState } from "react";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
 import { Link } from "react-router-dom";
+import { Loading } from "../components";
 
 export default function Forgot() {
   const [email, setEmail] = useState("");
-  const { mutate, isSuccess } = useMutation({
+  
+  const { mutate, isSuccess, isLoading } = useMutation({
     mutationFn: () => authFetch.post("/forgot-password", { email }),
   });
 
@@ -13,6 +15,10 @@ export default function Forgot() {
     e.preventDefault();
     mutate();
   };
+
+  if (isLoading) {
+    return <Loading height="min-h-screen" />;
+  }
 
   if (isSuccess) {
     return (

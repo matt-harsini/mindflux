@@ -1,27 +1,58 @@
 import { useMutation } from "react-query";
-import { Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
 import { useState } from "react";
 
 export default function Reset() {
   const [mounted, hasMounted] = useState(false);
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const { token } = useParams();
 
-  const { mutate, isSuccess } = useMutation({
-    mutationFn: () => authFetch.post(`/verify-token/${token}`),
+  const { mutate: verifyToken, isError } = useMutation({
+    mutationFn: () => authFetch.post("/verify-token", { token }),
+    mutationKey: ["verify"],
   });
+
+  console.log(isError);
+
+  const { mutate: resetPassword } = useMutation({
+    mutationFn: () =>
+      authFetch.patch(`/forgot-password/${token}`, {
+        password,
+        passwordConfirm,
+      }),
+    mutationKey: ["reset"],
+  });
+
+  const handleReset = () => {
+    resetPassword();
+  };
 
   if (!mounted) {
     hasMounted(true);
-    mutate();
+    verifyToken();
   }
 
-  if (!isSuccess) {
-    return <Navigate to="/" />;
-  }
+  // if (isSuccess) {
+  //   return (
+  //     <div className="min-h-screen flex flex-col gap-y-6 items-center justify-center">
+  //       <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
+  //       <h1 className="text-white text-lg max-w-xl text-center">
+  //         Password successfully reset, please login
+  //       </h1>
+  //       <Link to="/login" className="btn btn-accent">
+  //         Go to login
+  //       </Link>
+  //     </div>
+  //   );
+  // }
+
+  //   if (!isSuccess && !isFetching) {
+  //     return <Navigate to="/" />;
+  //   }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
@@ -30,9 +61,6 @@ export default function Reset() {
           <h4 className="text-white text-2xl font-semibold">
             Getting back into your moodflux account
           </h4>
-          <h5 className="text-lg mt-1.5">
-            Tell us some information about your account
-          </h5>
         </div>
         <div className="flex flex-col gap-y-2">
           <label htmlFor="email" className="text-white">
@@ -56,13 +84,19 @@ export default function Reset() {
             className="input input-bordered w-full"
             type="text"
             id="email"
-            value={confirmPassword}
+            value={passwordConfirm}
             onChange={(e) => {
-              setConfirmPassword(e.target.value);
+              setPasswordConfirm(e.target.value);
             }}
           />
         </div>
-        <button className="btn btn-secondary w-full">Continue</button>
+        <button
+          onClick={handleReset}
+          type="button"
+          className="btn btn-secondary w-full"
+        >
+          Reset password
+        </button>
       </form>
     </div>
   );
