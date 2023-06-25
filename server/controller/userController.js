@@ -84,7 +84,7 @@ async function forgotPassword(req, res, next) {
 
   const resetURL = `${req.protocol}://${req.get("origin")}/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and password confirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email`;
+  const message = `Forgot your password? Click on the link below to reset and confirm your password.\n${resetURL}.\nIf you didn't forget your password, please ignore this email`;
   try {
     await sendEmail({
       email: user.email,
@@ -107,6 +107,24 @@ async function forgotPassword(req, res, next) {
     status: "Success",
     message: "Token sent to email",
   });
+}
+
+async function verifyPasswordToken(req, res, next) {
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    password_reset_token: hashedToken,
+    password_reset_expires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    next(createAPIError("Token is not valid", StatusCodes.UNAUTHORIZED));
+  }
+
+  res.status(StatusCodes.OK).json({ status: "Success" });
 }
 
 async function resetPassword(req, res, next) {
@@ -147,4 +165,11 @@ async function resetPassword(req, res, next) {
   });
 }
 
-export { login, register, verify, forgotPassword, resetPassword };
+export {
+  login,
+  register,
+  verify,
+  forgotPassword,
+  resetPassword,
+  verifyPasswordToken,
+};

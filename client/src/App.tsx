@@ -1,9 +1,8 @@
 import { lazy } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Home, Login, Register } from "./pages";
+import { Forgot, Home, Login, Register, Reset } from "./pages";
 import { SidebarOutlet } from "./components";
 import { useAuthContext } from "./hooks/useAuthContext";
-import Forgot from "./pages/Forgot";
 
 export default function App() {
   const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -30,6 +29,10 @@ export default function App() {
         <Route
           path="forgot"
           element={isAuth ? <Navigate to="/dashboard" /> : <Forgot />}
+        />
+        <Route
+          path=":token"
+          element={isAuth ? <Navigate to="/dashboard" /> : <Reset />}
         />
         <Route
           path="dashboard"

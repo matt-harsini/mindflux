@@ -1,10 +1,11 @@
 import { FormEvent, useState } from "react";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
+import { Link } from "react-router-dom";
 
 export default function Forgot() {
   const [email, setEmail] = useState("");
-  const { mutate, status } = useMutation({
+  const { mutate, isSuccess } = useMutation({
     mutationFn: () => authFetch.post("/forgot-password", { email }),
   });
 
@@ -12,7 +13,22 @@ export default function Forgot() {
     e.preventDefault();
     mutate();
   };
-  
+
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen flex flex-col gap-y-6 items-center justify-center">
+        <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
+        <h1 className="text-white text-lg max-w-xl text-center">
+          An email has been sent to reset your password <br />
+          with an expiry of 10 minutes. Click on the link provided to proceed.
+        </h1>
+        <Link to="/" className="btn btn-accent">
+          Back to home
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <form
