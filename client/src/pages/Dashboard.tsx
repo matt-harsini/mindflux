@@ -67,11 +67,13 @@ export default function Dashboard() {
   const { data: chartData } = useQuery({
     queryFn: () => authFetch.get(`/chart-data${queries[filter]}`),
     queryKey: [filter],
+    keepPreviousData: true,
   });
 
   const { data: pieData } = useQuery({
     queryFn: () => authFetch.get(`/pie-data${queries[filter]}`),
     queryKey: [filter, "pie-data"],
+    keepPreviousData: true,
   });
 
   return (

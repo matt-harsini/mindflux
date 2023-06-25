@@ -8,32 +8,30 @@ export default function Reset() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const { token } = useParams();
 
-  const { mutate: verifyToken, isError } = useMutation({
+  const { mutate, isError } = useMutation({
     mutationFn: () => authFetch.post("/verify-token", { token }),
-    mutationKey: ["verify"],
   });
 
   console.log(isError);
 
-  const { mutate: resetPassword } = useMutation({
-    mutationFn: () =>
-      authFetch.patch(`/forgot-password/${token}`, {
-        password,
-        passwordConfirm,
-      }),
-    mutationKey: ["reset"],
-  });
+  // const { mutate: resetPassword } = useMutation({
+  //   mutationFn: () =>
+  //     authFetch.patch(`/forgot-password/${token}`, {
+  //       password,
+  //       passwordConfirm,
+  //     }),
+  //   mutationKey: ["reset"],
+  // });
 
-  const handleReset = () => {
-    resetPassword();
-  };
+  // const handleReset = () => {
+  //   resetPassword();
+  // };
 
   if (!mounted) {
     hasMounted(true);
-    verifyToken();
+    mutate();
   }
 
   // if (isSuccess) {
@@ -90,11 +88,7 @@ export default function Reset() {
             }}
           />
         </div>
-        <button
-          onClick={handleReset}
-          type="button"
-          className="btn btn-secondary w-full"
-        >
+        <button type="button" className="btn btn-secondary w-full">
           Reset password
         </button>
       </form>
