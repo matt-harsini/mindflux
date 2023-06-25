@@ -2,8 +2,10 @@ import { useMutation } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
 import { useState } from "react";
-import axios from "axios";
 
+const postData = () => {
+  return Promise.reject();
+};
 export default function Reset() {
   const [mounted, hasMounted] = useState(false);
   const [password, setPassword] = useState("");
@@ -13,13 +15,13 @@ export default function Reset() {
 
   const {
     mutate: verifyToken,
-    isSuccess: isVerifySuccess,
+    isError: isVerifyError,
     isLoading: isVerifyLoading,
   } = useMutation({
-    mutationFn: () => axios.post("http://localhost:4000/api/verify-token", { token }),
+    mutationFn: () => postData(),
   });
 
-  console.log(isVerifySuccess, isVerifyLoading);
+  console.log(isVerifyError, isVerifyLoading);
 
   const { mutate: resetPassword, isSuccess } = useMutation({
     mutationFn: () =>
@@ -52,7 +54,7 @@ export default function Reset() {
     );
   }
 
-  if (!isVerifySuccess && !isVerifyLoading) {
+  if (isVerifyError && !isVerifyLoading) {
     return <Navigate to="/" />;
   }
 
