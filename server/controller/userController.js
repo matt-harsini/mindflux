@@ -78,13 +78,13 @@ async function forgotPassword(req, res, next) {
   if (!user) {
     return next(createAPIError("Cannot find user", 404));
   }
-  console.log(req.get("origin"));
   const resetToken = user.createPasswordResetToken();
+
   await user.save();
 
-  const resetURL = `${req.protocol}://${req.get("origin")}/${resetToken}`;
+  const resetURL = `${req.get("origin")}/${resetToken}`;
 
-  const message = `Forgot your password? Click on the link below to reset and confirm your password.\n${resetURL}.\nIf you didn't forget your password, please ignore this email`;
+  const message = `Forgot your password? Click on the link below to reset and confirm your password.\n${resetURL}\nIf you didn't forget your password, please ignore this email`;
   try {
     await sendEmail({
       email: user.email,
@@ -103,7 +103,7 @@ async function forgotPassword(req, res, next) {
     );
   }
 
-  res.status(200).json({
+  return res.status(200).json({
     status: "Success",
     message: "Token sent to email",
   });
@@ -112,19 +112,22 @@ async function forgotPassword(req, res, next) {
 async function verifyPasswordToken(req, res, next) {
   const hashedToken = crypto
     .createHash("sha256")
-    .update(req.params.token)
+    .update(req.body.token)
     .digest("hex");
+  try {
+    const user = await User.findOne({
+      password_reset_token: hashedToken,
+      password_reset_expires: { $gt: Date.now() },
+    });
 
-  const user = await User.findOne({
-    password_reset_token: hashedToken,
-    password_reset_expires: { $gt: Date.now() },
-  });
-
-  if (!user) {
-    next(createAPIError("Token is not valid", StatusCodes.UNAUTHORIZED));
+    if (!user) {
+      throw Error();
+    }
+  } catch (error) {
+    return next(createAPIError("Token is not valid", StatusCodes.UNAUTHORIZED));
   }
 
-  res.status(StatusCodes.OK).json({ status: "Success" });
+  return res.status(StatusCodes.OK).json({ status: "Success" });
 }
 
 async function resetPassword(req, res, next) {
@@ -159,7 +162,7 @@ async function resetPassword(req, res, next) {
 
   const token = createToken(user._id);
 
-  res.status(200).json({
+  return res.status(200).json({
     status: "Success",
     token,
   });

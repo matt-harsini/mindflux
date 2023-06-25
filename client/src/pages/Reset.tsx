@@ -2,6 +2,7 @@ import { useMutation } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Reset() {
   const [mounted, hasMounted] = useState(false);
@@ -10,47 +11,50 @@ export default function Reset() {
   const [showPassword, setShowPassword] = useState(false);
   const { token } = useParams();
 
-  const { mutate, isError } = useMutation({
-    mutationFn: () => authFetch.post("/verify-token", { token }),
+  const {
+    mutate: verifyToken,
+    isSuccess: isVerifySuccess,
+    isLoading: isVerifyLoading,
+  } = useMutation({
+    mutationFn: () => axios.post("http://localhost:4000/api/verify-token", { token }),
   });
 
-  console.log(isError);
+  console.log(isVerifySuccess, isVerifyLoading);
 
-  // const { mutate: resetPassword } = useMutation({
-  //   mutationFn: () =>
-  //     authFetch.patch(`/forgot-password/${token}`, {
-  //       password,
-  //       passwordConfirm,
-  //     }),
-  //   mutationKey: ["reset"],
-  // });
+  const { mutate: resetPassword, isSuccess } = useMutation({
+    mutationFn: () =>
+      authFetch.patch(`/forgot-password/${token}`, {
+        password,
+        passwordConfirm,
+      }),
+  });
 
-  // const handleReset = () => {
-  //   resetPassword();
-  // };
+  const handleReset = () => {
+    resetPassword();
+  };
 
   if (!mounted) {
     hasMounted(true);
-    mutate();
+    verifyToken();
   }
 
-  // if (isSuccess) {
-  //   return (
-  //     <div className="min-h-screen flex flex-col gap-y-6 items-center justify-center">
-  //       <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
-  //       <h1 className="text-white text-lg max-w-xl text-center">
-  //         Password successfully reset, please login
-  //       </h1>
-  //       <Link to="/login" className="btn btn-accent">
-  //         Go to login
-  //       </Link>
-  //     </div>
-  //   );
-  // }
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen flex flex-col gap-y-6 items-center justify-center">
+        <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
+        <h1 className="text-white text-lg max-w-xl text-center">
+          Password successfully reset, please login
+        </h1>
+        <Link to="/login" className="btn btn-accent">
+          Go to login
+        </Link>
+      </div>
+    );
+  }
 
-  //   if (!isSuccess && !isFetching) {
-  //     return <Navigate to="/" />;
-  //   }
+  if (!isVerifySuccess && !isVerifyLoading) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
@@ -88,7 +92,11 @@ export default function Reset() {
             }}
           />
         </div>
-        <button type="button" className="btn btn-secondary w-full">
+        <button
+          onClick={handleReset}
+          type="button"
+          className="btn btn-secondary w-full"
+        >
           Reset password
         </button>
       </form>

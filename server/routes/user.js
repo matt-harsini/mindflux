@@ -20,6 +20,6 @@ router.post("/forgot-password", forgotPassword);
 
 router.patch("/forgot-password/:token", resetPassword);
 
-router.post("/verify-token/:token", verifyPasswordToken);
+router.post("/verify-token", verifyPasswordToken);
 
 export { router };

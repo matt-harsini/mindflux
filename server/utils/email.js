@@ -10,6 +10,7 @@ async function sendEmail(options) {
   //   },
   // });
 
+
   const transporter = nodemailer.createTransport({
     service: "SendGrid",
     auth: {
@@ -24,7 +25,7 @@ async function sendEmail(options) {
     subject: options.subject,
     text: options.message,
   };
-  
+
   try {
     await transporter.sendMail(mailOptions);
   } catch (error) {
