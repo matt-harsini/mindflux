@@ -165,6 +165,12 @@ async function resetPassword(req, res, next) {
   });
 }
 
+async function updateUser(req, res, next) {
+  console.log(req.user);
+  console.log(123);
+  res.sendStatus(200);
+}
+
 export {
   login,
   register,
@@ -172,4 +178,5 @@ export {
   forgotPassword,
   resetPassword,
   verifyPasswordToken,
+  updateUser,
 };

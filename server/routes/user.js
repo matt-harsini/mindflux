@@ -1,4 +1,5 @@
 import express from "express";
+import { auth } from "../middleware/auth.js";
 import {
   login,
   register,
@@ -6,6 +7,7 @@ import {
   forgotPassword,
   resetPassword,
   verifyPasswordToken,
+  updateUser,
 } from "../controller/userController.js";
 
 const router = express.Router();
@@ -22,4 +24,7 @@ router.patch("/forgot-password/:token", resetPassword);
 
 router.post("/verify-token", verifyPasswordToken);
 
+router.use(auth);
+
+router.patch("/update-user", updateUser);
 export { router };

@@ -4,6 +4,7 @@ import { SettingsActionType } from "../shared/types";
 import { SettingsAction, SettingsState } from "../shared/interfaces";
 import { AuthContext } from "../shared/interfaces";
 import { authFetch } from "../utils";
+import { useMutation } from "react-query";
 
 function reducer(state: SettingsState, action: SettingsAction) {
   switch (action.type) {
@@ -33,6 +34,20 @@ export default function Settings() {
     lastName: "",
     email: initialEmail as string,
     phoneNumber: "",
+  });
+
+  const {
+    mutate: updateUser,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: () =>
+      authFetch.patch("/update-user", {
+        first_name: state.firstName,
+        last_name: state.lastName,
+        phone_number: state.phoneNumber,
+      }),
   });
 
   return (
@@ -101,6 +116,7 @@ export default function Settings() {
                 onChange={(e) => {
                   dispatch({ type: "EMAIL", payload: e.target.value });
                 }}
+                readOnly
               />
             </div>
             <div className="flex flex-col gap-3">

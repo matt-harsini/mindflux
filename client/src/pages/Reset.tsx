@@ -9,7 +9,6 @@ export default function Reset() {
   const [mounted, hasMounted] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [password, setPassword] = useState("");
-
   const { token } = useParams();
 
   const {

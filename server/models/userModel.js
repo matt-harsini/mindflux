@@ -37,6 +37,10 @@ const userSchema = new Schema({
   last_name: {
     type: String,
   },
+  phone_number: {
+    type: Number,
+    validate: [validator.isMobilePhone, "Phone number must be valid"],
+  },
   password_confirm: {
     type: String,
     validate: {
