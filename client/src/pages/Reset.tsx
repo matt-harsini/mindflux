@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
 import { Loading } from "../components";
+import PasswordInput from "../components/PasswordInput";
 
 export default function Reset() {
   const [mounted, hasMounted] = useState(false);
-  const [passwords, setPasswords] = useState({
-    password: "",
-    passwordConfirm: "",
-  });
-  const [showPassword, setShowPassword] = useState(false);
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [password, setPassword] = useState("");
 
   const { token } = useParams();
 
@@ -18,7 +16,6 @@ export default function Reset() {
     mutateAsync: verifyToken,
     isError: isVerifyError,
     isLoading: isVerifyLoading,
-    isSuccess: isVerifySuccess,
   } = useMutation({
     mutationFn: () => authFetch.post("/verify-token", { token }),
   });
@@ -26,17 +23,17 @@ export default function Reset() {
   const { mutate: resetPassword, isSuccess: isResetSuccess } = useMutation({
     mutationFn: () =>
       authFetch.patch(`/forgot-password/${token}`, {
-        ...passwords,
+        password,
+        passwordConfirm,
       }),
-    mutationKey: [passwords.password, passwords.passwordConfirm],
+    mutationKey: [password, passwordConfirm],
   });
-  console.log(isVerifyLoading, isVerifyError, isVerifySuccess);
 
   if (!mounted) {
     verifyToken().then(() => hasMounted(true));
   }
 
-  if (isVerifyLoading) {
+  if (isVerifyLoading && !mounted) {
     return <Loading height="h-screen" />;
   }
 
@@ -70,32 +67,15 @@ export default function Reset() {
           <label htmlFor="email" className="text-white">
             Enter new password
           </label>
-          <input
-            className="input input-bordered w-full"
-            type="text"
-            id="email"
-            value={passwords.password}
-            onChange={(e) => {
-              setPasswords((prevState) => {
-                return { ...prevState, password: e.target.value };
-              });
-            }}
-          />
+          <PasswordInput password={password} setPassword={setPassword} />
         </div>
         <div className="flex flex-col gap-y-2">
           <label htmlFor="email" className="text-white">
             Confirm password
           </label>
-          <input
-            className="input input-bordered w-full"
-            type="text"
-            id="email"
-            value={passwords.passwordConfirm}
-            onChange={(e) => {
-              setPasswords((prevState) => {
-                return { ...prevState, passwordConfirm: e.target.value };
-              });
-            }}
+          <PasswordInput
+            password={passwordConfirm}
+            setPassword={setPasswordConfirm}
           />
         </div>
         <button
