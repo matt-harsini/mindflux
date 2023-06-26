@@ -10,7 +10,6 @@ import PasswordInput from "../components/PasswordInput";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const { dispatch }: AuthContext = useAuthContext();
   const {
     error,
