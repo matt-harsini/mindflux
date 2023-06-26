@@ -15,7 +15,6 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/test" element={<Test />} />
         <Route
           path="/"
           element={isAuth ? <Navigate to="/dashboard" /> : <Home />}
