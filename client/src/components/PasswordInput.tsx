@@ -12,7 +12,7 @@ export default function PasswordInput({
     <div className="relative">
       <input
         type={showPassword ? "text" : "password"}
-        className="input input-bordered w-full"
+        className="input input-bordered w-full pr-10"
         value={password}
         onChange={(e) => {
           setPassword(e.target.value);
@@ -23,7 +23,7 @@ export default function PasswordInput({
       />
       {!showPassword ? (
         <button
-          className="scale-[0.8] absolute top-[11.4px] z-10 right-3"
+          className="scale-[0.8] absolute top-3 right-2.5"
           type="button"
           onClick={() => setShowPassword((prevState) => !prevState)}
         >
@@ -45,7 +45,7 @@ export default function PasswordInput({
       ) : (
         <button
           type="button"
-          className="scale-[0.8] absolute top-[11.4px] z-10 right-3"
+          className="scale-[0.8] absolute top-3 right-2.5"
           onClick={() => setShowPassword((prevState) => !prevState)}
         >
           <svg
