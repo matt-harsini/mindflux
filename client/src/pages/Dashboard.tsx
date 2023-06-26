@@ -76,6 +76,8 @@ export default function Dashboard() {
     keepPreviousData: true,
   });
 
+  console.log(chartData, pieData);
+
   return (
     <>
       <div className="flex flex-col gap-y-10">
@@ -140,85 +142,91 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
-        <ResponsiveContainer width="100%" aspect={2.5}>
-          <AreaChart
-            data={chartData?.data.documents}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="Anxiety" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#D926A9" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#D926A9" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="Happiness" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="Anger" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#DC2626" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="Sadness" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#1FB2A6" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
-            <YAxis />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="Anxiety"
-              stroke="#D926A9"
-              fillOpacity={0.9}
-              fill="url(#Anxiety)"
-            />
-            <Area
-              type="monotone"
-              dataKey="Happiness"
-              stroke="#22C55E"
-              fillOpacity={0.9}
-              fill="url(#Happiness)"
-            />
-            <Area
-              type="monotone"
-              dataKey="Anger"
-              stroke="#DC2626"
-              fillOpacity={0.9}
-              fill="url(#Anger)"
-            />
-            <Area
-              type="monotone"
-              dataKey="Sadness"
-              stroke="#1FB2A6"
-              fillOpacity={0.9}
-              fill="url(#Sadness)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-        <ResponsiveContainer width="100%" aspect={2}>
-          <PieChart width={730} height={250}>
-            <Pie
-              data={pieData?.data.documents[0].data}
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              dataKey="value"
-              label
-              stroke="none"
-              fillOpacity={0.9}
+      {!!chartData?.data.documents.length &&
+      !!pieData?.data.documents.length ? (
+        <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
+          <ResponsiveContainer width="100%" aspect={2}>
+            <PieChart width={730} height={250}>
+              <Pie
+                data={pieData?.data?.documents[0]?.data}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                dataKey="value"
+                stroke="none"
+                fillOpacity={0.9}
+              >
+                {pieData?.data?.documents[0]?.data.map(
+                  (values: pieData, index: number) => {
+                    return <Cell key={index} fill={pieColors[values.name]} />;
+                  }
+                )}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="100%" aspect={2.5}>
+            <AreaChart
+              data={chartData?.data.documents}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
-              {pieData?.data.documents[0].data.map(
-                (values: pieData, index: number) => {
-                  return <Cell key={index} fill={pieColors[values.name]} />;
-                }
-              )}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
+              <defs>
+                <linearGradient id="Anxiety" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#D926A9" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#D926A9" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="Happiness" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="Anger" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#DC2626" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="Sadness" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#1FB2A6" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
+              <YAxis />
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="Anxiety"
+                stroke="#D926A9"
+                fillOpacity={0.9}
+                fill="url(#Anxiety)"
+              />
+              <Area
+                type="monotone"
+                dataKey="Happiness"
+                stroke="#22C55E"
+                fillOpacity={0.9}
+                fill="url(#Happiness)"
+              />
+              <Area
+                type="monotone"
+                dataKey="Anger"
+                stroke="#DC2626"
+                fillOpacity={0.9}
+                fill="url(#Anger)"
+              />
+              <Area
+                type="monotone"
+                dataKey="Sadness"
+                stroke="#1FB2A6"
+                fillOpacity={0.9}
+                fill="url(#Sadness)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      ) : (
+        <h4 className="text-center text-xl mt-48 text-white">
+          No data yet, please log your mood to start populating your charts
+        </h4>
+      )}
     </>
   );
 }

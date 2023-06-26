@@ -175,7 +175,7 @@ export default function Calendar() {
                     `relative px-3 py-2${
                       i === 0 ? colStartClasses[getDay(day)] : ""
                     }`,
-                    "h-[108px] hover:cursor-pointer hover:bg-base-300"
+                    "h-[106px] hover:cursor-pointer hover:bg-base-300"
                   )}
                 >
                   <div className="flex justify-between">
