@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Forgot, Home, Login, Register, Reset } from "./pages";
 import { SidebarOutlet } from "./components";
 import { useAuthContext } from "./hooks/useAuthContext";
-import Test from "./pages/Test";
 
 export default function App() {
   const Dashboard = lazy(() => import("./pages/Dashboard"));
