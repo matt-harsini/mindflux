@@ -28,7 +28,6 @@ import { authFetch } from "../utils";
 import { colors, inputIcons, progressColors } from "../theme";
 import { Link } from "react-router-dom";
 import { Slideover } from ".";
-import { motion, progress } from "framer-motion";
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(" ");
