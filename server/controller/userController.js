@@ -114,16 +114,13 @@ async function verifyPasswordToken(req, res, next) {
     .createHash("sha256")
     .update(req.body.token)
     .digest("hex");
-  try {
-    const user = await User.findOne({
-      password_reset_token: hashedToken,
-      password_reset_expires: { $gt: Date.now() },
-    });
 
-    if (!user) {
-      throw Error();
-    }
-  } catch (error) {
+  const user = await User.findOne({
+    password_reset_token: hashedToken,
+    password_reset_expires: { $gt: Date.now() },
+  });
+
+  if (!user) {
     return next(createAPIError("Token is not valid", StatusCodes.UNAUTHORIZED));
   }
 

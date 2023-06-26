@@ -1,46 +1,50 @@
-import { useMutation } from "react-query";
+import { useState } from "react";
+import { useMutation, useQuery } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
-import { useState } from "react";
+import { Loading } from "../components";
 
-const postData = () => {
-  return Promise.reject();
-};
 export default function Reset() {
   const [mounted, hasMounted] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwords, setPasswords] = useState({
+    password: "",
+    passwordConfirm: "",
+  });
   const [showPassword, setShowPassword] = useState(false);
+
   const { token } = useParams();
 
   const {
-    mutate: verifyToken,
+    mutateAsync: verifyToken,
     isError: isVerifyError,
     isLoading: isVerifyLoading,
+    isSuccess: isVerifySuccess,
   } = useMutation({
-    mutationFn: () => postData(),
+    mutationFn: () => authFetch.post("/verify-token", { token }),
   });
 
-  console.log(isVerifyError, isVerifyLoading);
-
-  const { mutate: resetPassword, isSuccess } = useMutation({
+  const { mutate: resetPassword, isSuccess: isResetSuccess } = useMutation({
     mutationFn: () =>
       authFetch.patch(`/forgot-password/${token}`, {
-        password,
-        passwordConfirm,
+        ...passwords,
       }),
+    mutationKey: [passwords.password, passwords.passwordConfirm],
   });
-
-  const handleReset = () => {
-    resetPassword();
-  };
+  console.log(isVerifyLoading, isVerifyError, isVerifySuccess);
 
   if (!mounted) {
-    hasMounted(true);
-    verifyToken();
+    verifyToken().then(() => hasMounted(true));
   }
 
-  if (isSuccess) {
+  if (isVerifyLoading) {
+    return <Loading height="h-screen" />;
+  }
+
+  if (!isVerifyLoading && isVerifyError) {
+    return <Navigate to="/" />;
+  }
+
+  if (isResetSuccess) {
     return (
       <div className="min-h-screen flex flex-col gap-y-6 items-center justify-center">
         <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
@@ -52,10 +56,6 @@ export default function Reset() {
         </Link>
       </div>
     );
-  }
-
-  if (isVerifyError && !isVerifyLoading) {
-    return <Navigate to="/" />;
   }
 
   return (
@@ -74,9 +74,11 @@ export default function Reset() {
             className="input input-bordered w-full"
             type="text"
             id="email"
-            value={password}
+            value={passwords.password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setPasswords((prevState) => {
+                return { ...prevState, password: e.target.value };
+              });
             }}
           />
         </div>
@@ -88,14 +90,16 @@ export default function Reset() {
             className="input input-bordered w-full"
             type="text"
             id="email"
-            value={passwordConfirm}
+            value={passwords.passwordConfirm}
             onChange={(e) => {
-              setPasswordConfirm(e.target.value);
+              setPasswords((prevState) => {
+                return { ...prevState, passwordConfirm: e.target.value };
+              });
             }}
           />
         </div>
         <button
-          onClick={handleReset}
+          onClick={() => resetPassword()}
           type="button"
           className="btn btn-secondary w-full"
         >
