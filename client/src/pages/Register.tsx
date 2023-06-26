@@ -56,7 +56,7 @@ export default function Register() {
         <span className="text-center">{error?.response.data.message}</span>
       </div>
       <form
-        className="py-6 px-8 pt-8 flex flex-col gap-8 max-w-lg w-full relative"
+        className="py-6 px-8 pt-8 flex flex-col gap-6 max-w-lg w-full relative"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-y-2">
