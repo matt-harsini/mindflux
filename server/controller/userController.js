@@ -183,7 +183,18 @@ async function resetPassword(req, res, next) {
 
 async function updateUser(req, res, next) {
   console.log(req.user);
-  console.log(123);
+  console.log(req.body);
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { ...req.body }
+    );
+  } catch (error) {
+    return next(
+      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+    );
+  }
+
   res.sendStatus(200);
 }
 

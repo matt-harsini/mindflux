@@ -25,6 +25,9 @@ export default function Settings() {
     username,
     email: initialEmail,
     dispatch: authDispatch,
+    firstName,
+    lastName,
+    phoneNumber,
   }: AuthContext = useAuthContext();
 
   const handleLogout = () => {
@@ -33,11 +36,12 @@ export default function Settings() {
       type: "LOGOUT",
     });
   };
+
   const [state, dispatch] = useReducer(reducer, {
-    firstName: "",
-    lastName: "",
+    firstName: firstName as string,
+    lastName: lastName as string,
     email: initialEmail as string,
-    phoneNumber: "",
+    phoneNumber: phoneNumber as string,
   });
 
   const [change, setChange] = useState(false);
@@ -50,6 +54,8 @@ export default function Settings() {
         phone_number: state.phoneNumber,
       }),
   });
+
+  
 
   return (
     <>
