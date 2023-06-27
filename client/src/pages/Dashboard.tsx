@@ -4,6 +4,7 @@ import {
   Area,
   AreaChart,
   Cell,
+  Label,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -14,7 +15,7 @@ import {
 import { inputIcons, colors, feelings } from "../theme";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { formatISO, startOfToday, sub } from "date-fns";
 import { motion } from "framer-motion";
 
@@ -155,9 +156,9 @@ export default function Dashboard() {
                 fillOpacity={0.9}
               >
                 {pieData?.data?.documents[0]?.data.map(
-                  (values: pieData, index: number) => {
-                    return <Cell key={index} fill={pieColors[values.name]} />;
-                  }
+                  (values: pieData, index: number) => (
+                    <Cell key={index} fill={pieColors[values.name]} />
+                  )
                 )}
               </Pie>
               <Tooltip />
