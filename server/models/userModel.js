@@ -38,8 +38,8 @@ const userSchema = new Schema({
     type: String,
   },
   phone_number: {
-    type: Number,
-    validate: [validator.isMobilePhone, "Phone number must be valid"],
+    type: String,
+    match: /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/,
   },
   password_confirm: {
     type: String,

@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { SettingsActionType } from "../shared/types";
 import { SettingsAction, SettingsState } from "../shared/interfaces";
@@ -28,6 +28,7 @@ export default function Settings() {
     firstName,
     lastName,
     phoneNumber,
+    isAuth,
   }: AuthContext = useAuthContext();
 
   const handleLogout = () => {
@@ -44,8 +45,6 @@ export default function Settings() {
     phoneNumber: phoneNumber as string,
   });
 
-  const [change, setChange] = useState(false);
-
   const { mutate: updateUser } = useMutation({
     mutationFn: () =>
       authFetch.patch("/update-user", {
@@ -54,6 +53,11 @@ export default function Settings() {
         phone_number: state.phoneNumber,
       }),
   });
+
+  const isEqual =
+    firstName === state.firstName &&
+    lastName === state.lastName &&
+    phoneNumber === state.phoneNumber;
 
   return (
     <>
@@ -88,7 +92,6 @@ export default function Settings() {
                 type="text"
                 value={state.firstName}
                 onChange={(e) => {
-                  setChange(true);
                   dispatch({ type: "FIRST_NAME", payload: e.target.value });
                 }}
               />
@@ -103,7 +106,6 @@ export default function Settings() {
                 type="text"
                 value={state.lastName}
                 onChange={(e) => {
-                  setChange(true);
                   dispatch({ type: "LAST_NAME", payload: e.target.value });
                 }}
               />
@@ -136,7 +138,6 @@ export default function Settings() {
                 type="text"
                 value={state.phoneNumber}
                 onChange={(e) => {
-                  setChange(true);
                   dispatch({ type: "PHONE_NUMBER", payload: e.target.value });
                 }}
               />
@@ -153,11 +154,14 @@ export default function Settings() {
           </button>
           <button
             onClick={() => {
-              setChange(false);
+              authDispatch({
+                type: "SET_DATA",
+                payload: { ...state, username, isAuth },
+              });
               updateUser();
             }}
             className={`btn self-start ${
-              !change ? "btn-disabled" : "btn-accent"
+              isEqual ? "btn-disabled" : "btn-accent"
             }`}
           >
             Update

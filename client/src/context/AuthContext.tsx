@@ -11,6 +11,7 @@ enum AuthActionTypes {
   LOGIN = "LOGIN",
   LOGOUT = "LOGOUT",
   SET_AUTH = "SET_AUTH",
+  SET_DATA = "SET_DATA",
 }
 
 function authReducer(_state: AuthState, action: AuthAction): AuthState {
@@ -45,6 +46,13 @@ function authReducer(_state: AuthState, action: AuthAction): AuthState {
         isAuth: action.payload?.isAuth,
         email: action.payload?.email,
         username: action.payload?.username,
+        firstName: action.payload?.firstName,
+        lastName: action.payload?.lastName,
+        phoneNumber: action.payload?.phoneNumber,
+      };
+    case AuthActionTypes.SET_DATA:
+      return {
+        ..._state,
         firstName: action.payload?.firstName,
         lastName: action.payload?.lastName,
         phoneNumber: action.payload?.phoneNumber,
