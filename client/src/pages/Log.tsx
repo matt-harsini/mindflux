@@ -225,7 +225,7 @@ export default function Log() {
               onChange={(e) => {
                 setLog(e.target.value);
               }}
-              className="textarea resize-none text-md w-full max-w-[780px] mx-auto text-primary-content bg-base-200"
+              className="textarea resize-none text-md lg:text-lg w-full max-w-[780px] mx-auto text-primary-content bg-base-200"
             />
             <button
               onClick={handleLog}
