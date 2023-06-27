@@ -11,6 +11,7 @@ export default function App() {
   const Log = lazy(() => import("./pages/Log"));
 
   const { isAuth } = useAuthContext();
+  
   return (
     <BrowserRouter>
       <Routes>
