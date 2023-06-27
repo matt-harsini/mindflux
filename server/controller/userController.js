@@ -19,7 +19,7 @@ function displayErrorMessage(error) {
     case error.includes("password_confirm"):
       return "Passwords are not the same.";
     case error.includes("phone_number"):
-      return "Phone number must be length 10 and consist of numbers only.";
+      return "Phone number is not valid.";
     default:
       return error;
   }

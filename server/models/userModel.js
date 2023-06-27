@@ -39,7 +39,6 @@ const userSchema = new Schema({
   },
   phone_number: {
     type: String,
-    maxLength: 10,
     validate: {
       validator: function (v) {
         return /\d{3}-\d{3}-\d{4}/.test(v);
