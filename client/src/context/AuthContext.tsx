@@ -45,6 +45,9 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, {
     username: null,
     email: null,
+    firstName: null,
+    lastName: null,
+    phone: null,
     isAuth: false,
   });
   const [mount, setMount] = useState(false);

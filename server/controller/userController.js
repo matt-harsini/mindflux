@@ -67,6 +67,9 @@ async function verify(req, res) {
       authorized: true,
       username: user.username,
       email: user.email,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      phoneNumber: user.phone_number,
     });
   } catch (error) {
     return res.json({

@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { SettingsActionType } from "../shared/types";
 import { SettingsAction, SettingsState } from "../shared/interfaces";
@@ -21,14 +21,18 @@ function reducer(state: SettingsState, action: SettingsAction) {
 }
 
 export default function Settings() {
-  const { dispatch: authDispatch }: AuthContext = useAuthContext();
+  const {
+    username,
+    email: initialEmail,
+    dispatch: authDispatch,
+  }: AuthContext = useAuthContext();
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     authDispatch({
       type: "LOGOUT",
     });
   };
-  const { username, email: initialEmail } = useAuthContext();
   const [state, dispatch] = useReducer(reducer, {
     firstName: "",
     lastName: "",
@@ -36,12 +40,9 @@ export default function Settings() {
     phoneNumber: "",
   });
 
-  const {
-    mutate: updateUser,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useMutation({
+  const [change, setChange] = useState(false);
+
+  const { mutate: updateUser } = useMutation({
     mutationFn: () =>
       authFetch.patch("/update-user", {
         first_name: state.firstName,
@@ -82,9 +83,10 @@ export default function Settings() {
                 className="input bg-base-200 input-bordered text-primary-content"
                 type="text"
                 value={state.firstName}
-                onChange={(e) =>
-                  dispatch({ type: "FIRST_NAME", payload: e.target.value })
-                }
+                onChange={(e) => {
+                  setChange(true);
+                  dispatch({ type: "FIRST_NAME", payload: e.target.value });
+                }}
               />
             </div>
             <div className="flex flex-col gap-3">
@@ -97,6 +99,7 @@ export default function Settings() {
                 type="text"
                 value={state.lastName}
                 onChange={(e) => {
+                  setChange(true);
                   dispatch({ type: "LAST_NAME", payload: e.target.value });
                 }}
               />
@@ -129,19 +132,33 @@ export default function Settings() {
                 type="text"
                 value={state.phoneNumber}
                 onChange={(e) => {
+                  setChange(true);
                   dispatch({ type: "PHONE_NUMBER", payload: e.target.value });
                 }}
               />
             </div>
           </div>
         </form>
-        <button
-          onClick={handleLogout}
-          type="button"
-          className="btn btn-secondary self-center"
-        >
-          log out
-        </button>
+        <div className="flex items-center justify-center gap-x-20">
+          <button
+            onClick={handleLogout}
+            type="button"
+            className="btn btn-secondary self-center"
+          >
+            log out
+          </button>
+          <button
+            onClick={() => {
+              setChange(false);
+              updateUser();
+            }}
+            className={`btn self-start ${
+              !change ? "btn-disabled" : "btn-accent"
+            }`}
+          >
+            Update
+          </button>
+        </div>
       </div>
     </>
   );

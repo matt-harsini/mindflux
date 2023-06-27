@@ -2,6 +2,9 @@ interface AuthState {
   email: string | null | undefined;
   username: string | null | undefined;
   isAuth: boolean | undefined;
+  firstName: string | null;
+  lastName: string | null;
+  phone: string | null;
 }
 
 interface AuthAction {
