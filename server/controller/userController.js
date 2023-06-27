@@ -18,6 +18,8 @@ function displayErrorMessage(error) {
       return "Password must contain at least one symbol, number, uppercase, and lowercase characters.";
     case error.includes("password_confirm"):
       return "Passwords are not the same.";
+    case error.includes("phone_number"):
+      return "Phone number must be length 10 and consist of numbers only.";
     default:
       return error;
   }
@@ -183,14 +185,18 @@ async function resetPassword(req, res, next) {
 
 async function updateUser(req, res, next) {
   try {
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { _id: req.user._id },
-      { ...req.body }
+      { ...req.body },
+      { runValidators: true }
     );
     return res.sendStatus(StatusCodes.OK);
   } catch (error) {
     return next(
-      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+      createAPIError(
+        displayErrorMessage(error.message),
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
     );
   }
 }
