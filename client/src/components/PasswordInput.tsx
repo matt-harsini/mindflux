@@ -3,7 +3,9 @@ import { useState } from "react";
 export default function PasswordInput({
   password,
   setPassword,
+  type = "password",
 }: {
+  type?: string;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
 }) {
@@ -19,7 +21,7 @@ export default function PasswordInput({
         }}
         required
         autoComplete="on"
-        id="password"
+        id={type}
       />
       {!showPassword ? (
         <button

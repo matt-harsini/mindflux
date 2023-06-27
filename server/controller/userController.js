@@ -6,6 +6,7 @@ import { createToken } from "../utils/index.js";
 import crypto from "crypto";
 import { createAPIError } from "../errors/errorHandler.js";
 import { sendEmail } from "../utils/email.js";
+import bcrypt from "bcrypt";
 
 function displayErrorMessage(error) {
   switch (true) {
@@ -15,6 +16,8 @@ function displayErrorMessage(error) {
       return "Must be a valid email.";
     case error.includes("password:"):
       return "Password must contain at least one symbol, number, uppercase, and lowercase characters.";
+    case error.includes("password_confirm"):
+      return "Passwords are not the same.";
     default:
       return error;
   }
@@ -84,7 +87,7 @@ async function forgotPassword(req, res, next) {
 
   const resetURL = `${req.get("origin")}/${resetToken}`;
 
-  const message = `Forgot your password? Click on the link below to reset and confirm your password.\n${resetURL}\nIf you didn't forget your password, please ignore this email`;
+  const message = `Forgot your password? Click on the link below to reset and confirm your password. If you didn't forget your password, please ignore this email.\n\n${resetURL}\n\n`;
   try {
     await sendEmail({
       email: user.email,
@@ -146,6 +149,14 @@ async function resetPassword(req, res, next) {
     );
   }
 
+  const match = await bcrypt.compare(req.body.password, user.password);
+
+  if (match) {
+    return next(
+      createAPIError("Passwords must not be the same", StatusCodes.BAD_REQUEST)
+    );
+  }
+
   user.password = req.body.password;
   user.password_confirm = req.body.passwordConfirm;
   user.password_reset_token = undefined;
@@ -154,14 +165,16 @@ async function resetPassword(req, res, next) {
   try {
     await user.save();
   } catch (error) {
-    return next(createAPIError(error.message, StatusCodes.BAD_REQUEST));
+    return next(
+      createAPIError(
+        displayErrorMessage(error.message),
+        StatusCodes.BAD_REQUEST
+      )
+    );
   }
-
-  const token = createToken(user._id);
 
   return res.status(200).json({
     status: "Success",
-    token,
   });
 }
 

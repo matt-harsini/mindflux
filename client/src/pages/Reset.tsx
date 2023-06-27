@@ -19,7 +19,12 @@ export default function Reset() {
     mutationFn: () => authFetch.post("/verify-token", { token }),
   });
 
-  const { mutate: resetPassword, isSuccess: isResetSuccess } = useMutation({
+  const {
+    mutate: resetPassword,
+    isSuccess: isResetSuccess,
+    error,
+    isError,
+  } = useMutation({
     mutationFn: () =>
       authFetch.patch(`/forgot-password/${token}`, {
         password,
@@ -32,7 +37,7 @@ export default function Reset() {
     verifyToken().then(() => hasMounted(true));
   }
 
-  if (isVerifyLoading && !mounted) {
+  if (!mounted) {
     return <Loading height="h-screen" />;
   }
 
@@ -56,6 +61,13 @@ export default function Reset() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
+      <div
+        className={`max-w-max alert alert-error flex justify-items-center py-2.5 ${
+          !isError && "invisible"
+        }`}
+      >
+        <span className="text-center">{error?.response?.data.message}</span>
+      </div>
       <form className="py-6 px-8 pt-8 flex flex-col gap-8 max-w-lg w-full relative">
         <div>
           <h4 className="text-white text-2xl font-semibold">
@@ -75,6 +87,7 @@ export default function Reset() {
           <PasswordInput
             password={passwordConfirm}
             setPassword={setPasswordConfirm}
+            type="confirmPassword"
           />
         </div>
         <button
@@ -85,6 +98,9 @@ export default function Reset() {
           Reset password
         </button>
       </form>
+      <Link to="/" className="text-white text-md mt-5">
+        Back to home
+      </Link>
     </div>
   );
 }
