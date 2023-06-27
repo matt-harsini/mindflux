@@ -274,7 +274,7 @@ export default function Calendar() {
                       !isSameMonth(day, firstDayCurrentMonth) &&
                       !isEqual(day, selectedDay) &&
                       "text-gray-500",
-                    "flex h-14 flex-col px-3 py-2 hover:bg-base-300 focus:primary-content"
+                    "flex h-[72px] flex-col px-3 py-2 hover:bg-base-300 focus:primary-content"
                   )}
                 >
                   <time

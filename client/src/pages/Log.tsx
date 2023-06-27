@@ -90,7 +90,7 @@ export default function Log() {
 
   useEffect(() => {
     if (!btnLogClicked) return;
-    
+
     const id = setTimeout(() => {
       navigate.current("/dashboard/calendar");
     }, 2000);
@@ -125,7 +125,7 @@ export default function Log() {
         <h4 className="text-xl text-primary-content lg:text-3xl font-bold mx-auto">
           How are you feeling?
         </h4>
-        <div className="flex flex-col items-center gap-16 md:flex-row justify-between md:gap-4 max-w-[1280px] w-full mx-auto">
+        <div className="flex flex-col items-center gap-16 px-8 md:flex-row justify-between md:gap-4 max-w-[1280px] w-full mx-auto">
           {icons.map(({ icon, title, id }, i) => {
             return (
               <motion.div

@@ -142,7 +142,7 @@ export default function Dashboard() {
       </div>
       {!!chartData?.data.documents.length &&
       !!pieData?.data.documents.length ? (
-        <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 mt-16">
+        <div className="flex flex-col 2xl:flex-row items-center justify-evenly w-full gap-10 mt-16 pb-8">
           <ResponsiveContainer width="100%" aspect={2}>
             <PieChart width={730} height={250}>
               <Pie
