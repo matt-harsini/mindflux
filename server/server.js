@@ -9,10 +9,11 @@ import cors from "cors";
 import helmet from "helmet";
 import { createAPIError, handleError } from "./errors/errorHandler.js";
 import { StatusCodes } from "http-status-codes";
+import { corsOptions } from "./config.js";
 
 const app = express();
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.options("*", cors());
 const limiter = rateLimit({
   max: 150,
