@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { UseMutateFunction, useMutation } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
 import { Loading } from "../components";
@@ -24,6 +25,11 @@ export default function Reset() {
     isSuccess: isResetSuccess,
     error,
     isError,
+  }: {
+    error: any;
+    isError: boolean;
+    isSuccess: boolean;
+    mutate: UseMutateFunction;
   } = useMutation({
     mutationFn: () =>
       authFetch.patch(`/forgot-password/${token}`, {

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useReducer } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { SettingsActionType } from "../shared/types";
 import { SettingsAction, SettingsState } from "../shared/interfaces";
 import { AuthContext } from "../shared/interfaces";
 import { authFetch } from "../utils";
-import { useMutation } from "react-query";
+import { UseMutateAsyncFunction, useMutation } from "react-query";
 
 function reducer(state: SettingsState, action: SettingsAction) {
   switch (action.type) {
@@ -49,6 +50,10 @@ export default function Settings() {
     mutateAsync: updateUser,
     isError,
     error,
+  }: {
+    error: any;
+    isError: boolean;
+    mutateAsync: UseMutateAsyncFunction;
   } = useMutation({
     mutationFn: () =>
       authFetch.patch("/update-user", {

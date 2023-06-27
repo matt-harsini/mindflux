@@ -1,4 +1,4 @@
-import { Dispatch, DispatchWithoutAction, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type MoodMeter = {
   CARD_HAPPY: null;
