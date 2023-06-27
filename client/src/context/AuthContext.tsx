@@ -65,7 +65,6 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
   });
   const [mount, setMount] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
-  console.log("AuthContext state: ", state);
   const { refetch } = useQuery({
     queryFn: () =>
       authFetch.get("/verify", {

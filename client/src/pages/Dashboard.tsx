@@ -76,8 +76,6 @@ export default function Dashboard() {
     keepPreviousData: true,
   });
 
-  console.log(chartData, pieData);
-
   return (
     <>
       <div className="flex flex-col gap-y-10">
