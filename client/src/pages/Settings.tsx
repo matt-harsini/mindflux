@@ -141,12 +141,11 @@ export default function Settings() {
             </div>
             <div className="flex flex-col gap-3">
               <label className="text-primary-content" htmlFor="phone-number">
-                Phone Number
+                Phone Number (xxx-xxx-xxxx)
               </label>
               <input
                 id="phone-number"
                 className="input bg-base-200 input-bordered text-primary-content"
-                type="text"
                 value={state.phoneNumber}
                 onChange={(e) => {
                   dispatch({ type: "PHONE_NUMBER", payload: e.target.value });
@@ -154,31 +153,32 @@ export default function Settings() {
               />
             </div>
           </div>
-        </form>
-        <div className="flex items-center justify-center gap-x-20">
-          <button
-            onClick={handleLogout}
-            type="button"
-            className="btn btn-secondary self-center"
-          >
-            log out
-          </button>
-          <button
-            onClick={() => {
-              updateUser().then(() => {
-                authDispatch({
-                  type: "SET_DATA",
-                  payload: { ...state, username, isAuth },
+          <div className="flex items-center justify-center gap-x-20 mt-4">
+            <button
+              onClick={handleLogout}
+              type="button"
+              className="btn btn-secondary self-center"
+            >
+              log out
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                updateUser().then(() => {
+                  authDispatch({
+                    type: "SET_DATA",
+                    payload: { ...state, username, isAuth },
+                  });
                 });
-              });
-            }}
-            className={`btn self-start ${
-              isEqual ? "btn-disabled" : "btn-accent"
-            }`}
-          >
-            Update
-          </button>
-        </div>
+              }}
+              className={`btn self-start ${
+                isEqual ? "btn-disabled" : "btn-accent"
+              }`}
+            >
+              Update
+            </button>
+          </div>
+        </form>
       </div>
     </>
   );
