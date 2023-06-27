@@ -1,6 +1,0 @@
-Todos:
-
-2. Handle error password validation on resetpassword page
-4. Implement a feature where user can input custom log, select their own color for charts, etc.
-5. Implement a custom mood input feature
-
