@@ -58,8 +58,6 @@ export default function Settings() {
       }),
   });
 
-  console.log(isError, error);
-
   const isEqual =
     firstName === state.firstName &&
     lastName === state.lastName &&
