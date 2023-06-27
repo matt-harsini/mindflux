@@ -4,7 +4,6 @@ import {
   Area,
   AreaChart,
   Cell,
-  Label,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -15,7 +14,7 @@ import {
 import { inputIcons, colors, feelings } from "../theme";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { formatISO, startOfToday, sub } from "date-fns";
 import { motion } from "framer-motion";
 

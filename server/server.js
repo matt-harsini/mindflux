@@ -13,6 +13,7 @@ import { StatusCodes } from "http-status-codes";
 const app = express();
 app.use(helmet());
 app.use(cors());
+app.options("*", cors());
 const limiter = rateLimit({
   max: 150,
   windowMs: 60 * 60 * 60,
