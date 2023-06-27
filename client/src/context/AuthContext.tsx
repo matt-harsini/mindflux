@@ -20,13 +20,23 @@ function authReducer(_state: AuthState, action: AuthAction): AuthState {
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
       return {
+        isAuth: true,
         email: action.payload?.email,
         username: action.payload?.username,
-        isAuth: true,
+        firstName: action.payload?.firstName,
+        lastName: action.payload?.lastName,
+        phoneNumber: action.payload?.phoneNumber,
       };
     case AuthActionTypes.LOGOUT:
       delete authFetch.defaults.headers.common["Authorization"];
-      return { username: null, isAuth: false, email: null };
+      return {
+        username: null,
+        isAuth: false,
+        email: null,
+        firstName: null,
+        lastName: null,
+        phoneNumber: null,
+      };
     case AuthActionTypes.SET_AUTH:
       authFetch.defaults.headers.common[
         "Authorization"
@@ -35,6 +45,9 @@ function authReducer(_state: AuthState, action: AuthAction): AuthState {
         isAuth: action.payload?.isAuth,
         email: action.payload?.email,
         username: action.payload?.username,
+        firstName: action.payload?.firstName,
+        lastName: action.payload?.lastName,
+        phoneNumber: action.payload?.phoneNumber,
       };
   }
   throw new Error(`No matching ${action.type}`);
@@ -47,7 +60,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     email: null,
     firstName: null,
     lastName: null,
-    phone: null,
+    phoneNumber: null,
     isAuth: false,
   });
   const [mount, setMount] = useState(false);
@@ -65,6 +78,9 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
       dispatch({
         type: "SET_AUTH",
         payload: {
+          phoneNumber: data.data.phoneNumber,
+          firstName: data.data.firstName,
+          lastName: data.data.lastName,
           isAuth: data.data.authorized,
           username: data.data.username,
           email: data.data.email,
@@ -73,6 +89,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     },
     queryKey: ["auth"],
   });
+
   if (!mount) {
     refetch();
     setMount(true);
