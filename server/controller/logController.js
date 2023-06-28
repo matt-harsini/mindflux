@@ -5,6 +5,8 @@ import { createAPIError } from "../errors/errorHandler.js";
 
 async function createLog(req, res, next) {
   const { moodMeter, log, date } = req.body;
+
+  console.log(new Date(date).getDate());
   const { _id: user_id } = req.user;
   try {
     await Log.create({ moodMeter, log, date, user_id });
