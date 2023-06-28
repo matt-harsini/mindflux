@@ -32,13 +32,6 @@ export default function Settings() {
     isAuth,
   }: AuthContext = useAuthContext();
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    authDispatch({
-      type: "LOGOUT",
-    });
-  };
-
   const [state, dispatch] = useReducer(reducer, {
     firstName: firstName as string,
     lastName: lastName as string,
@@ -74,7 +67,7 @@ export default function Settings() {
         Settings
       </h3>
       <div
-        className={`max-w-max absolute top-0 right-0 left-0 mx-auto mb-7 alert alert-error flex justify-items-center py-2.5 ${
+        className={`max-w-max mb-7 lg:mb-3 mx-auto alert alert-error flex justify-items-center py-2.5 ${
           !isError && "hidden"
         }`}
       >
@@ -159,7 +152,7 @@ export default function Settings() {
             </div>
           </div>
           <div className="divider" />
-          <div className="flex items-center justify-start gap-x-20 pb-12">
+          <div className="flex items-center justify-center lg:justify-start gap-x-20 pb-12">
             <button
               onClick={(e) => {
                 e.preventDefault();
