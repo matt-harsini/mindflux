@@ -144,6 +144,12 @@ export default function SidebarOutlet() {
                           </ul>
                         </li>
                       </ul>
+                      <button
+                        onClick={handleLogout}
+                        className="btn btn-secondary w-full self-center"
+                      >
+                        log out
+                      </button>
                     </nav>
                   </div>
                 </Dialog.Panel>

@@ -159,7 +159,7 @@ export default function Settings() {
             </div>
           </div>
           <div className="divider" />
-          <div className="flex items-center justify-start gap-x-20">
+          <div className="flex items-center justify-start gap-x-20 pb-12">
             <button
               onClick={(e) => {
                 e.preventDefault();
