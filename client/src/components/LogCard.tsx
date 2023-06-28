@@ -7,11 +7,10 @@ import { authFetch } from "../utils";
 import { useState } from "react";
 
 export default function LogCard({ log, refetch }: any) {
-  const { mutate, isLoading } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (id: string) => authFetch.delete(`/delete-log/${id}`),
     onSuccess: () => {
-      refetch();
-      setClicked(false);
+      refetch().then(() => setClicked(false));
     },
   });
 
