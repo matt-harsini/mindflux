@@ -24,8 +24,8 @@ export default function Reset() {
     mutate: resetPassword,
     isSuccess: isResetSuccess,
     error,
-    isError,
-    isLoading,
+    isError: isResetError,
+    isLoading: isResetLoading,
   }: {
     isLoading: boolean;
     error: any;
@@ -45,16 +45,21 @@ export default function Reset() {
     verifyToken().then(() => hasMounted(true));
   }, [verifyToken]);
 
-  if (!mounted) {
+  if (!mounted || !isVerifyLoading) {
     return <Loading height="h-screen" />;
   }
 
-  if (isLoading && !isError) {
+  if (isResetLoading && !isResetError) {
     return <Loading height="h-screen" />;
   }
 
   if (!isVerifyLoading && isVerifyError) {
-    return <Navigate to="/" />;
+    return (
+      <div className="flex flex-col justify-items items-center h-screen">
+        <h4 className="text-white text-lg">Page not found</h4>
+        <Link to="/">Back to home</Link>
+      </div>
+    );
   }
 
   if (isResetSuccess) {
