@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import {
@@ -72,7 +72,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     isAuth: false,
   });
   const [isFetching, setIsFetching] = useState(true);
-  useQuery({
+  const { refetch } = useQuery({
     queryFn: () =>
       authFetch.get("/verify", {
         headers: {
@@ -95,6 +95,10 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     },
     queryKey: ["auth"],
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch, isFetching }}>

@@ -43,14 +43,13 @@ export default function Reset() {
 
   useEffect(() => {
     verifyToken().then(() => hasMounted(true));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [verifyToken]);
 
   if (!mounted) {
     return <Loading height="h-screen" />;
   }
 
-  if (isLoading) {
+  if (isLoading && !isError) {
     return <Loading height="h-screen" />;
   }
 
