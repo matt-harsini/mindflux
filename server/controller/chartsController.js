@@ -118,6 +118,7 @@ async function getChartData(req, res, next) {
         },
       },
     ]);
+    console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
     return next(
@@ -273,6 +274,7 @@ async function getPieChartData(req, res, next) {
         },
       },
     ]);
+    console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
     return next(

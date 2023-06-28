@@ -72,7 +72,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     isAuth: false,
   });
   const [isFetching, setIsFetching] = useState(true);
-  const { refetch } = useQuery({
+  useQuery({
     queryFn: () =>
       authFetch.get("/verify", {
         headers: {
@@ -94,11 +94,8 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
       });
     },
     queryKey: ["auth"],
+    refetchOnWindowFocus: false,
   });
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch, isFetching }}>
