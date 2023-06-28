@@ -1,13 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useState } from "react";
-import { useMutation } from "react-query";
+import { UseMutateFunction, useMutation } from "react-query";
 import { authFetch } from "../utils";
 import { Link } from "react-router-dom";
 import { Loading } from "../components";
 
 export default function Forgot() {
   const [email, setEmail] = useState("");
-  
-  const { mutate, isSuccess, isLoading } = useMutation({
+
+  const {
+    mutate,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  }: {
+    mutate: UseMutateFunction;
+    isSuccess: boolean;
+    isLoading: boolean;
+    isError: boolean;
+    error: any;
+  } = useMutation({
     mutationFn: () => authFetch.post("/forgot-password", { email }),
   });
 
@@ -37,6 +50,13 @@ export default function Forgot() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
+      <div
+        className={`max-w-max absolute top-10 alert alert-error flex justify-items-center py-2.5 ${
+          !isError && "invisible"
+        }`}
+      >
+        <span className="text-center">{error?.response?.data.message}</span>
+      </div>
       <form
         className="py-6 px-8 pt-8 flex flex-col gap-8 max-w-lg w-full relative"
         onSubmit={handleEmailSubmit}
