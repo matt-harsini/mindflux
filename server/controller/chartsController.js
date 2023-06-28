@@ -9,6 +9,15 @@ async function getChartData(req, res, next) {
     if (!f) {
       const documents = await Log.aggregate([
         {
+          $addFields: {
+            user_date: {
+              $dateFromString: {
+                dateString: "$date",
+              },
+            },
+          },
+        },
+        {
           $match: {
             $and: [
               {
@@ -20,7 +29,7 @@ async function getChartData(req, res, next) {
         {
           $group: {
             _id: {
-              $substr: ["$createdAt", 0, 10],
+              $substr: ["$user_date", 0, 10],
             },
             Happiness: {
               $sum: {
@@ -54,13 +63,22 @@ async function getChartData(req, res, next) {
     }
     const documents = await Log.aggregate([
       {
+        $addFields: {
+          user_date: {
+            $dateFromString: {
+              dateString: "$date",
+            },
+          },
+        },
+      },
+      {
         $match: {
           $and: [
             {
               user_id: user_id.toString(),
             },
             {
-              createdAt: {
+              user_date: {
                 $gte: new Date(f),
               },
             },
@@ -70,7 +88,7 @@ async function getChartData(req, res, next) {
       {
         $group: {
           _id: {
-            $substr: ["$createdAt", 0, 10],
+            $substr: ["$user_date", 0, 10],
           },
           Happiness: {
             $sum: {
@@ -102,7 +120,10 @@ async function getChartData(req, res, next) {
     ]);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    return next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    console.log(error);
+    return next(
+      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+    );
   }
 }
 
@@ -178,13 +199,22 @@ async function getPieChartData(req, res, next) {
     }
     const documents = await Log.aggregate([
       {
+        $addFields: {
+          user_date: {
+            $dateFromString: {
+              dateString: "$date",
+            },
+          },
+        },
+      },
+      {
         $match: {
           $and: [
             {
               user_id: user_id.toString(),
             },
             {
-              createdAt: {
+              user_date: {
                 $gte: new Date(f),
               },
             },
@@ -246,7 +276,9 @@ async function getPieChartData(req, res, next) {
     ]);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    return next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    return next(
+      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+    );
   }
 }
 
