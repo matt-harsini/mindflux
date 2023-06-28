@@ -80,7 +80,7 @@ export default function Reset() {
     <div className="min-h-screen flex flex-col items-center justify-center">
       <div
         className={`max-w-max alert alert-error flex justify-items-center py-2.5 ${
-          !isError && "invisible"
+          !isResetError && "invisible"
         }`}
       >
         <span className="text-center">{error?.response?.data.message}</span>
