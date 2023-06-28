@@ -60,10 +60,6 @@ export default function Reset() {
     );
   }
 
-  if (isResetLoading) {
-    return <Loading height="h-screen" />;
-  }
-
   if (isResetSuccess) {
     return (
       <div className="min-h-screen flex flex-col gap-y-6 items-center justify-center">
@@ -81,7 +77,7 @@ export default function Reset() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <div
-        className={`max-w-max alert alert-error flex justify-items-center py-2.5 ${
+        className={`max-w-max absolute top-10 alert alert-error flex justify-items-center py-2.5 ${
           !isResetError && "invisible"
         }`}
       >
@@ -112,7 +108,9 @@ export default function Reset() {
         <button
           onClick={() => resetPassword()}
           type="button"
-          className="btn btn-secondary w-full"
+          className={`btn ${
+            isResetLoading ? "btn-disabled" : "btn-secondary"
+          } w-full`}
         >
           Reset password
         </button>

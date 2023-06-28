@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation } from "react-query";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { AuthContext } from "../shared/interfaces";
+import { AuthContext, Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
 import { getAuthFetch } from "../utils/axios";
 import PasswordInput from "../components/PasswordInput";
-import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -16,10 +14,13 @@ export default function Register() {
 
   const {
     mutate,
+    isError,
     isLoading,
+    error,
   }: {
     mutate: () => void;
     isError: boolean;
+    error: Error | null;
     isLoading: boolean;
   } = useMutation({
     mutationFn: () =>
@@ -32,15 +33,6 @@ export default function Register() {
           isAuth: true,
           username: data.data.username,
           email: data.data.email,
-        },
-      });
-    },
-    onError: (error: any) => {
-      toast.error(error?.response?.data.message, {
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
         },
       });
     },
@@ -60,6 +52,13 @@ export default function Register() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
+      <div
+        className={`max-w-max absolute top-10 alert alert-error flex justify-items-center py-2.5 ${
+          !isError && "invisible"
+        }`}
+      >
+        <span className="text-center">{error?.response.data.message}</span>
+      </div>
       <form
         className="py-6 px-8 pt-8 flex flex-col gap-6 max-w-lg w-full relative"
         onSubmit={handleSubmit}
@@ -120,7 +119,6 @@ export default function Register() {
       <Link to="/login" className="text-white text-md mt-5">
         Already a user? Log in
       </Link>
-      <Toaster />
     </div>
   );
 }

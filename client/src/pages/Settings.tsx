@@ -69,12 +69,12 @@ export default function Settings() {
     phoneNumber === state.phoneNumber;
 
   return (
-    <>
+    <div className="relative">
       <h3 className="text-2xl sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 text-start">
         Settings
       </h3>
       <div
-        className={`max-w-max mx-auto mb-7 alert alert-error flex justify-items-center py-2.5 ${
+        className={`max-w-max absolute top-0 right-0 left-0 mx-auto mb-7 alert alert-error flex justify-items-center py-2.5 ${
           !isError && "hidden"
         }`}
       >
@@ -185,6 +185,6 @@ export default function Settings() {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }
