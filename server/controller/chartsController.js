@@ -20,7 +20,7 @@ async function getChartData(req, res, next) {
         {
           $group: {
             _id: {
-              $substr: ["$createdAt", 0, 10],
+              $substr: ["$date", 0, 10],
             },
             Happiness: {
               $sum: {
@@ -60,7 +60,7 @@ async function getChartData(req, res, next) {
               user_id: user_id.toString(),
             },
             {
-              createdAt: {
+              date: {
                 $gte: new Date(f),
               },
             },
@@ -70,7 +70,7 @@ async function getChartData(req, res, next) {
       {
         $group: {
           _id: {
-            $substr: ["$createdAt", 0, 10],
+            $substr: ["$date", 0, 10],
           },
           Happiness: {
             $sum: {
@@ -102,7 +102,9 @@ async function getChartData(req, res, next) {
     ]);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    return next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    return next(
+      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+    );
   }
 }
 
@@ -184,7 +186,7 @@ async function getPieChartData(req, res, next) {
               user_id: user_id.toString(),
             },
             {
-              createdAt: {
+              date: {
                 $gte: new Date(f),
               },
             },
@@ -246,7 +248,9 @@ async function getPieChartData(req, res, next) {
     ]);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    return next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
+    return next(
+      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+    );
   }
 }
 
