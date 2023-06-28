@@ -7,16 +7,12 @@ import { Loading } from "../components";
 import PasswordInput from "../components/PasswordInput";
 
 export default function Reset() {
-  const [mounted, hasMounted] = useState(false);
+  const [mount, setMount] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [password, setPassword] = useState("");
   const { token } = useParams();
 
-  const {
-    mutateAsync: verifyToken,
-    isError: isVerifyError,
-    isLoading: isVerifyLoading,
-  } = useMutation({
+  const { mutateAsync: verifyToken, isError: isVerifyError } = useMutation({
     mutationFn: () => authFetch.post("/verify-token", { token }),
   });
 
@@ -42,24 +38,30 @@ export default function Reset() {
   });
 
   useEffect(() => {
-    verifyToken().then(() => hasMounted(true));
+    verifyToken()
+      .then(() => setMount(true))
+      .catch(() => setMount(true));
   }, [verifyToken]);
 
-  if (!mounted || !isVerifyLoading) {
+  if (!mount) {
     return <Loading height="h-screen" />;
   }
 
-  if (isResetLoading && !isResetError) {
-    return <Loading height="h-screen" />;
-  }
-
-  if (!isVerifyLoading && isVerifyError) {
+  if (isVerifyError) {
     return (
-      <div className="flex flex-col justify-items items-center h-screen">
-        <h4 className="text-white text-lg">Page not found</h4>
-        <Link to="/">Back to home</Link>
+      <div className="flex flex-col justify-center items-center h-screen gap-y-4">
+        <h4 className="text-white text-lg">
+          Token has expired or is not valid
+        </h4>
+        <Link to="/" className="underline">
+          Back to home
+        </Link>
       </div>
     );
+  }
+
+  if (isResetLoading) {
+    return <Loading height="h-screen" />;
   }
 
   if (isResetSuccess) {

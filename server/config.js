@@ -1,4 +1,7 @@
-export const allowedOrigins = ["https://mindflux-hw3c.onrender.com"];
+export const allowedOrigins = [
+  "https://mindflux-hw3c.onrender.com",
+  "http://localhost:5173",
+];
 
 export const corsOptions = {
   origin: (origin, callback) => {
