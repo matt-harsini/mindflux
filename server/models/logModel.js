@@ -19,6 +19,9 @@ const logSchema = new Schema(
       type: String,
       required: true,
     },
+    user_date: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

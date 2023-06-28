@@ -7,7 +7,7 @@ async function createLog(req, res, next) {
   const { moodMeter, log, date } = req.body;
   const { _id: user_id } = req.user;
   try {
-    await Log.create({ moodMeter, log, date, user_id });
+    await Log.create({ moodMeter, log, date, user_id, user_date: date });
     return res.status(StatusCodes.OK).json({ moodMeter, log, date, user_id });
   } catch (error) {
     next(createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR));
