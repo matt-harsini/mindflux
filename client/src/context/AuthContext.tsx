@@ -1,4 +1,10 @@
-import { createContext, useReducer, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import {
@@ -71,7 +77,6 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     phoneNumber: null,
     isAuth: false,
   });
-  const [mount, setMount] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const { refetch } = useQuery({
     queryFn: () =>
@@ -97,10 +102,6 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     queryKey: ["auth"],
   });
 
-  if (!mount) {
-    refetch();
-    setMount(true);
-  }
   return (
     <AuthContext.Provider value={{ ...state, dispatch, isFetching }}>
       {children}
