@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import {
