@@ -4,17 +4,14 @@ import { colors, inputIcons, progressColors } from "../theme";
 import { ClockIcon } from "@heroicons/react/20/solid";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
-import { Loading } from ".";
 
 export default function LogCard({ log, refetch }: any) {
-  const { mutate, isLoading, isIdle } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: (id: string) => authFetch.delete(`/delete-log/${id}`),
     onSuccess: () => {
       refetch();
     },
   });
-
-  console.log(isLoading, isIdle);
 
   return (
     <div className="card shadow-md relative p-3">
