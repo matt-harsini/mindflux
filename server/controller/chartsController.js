@@ -120,7 +120,6 @@ async function getChartData(req, res, next) {
     ]);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
-    console.log(error);
     return next(
       createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
     );
