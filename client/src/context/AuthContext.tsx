@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { createContext, useReducer, useState } from "react";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import {
@@ -78,7 +72,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     isAuth: false,
   });
   const [isFetching, setIsFetching] = useState(true);
-  const { refetch } = useQuery({
+  useQuery({
     queryFn: () =>
       authFetch.get("/verify", {
         headers: {
