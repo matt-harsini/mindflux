@@ -39,7 +39,7 @@ async function getMonthLogs(req, res, next) {
       .fill()
       .map(() => []);
     documents.forEach((document) => {
-      const date = +new Date(document.createdAt).getDate();
+      const date = +new Date(document.date).getDate();
       payload[date - 1].push(document);
     });
     res.status(StatusCodes.OK).json({ payload });
