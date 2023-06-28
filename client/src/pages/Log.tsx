@@ -125,7 +125,7 @@ export default function Log() {
         <h4 className="text-xl text-primary-content md:text-2xl lg:text-3xl font-bold mx-auto">
           How are you feeling?
         </h4>
-        <div className="flex flex-col items-center gap-16 px-8 lg:flex-row justify-between md:gap-4 max-w-[1280px] w-full mx-auto">
+        <div className="flex flex-col gap-y-12 items-center px-8 lg:flex-row justify-between lg:gap-x-4 max-w-[1280px] w-full mx-auto">
           {icons.map(({ icon, title, id }, i) => {
             return (
               <motion.div
@@ -191,9 +191,9 @@ export default function Log() {
                   }}
                   initial="hidden"
                   animate="visible"
+                  key={card_title as Key}
                 >
                   <Input
-                    key={card_title as Key}
                     card_title={card_title as string}
                     setMoodMeter={setMoodMeter}
                     moodMeter={moodMeter}

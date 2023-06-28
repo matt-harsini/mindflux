@@ -1,4 +1,4 @@
-import { Dispatch, Key, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 export type MoodMeter = {
   CARD_HAPPY: null;
@@ -9,7 +9,6 @@ export type MoodMeter = {
 
 export type InputProps = {
   card_title: string;
-  key: Key;
   setMoodMeter: Dispatch<SetStateAction<MoodMeter>>;
   moodMeter: MoodMeter;
 };
