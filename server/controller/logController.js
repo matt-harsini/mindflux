@@ -5,9 +5,6 @@ import { createAPIError } from "../errors/errorHandler.js";
 
 async function createLog(req, res, next) {
   const { moodMeter, log, date } = req.body;
-
-  console.log(new Date(date).getDate());
-  console.log(date);
   const { _id: user_id } = req.user;
   try {
     await Log.create({ moodMeter, log, date, user_id });
@@ -42,8 +39,7 @@ async function getMonthLogs(req, res, next) {
       .fill()
       .map(() => []);
     documents.forEach((document) => {
-      const date = +new Date(document.date).getDate();
-      payload[date - 1].push(document);
+      payload[Number(document.date.substring(8, 10)) - 1].push(document);
     });
     res.status(StatusCodes.OK).json({ payload });
   } catch (error) {
