@@ -25,7 +25,9 @@ export default function Reset() {
     isSuccess: isResetSuccess,
     error,
     isError,
+    isLoading,
   }: {
+    isLoading: boolean;
     error: any;
     isError: boolean;
     isSuccess: boolean;
@@ -41,9 +43,10 @@ export default function Reset() {
 
   if (!mounted) {
     verifyToken().then(() => hasMounted(true));
+    return <Loading height="h-screen" />;
   }
 
-  if (!mounted) {
+  if (isLoading) {
     return <Loading height="h-screen" />;
   }
 
