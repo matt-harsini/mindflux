@@ -125,7 +125,7 @@ export default function Log() {
         <h4 className="text-xl text-primary-content md:text-2xl lg:text-3xl font-bold mx-auto">
           How are you feeling?
         </h4>
-        <div className="flex flex-col gap-y-12 md:grid md:grid-cols-2 md:justify-items-center items-center px-8 lg:flex lg:flex-row justify-between lg:gap-x-4 max-w-[1280px] w-full mx-auto">
+        <div className="flex flex-col items-center justify-between gap-y-8 lg:flex-row px-8">
           {icons.map(({ icon, title, id }, i) => {
             return (
               <motion.div

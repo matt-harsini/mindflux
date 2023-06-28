@@ -40,7 +40,7 @@ function classNames(...classes: string[]) {
 export default function SidebarOutlet() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="max-w-[1920px] mx-auto" id="sidebar">
+    <div className="max-w-[1920px] mx-auto">
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
