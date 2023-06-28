@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { UseMutateFunction, useMutation } from "react-query";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
 import { Loading } from "../components";
 import PasswordInput from "../components/PasswordInput";
