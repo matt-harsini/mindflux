@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -6,21 +7,19 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../shared/interfaces";
 import { getAuthFetch } from "../utils/axios";
 import PasswordInput from "../components/PasswordInput";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { dispatch }: AuthContext = useAuthContext();
   const {
-    error,
     mutate,
     isLoading,
-    isError,
   }: {
-    error: Error | null;
+    error: any;
     mutate: () => void;
     isLoading: boolean;
-    isError: boolean;
   } = useMutation({
     mutationFn: () => getAuthFetch.post("/login", { username, password }),
     onSuccess: (data) => {
@@ -31,6 +30,15 @@ export default function Login() {
           isAuth: true,
           username: data.data.username,
           email: data.data.email,
+        },
+      });
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data.message, {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
         },
       });
     },
@@ -49,13 +57,6 @@ export default function Login() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
-      <div
-        className={`max-w-max alert alert-error flex justify-items-center py-2.5 ${
-          !isError && "invisible"
-        }`}
-      >
-        <span className="text-center">{error?.response.data.message}</span>
-      </div>
       <form
         className="py-6 px-8 pt-8 flex flex-col gap-6 max-w-lg w-full relative"
         onSubmit={handleSubmit}
@@ -103,6 +104,7 @@ export default function Login() {
       <Link to="/register" className="text-white text-md mt-5">
         Don't have an account? Sign up
       </Link>
+      <Toaster />
     </div>
   );
 }
