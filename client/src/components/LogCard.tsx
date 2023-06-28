@@ -4,14 +4,18 @@ import { colors, inputIcons, progressColors } from "../theme";
 import { ClockIcon } from "@heroicons/react/20/solid";
 import { useMutation } from "react-query";
 import { authFetch } from "../utils";
+import { useState } from "react";
 
 export default function LogCard({ log, refetch }: any) {
   const { mutate, isLoading } = useMutation({
     mutationFn: (id: string) => authFetch.delete(`/delete-log/${id}`),
     onSuccess: () => {
       refetch();
+      setClicked(false);
     },
   });
+
+  const [clicked, setClicked] = useState(false);
 
   return (
     <div className="card shadow-md relative p-3">
@@ -35,13 +39,14 @@ export default function LogCard({ log, refetch }: any) {
             );
           })}
         </div>
-        {isLoading ? (
-          <span className="loading loading-spinner loading-md" />
+        {clicked ? (
+          <span className="loading loading-spinner loading-md self-start" />
         ) : (
           <button
             type="button"
             className="rounded-full text-white shadow-sm self-start"
             onClick={() => {
+              setClicked(true);
               mutate(log._id);
             }}
           >
