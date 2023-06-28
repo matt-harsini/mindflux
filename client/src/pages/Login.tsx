@@ -92,8 +92,8 @@ export default function Login() {
         <div className="mt-4">
           <button
             type="submit"
-            className={`btn btn-secondary w-full ${
-              isLoading ? "btn-disabled" : ""
+            className={`btn w-full ${
+              isLoading ? "btn-disabled" : "btn-secondary"
             }`}
           >
             log in

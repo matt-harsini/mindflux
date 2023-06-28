@@ -15,23 +15,28 @@ export default function Register() {
   const {
     mutate,
     isError,
+    isLoading,
     error,
-  }: { mutate: () => void; isError: boolean; error: Error | null } =
-    useMutation({
-      mutationFn: () =>
-        getAuthFetch.post("/register", { email, username, password }),
-      onSuccess: (data) => {
-        localStorage.setItem("token", JSON.stringify(data.data.token));
-        dispatch({
-          type: "LOGIN",
-          payload: {
-            isAuth: true,
-            username: data.data.username,
-            email: data.data.email,
-          },
-        });
-      },
-    });
+  }: {
+    mutate: () => void;
+    isError: boolean;
+    error: Error | null;
+    isLoading: boolean;
+  } = useMutation({
+    mutationFn: () =>
+      getAuthFetch.post("/register", { email, username, password }),
+    onSuccess: (data) => {
+      localStorage.setItem("token", JSON.stringify(data.data.token));
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          isAuth: true,
+          username: data.data.username,
+          email: data.data.email,
+        },
+      });
+    },
+  });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -101,7 +106,12 @@ export default function Register() {
           <PasswordInput password={password} setPassword={setPassword} />
         </div>
         <div className="mt-4">
-          <button type="submit" className="btn btn-secondary w-full">
+          <button
+            type="submit"
+            className={`btn ${
+              isLoading ? "btn-disabled" : "btn-secondary"
+            }  w-full`}
+          >
             register
           </button>
         </div>
