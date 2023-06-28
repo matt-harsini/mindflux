@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UseMutateFunction, useMutation } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { authFetch } from "../utils";
@@ -41,8 +41,12 @@ export default function Reset() {
     mutationKey: [password, passwordConfirm],
   });
 
-  if (!mounted) {
+  useEffect(() => {
     verifyToken().then(() => hasMounted(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!mounted) {
     return <Loading height="h-screen" />;
   }
 
