@@ -5,7 +5,6 @@ export function getDifferenceInDates(f, l) {
   const lastDayOfMonth = new Date(l);
   const diffTime = Math.abs(lastDayOfMonth - firstDayOfMonth);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  console.log(diffDays);
   return diffDays;
 }
 
