@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { NavLink, Outlet } from "react-router-dom";
 import { Loading } from "..";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: ChartPieIcon, current: false },
@@ -39,6 +40,14 @@ function classNames(...classes: string[]) {
 
 export default function SidebarOutlet() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { dispatch: authDispatch } = useAuthContext();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    authDispatch({
+      type: "LOGOUT",
+    });
+  };
+
   return (
     <div className="max-w-[1920px] mx-auto">
       <div>
@@ -185,6 +194,12 @@ export default function SidebarOutlet() {
                   </ul>
                 </li>
               </ul>
+              <button
+                onClick={handleLogout}
+                className="btn btn-secondary w-full self-center"
+              >
+                log out
+              </button>
             </nav>
           </div>
         </div>

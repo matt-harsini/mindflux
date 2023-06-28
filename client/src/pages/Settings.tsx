@@ -158,14 +158,8 @@ export default function Settings() {
               />
             </div>
           </div>
-          <div className="flex items-center justify-center gap-x-20 mt-4">
-            <button
-              onClick={handleLogout}
-              type="button"
-              className="btn btn-secondary self-center"
-            >
-              log out
-            </button>
+          <div className="divider" />
+          <div className="flex items-center justify-start gap-x-20">
             <button
               onClick={(e) => {
                 e.preventDefault();
