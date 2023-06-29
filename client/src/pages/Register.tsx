@@ -5,6 +5,7 @@ import { AuthContext, Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
 import { getAuthFetch } from "../utils/axios";
 import PasswordInput from "../components/PasswordInput";
+import { Loading } from "../components";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -43,10 +44,14 @@ export default function Register() {
     mutate();
   };
 
-  const { isAuth, isFetching } = useAuthContext();
+  const { isAuth, isFetching, isLoading: isAuthLoading } = useAuthContext();
 
   if (!isAuth && localStorage.getItem("token") && isFetching) {
     return <div />;
+  }
+
+  if (isAuthLoading) {
+    return <Loading height="h-screen" />;
   }
 
   return (

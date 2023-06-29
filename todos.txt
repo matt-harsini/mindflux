@@ -1,0 +1,9 @@
+Bugs:
+
+MongoDB stores times in UTC, so all the dates in the application are off
+https://www.mongodb.com/docs/v4.4/tutorial/model-time-data/
+
+Possibly add in loading state for the calendar?
+
+Deploy the backend on fly using docker
+

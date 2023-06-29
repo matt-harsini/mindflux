@@ -15,7 +15,7 @@ const logSchema = new Schema(
       type: String,
       required: true,
     },
-    date: {
+    timezone: {
       type: String,
       required: true,
     },

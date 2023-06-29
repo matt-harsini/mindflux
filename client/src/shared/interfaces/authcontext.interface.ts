@@ -14,6 +14,7 @@ interface AuthAction {
 
 interface AuthContext {
   isFetching: boolean;
+  isLoading: boolean;
   isAuth: boolean | undefined;
   username: string | null | undefined;
   email: string | null | undefined;

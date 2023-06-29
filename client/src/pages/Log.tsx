@@ -1,4 +1,4 @@
-import { format, formatISO, startOfToday } from "date-fns";
+import { format, startOfToday } from "date-fns";
 import { Key, useReducer, useState, useEffect, useRef } from "react";
 import { Card } from "../components";
 import Input from "../components/Input";
@@ -84,7 +84,7 @@ export default function Log() {
       authFetch.post("/log-mood", {
         moodMeter,
         log,
-        date: formatISO(Date.now()),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       }),
   });
 

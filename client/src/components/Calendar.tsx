@@ -76,9 +76,10 @@ export default function Calendar() {
     setCurrentMonth(format(today, "MMM-yyyy"));
   }
 
-  const data: any = useQuery([currentMonth], {
+  const data: any = useQuery({
     queryFn: () =>
       authFetch.get(`/query?f=${firstDateOfMonth}&l=${lastDateOfMonth}`),
+    queryKey: [currentMonth],
   });
 
   const { mutate } = useMutation({

@@ -9,27 +9,39 @@ async function getChartData(req, res, next) {
     if (!f) {
       const documents = await Log.aggregate([
         {
+          $match: {
+            user_id: user_id.toString(),
+          },
+        },
+        {
           $addFields: {
-            user_date: {
-              $dateFromString: {
-                dateString: "$date",
+            localDate: {
+              $dateToParts: {
+                date: "$createdAt",
+                timezone: "$timezone",
               },
             },
           },
         },
         {
-          $match: {
-            $and: [
-              {
-                user_id: user_id.toString(),
+          $addFields: {
+            dateISO: {
+              $dateFromParts: {
+                year: "$localDate.year",
+                month: "$localDate.month",
+                day: "$localDate.day",
+                hour: "$localDate.hour",
+                minute: "$localDate.minute",
+                second: "$localDate.second",
+                millisecond: "$localDate.millisecond",
               },
-            ],
+            },
           },
         },
         {
           $group: {
             _id: {
-              $substr: ["$user_date", 0, 10],
+              $substr: ["$dateISO", 0, 10],
             },
             Happiness: {
               $sum: {
@@ -64,9 +76,25 @@ async function getChartData(req, res, next) {
     const documents = await Log.aggregate([
       {
         $addFields: {
-          user_date: {
-            $dateFromString: {
-              dateString: "$date",
+          localDate: {
+            $dateToParts: {
+              date: "$createdAt",
+              timezone: "$timezone",
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          dateISO: {
+            $dateFromParts: {
+              year: "$localDate.year",
+              month: "$localDate.month",
+              day: "$localDate.day",
+              hour: "$localDate.hour",
+              minute: "$localDate.minute",
+              second: "$localDate.second",
+              millisecond: "$localDate.millisecond",
             },
           },
         },
@@ -78,7 +106,7 @@ async function getChartData(req, res, next) {
               user_id: user_id.toString(),
             },
             {
-              user_date: {
+              dateISO: {
                 $gte: new Date(f),
               },
             },
@@ -88,7 +116,7 @@ async function getChartData(req, res, next) {
       {
         $group: {
           _id: {
-            $substr: ["$user_date", 0, 10],
+            $substr: ["$dateISO", 0, 10],
           },
           Happiness: {
             $sum: {
@@ -118,7 +146,6 @@ async function getChartData(req, res, next) {
         },
       },
     ]);
-    console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
     return next(
@@ -135,11 +162,7 @@ async function getPieChartData(req, res, next) {
       const documents = await Log.aggregate([
         {
           $match: {
-            $and: [
-              {
-                user_id: user_id.toString(),
-              },
-            ],
+            user_id: user_id.toString(),
           },
         },
         {
@@ -200,9 +223,25 @@ async function getPieChartData(req, res, next) {
     const documents = await Log.aggregate([
       {
         $addFields: {
-          user_date: {
-            $dateFromString: {
-              dateString: "$date",
+          localDate: {
+            $dateToParts: {
+              date: "$createdAt",
+              timezone: "$timezone",
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          dateISO: {
+            $dateFromParts: {
+              year: "$localDate.year",
+              month: "$localDate.month",
+              day: "$localDate.day",
+              hour: "$localDate.hour",
+              minute: "$localDate.minute",
+              second: "$localDate.second",
+              millisecond: "$localDate.millisecond",
             },
           },
         },
@@ -214,7 +253,7 @@ async function getPieChartData(req, res, next) {
               user_id: user_id.toString(),
             },
             {
-              user_date: {
+              dateISO: {
                 $gte: new Date(f),
               },
             },
@@ -274,7 +313,6 @@ async function getPieChartData(req, res, next) {
         },
       },
     ]);
-    console.log(documents);
     return res.status(StatusCodes.OK).json({ documents });
   } catch (error) {
     return next(
