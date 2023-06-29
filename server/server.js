@@ -33,7 +33,7 @@ main();
 async function main() {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 8080;
     app.listen(port, () => {
       console.log(`Server is listening on port ${port}`);
     });
