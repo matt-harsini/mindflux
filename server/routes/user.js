@@ -1,5 +1,5 @@
 import express from "express";
-import { auth } from "../middleware/auth.js";
+import { auth, verifyEmail } from "../middleware/auth.js";
 import {
   login,
   register,
@@ -17,6 +17,8 @@ router.post("/login", login);
 router.post("/register", register);
 
 router.get("/verify", verify);
+
+router.post("/verify-email", verifyEmail);
 
 router.post("/forgot-password", forgotPassword);
 

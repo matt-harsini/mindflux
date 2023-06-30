@@ -33,4 +33,10 @@ async function auth(req, res, next) {
   }
 }
 
-export { auth };
+async function verifyEmail(req, res) {
+  const { verificationToken, email } = req.body;
+
+  res.status(StatusCodes.OK).json({ verificationToken, email });
+}
+
+export { auth, verifyEmail };
