@@ -78,24 +78,24 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col gap-y-10">
+      <div className="flex flex-col gap-y-[46px]">
         <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
           Hello {username}
         </h3>
         <div className="flex self-center gap-x-10">
           {buttons.map(({ text }: { text: string }, index) => {
             return (
-              <motion.button
-                className={`rounded-md w-32 ${
-                  filter === index
-                    ? "bg-secondary hover:bg-secondary-focus"
-                    : "bg-white/10 hover:bg-white/20"
-                } px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm `}
+              <button
                 key={index}
                 onClick={() => setFilter(index)}
+                className={`btn w-[50px] sm:w-[75px] md:w-[100px] lowercase ${
+                  index === filter
+                    ? "btn-accent"
+                    : "bg-white/10 hover:bg-white/20"
+                }`}
               >
                 {text}
-              </motion.button>
+              </button>
             );
           })}
         </div>

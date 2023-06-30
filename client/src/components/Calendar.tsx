@@ -8,6 +8,7 @@ import {
   add,
   differenceInDays,
   eachDayOfInterval,
+  endOfDay,
   endOfMonth,
   format,
   formatISO,
@@ -55,7 +56,9 @@ export default function Calendar() {
   const end = endOfMonth(firstDayCurrentMonth);
   const difference = differenceInDays(end, start);
   const firstDateOfMonth = formatISO(firstDayCurrentMonth);
-  const lastDateOfMonth = formatISO(lastDayOfMonth(firstDayCurrentMonth));
+  const lastDateOfMonth = formatISO(
+    endOfDay(lastDayOfMonth(firstDayCurrentMonth))
+  );
   const [open, setOpen] = useState(false);
   const newDays = eachDayOfInterval({
     start,
