@@ -25,6 +25,7 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.2.16",
     "nodemon": "^2.0.22"
   }
 }
