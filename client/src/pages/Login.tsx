@@ -88,7 +88,7 @@ export default function Login() {
             <label htmlFor="password" className="text-white">
               Password
             </label>
-            <Link to="/forgot" className="text-secondary font-bold">
+            <Link to="/forgot" className="text-accent font-bold">
               Forgot password?
             </Link>
           </div>
