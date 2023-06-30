@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { inputIcons, colors, feelings } from "../theme";
+import { inputIcons, colors, feelings, chartColors } from "../theme";
 import { useQuery } from "react-query";
 import { authFetch } from "../utils";
 import { useState } from "react";
@@ -86,26 +86,13 @@ export default function Dashboard() {
           {buttons.map(({ text }: { text: string }, index) => {
             return (
               <motion.button
+                className={`rounded-md w-32 ${
+                  filter === index
+                    ? "bg-secondary hover:bg-secondary-focus"
+                    : "bg-white/10 hover:bg-white/20"
+                } px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm `}
                 key={index}
-                variants={{
-                  hidden: {
-                    opacity: 0,
-                  },
-                  visible: (i) => ({
-                    opacity: 1,
-                    transition: {
-                      delay: i * 0.1,
-                      duration: 0.5,
-                    },
-                  }),
-                }}
-                initial="hidden"
-                animate="visible"
-                custom={index}
                 onClick={() => setFilter(index)}
-                className={`btn w-[50px] sm:w-[75px] md:w-[100px] lowercase ${
-                  index === filter ? "btn-secondary" : "btn-primary"
-                }`}
               >
                 {text}
               </motion.button>
@@ -144,7 +131,7 @@ export default function Dashboard() {
       {!!chartData?.data.documents.length &&
       !!pieData?.data.documents.length ? (
         <div className="flex flex-col 2xl:flex-row items-center justify-evenly w-full gap-10 mt-16 pb-8">
-          <ResponsiveContainer width="100%" aspect={2}>
+          <ResponsiveContainer width="44%" aspect={2}>
             <PieChart width={730} height={250}>
               <Pie
                 data={pieData?.data?.documents[0]?.data}
@@ -164,59 +151,53 @@ export default function Dashboard() {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-          <ResponsiveContainer width="100%" aspect={2.5}>
+          <ResponsiveContainer width="100%" aspect={3}>
             <AreaChart
+              width={500}
+              height={400}
               data={chartData?.data.documents}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+              margin={{
+                top: 10,
+                right: 30,
+                left: 0,
+                bottom: 0,
+              }}
             >
-              <defs>
-                <linearGradient id="Anxiety" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#D926A9" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#D926A9" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="Happiness" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#22C55E" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#22C55E" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="Anger" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#DC2626" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#DC2626" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="Sadness" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#1FB2A6" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#1FB2A6" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="_id" fontSize={14} tickMargin={12} />
-              <YAxis />
+              <XAxis
+                dataKey="_id"
+                fontSize={13}
+                tickMargin={12}
+                stroke="#ffffff"
+              />
+              <YAxis stroke="#ffffff" fontSize={13} />
               <Tooltip />
               <Area
                 type="monotone"
                 dataKey="Anxiety"
-                stroke="#D926A9"
-                fillOpacity={0.9}
-                fill="url(#Anxiety)"
+                stackId="1"
+                stroke={chartColors.Anxiety}
+                fill={chartColors.Anxiety}
               />
               <Area
                 type="monotone"
                 dataKey="Happiness"
-                stroke="#22C55E"
-                fillOpacity={0.9}
-                fill="url(#Happiness)"
+                stackId="1"
+                stroke={chartColors.Happiness}
+                fill={chartColors.Happiness}
               />
               <Area
                 type="monotone"
                 dataKey="Anger"
-                stroke="#DC2626"
-                fillOpacity={0.9}
-                fill="url(#Anger)"
+                stackId="1"
+                stroke={chartColors.Anger}
+                fill={chartColors.Anger}
               />
               <Area
                 type="monotone"
                 dataKey="Sadness"
-                stroke="#1FB2A6"
-                fillOpacity={0.9}
-                fill="url(#Sadness)"
+                stackId="1"
+                stroke={chartColors.Sadness}
+                fill={chartColors.Sadness}
               />
             </AreaChart>
           </ResponsiveContainer>

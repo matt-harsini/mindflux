@@ -63,7 +63,7 @@ export const colors: Colors = {
   CARD_HAPPY: "text-green-500",
   CARD_SAD: "text-accent",
   CARD_ANXIOUS: "text-secondary",
-  CARD_ANGRY: "text-red-400",
+  CARD_ANGRY: "text-red-500",
 };
 
 export const progressColors: Colors = {
@@ -78,4 +78,11 @@ export const feelings: Feelings = {
   CARD_SAD: "Sadness",
   CARD_ANXIOUS: "Anxiety",
   CARD_ANGRY: "Anger",
+};
+
+export const chartColors = {
+  Happiness: "#22C55E",
+  Anxiety: "#D926A9",
+  Anger: "#DC2626",
+  Sadness: "#1FB2A6",
 };
