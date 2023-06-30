@@ -1,12 +1,12 @@
 import axios from "axios";
 
-// https://mindflux-api.onrender.com/api
+// https://mindflux.fly.dev/api
 // http://localhost:4000/api
 
 export const authFetch = axios.create({
-  baseURL: "https://mindflux.fly.dev/api",
+  baseURL: "http://localhost:4000/api",
 });
 
 export const getAuthFetch = axios.create({
-  baseURL: "https://mindflux.fly.dev/api",
+  baseURL: "http://localhost:4000/api",
 });

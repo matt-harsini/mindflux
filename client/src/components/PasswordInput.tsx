@@ -23,7 +23,7 @@ export default function PasswordInput({
         autoComplete="on"
         id={type}
       />
-      {!showPassword ? (
+      {showPassword ? (
         <button
           className="scale-[0.8] absolute top-3 right-2.5"
           type="button"
