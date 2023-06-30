@@ -1,17 +1,16 @@
 import { lazy } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Forgot, Home, Login, Register, Reset } from "./pages";
+import { Dashboard, Forgot, Home, Login, Register, Reset } from "./pages";
 import { SidebarOutlet } from "./components";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 export default function App() {
-  const Dashboard = lazy(() => import("./pages/Dashboard"));
   const CalendarPage = lazy(() => import("./pages/CalendarPage"));
   const Settings = lazy(() => import("./pages/Settings"));
   const Log = lazy(() => import("./pages/Log"));
 
   const { isAuth } = useAuthContext();
-  
+
   return (
     <BrowserRouter>
       <Routes>
