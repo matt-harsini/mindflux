@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
 import { FormEvent, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { AuthContext, Error } from "../shared/interfaces";
+import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
 import { getAuthFetch } from "../utils/axios";
 import PasswordInput from "../components/PasswordInput";
@@ -11,32 +11,22 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { dispatch }: AuthContext = useAuthContext();
 
   const {
     mutate,
     isError,
     isLoading,
     error,
+    isSuccess,
   }: {
     mutate: () => void;
     isError: boolean;
     error: Error | null;
     isLoading: boolean;
+    isSuccess: boolean;
   } = useMutation({
     mutationFn: () =>
       getAuthFetch.post("/register", { email, username, password }),
-    onSuccess: (data) => {
-      localStorage.setItem("token", JSON.stringify(data.data.token));
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          isAuth: true,
-          username: data.data.username,
-          email: data.data.email,
-        },
-      });
-    },
   });
 
   const handleSubmit = (e: FormEvent) => {
@@ -52,6 +42,27 @@ export default function Register() {
 
   if (isAuthLoading) {
     return <Loading height="h-screen" />;
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="min-h-screen flex flex-col justify-center items-center">
+        <h1 className="mt-4 text-lg lg:text-xl font-bold tracking-tight text-white sm:text-5xl">
+          Success!
+        </h1>
+        <h4 className="text-sm md:text-lg text-white text-center mt-2">
+          Please check your email to verify your account
+        </h4>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <Link
+            to="/"
+            className="rounded-md uppercase bg-accent px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-accent-focus focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Go back home
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (

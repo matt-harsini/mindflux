@@ -34,9 +34,40 @@ async function auth(req, res, next) {
 }
 
 async function verifyEmail(req, res) {
-  const { verificationToken, email } = req.body;
+  try {
+    const { verificationToken, email } = req.body;
+    const user = await User.findOne({ email });
 
-  res.status(StatusCodes.OK).json({ verificationToken, email });
+    if (!user) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "User does not exist" });
+    }
+
+    if (user.verificationToken !== verificationToken) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "Verification failed" });
+    }
+
+    user.isVerified = true;
+    user.verified = Date.now();
+    user.verificationToken = "";
+    delete user.verificationExpires;
+
+    await user.save();
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ email, message: "Email verified" });
+  } catch (error) {
+    next(
+      createAPIError(
+        "Something went wrong, please try again later",
+        StatusCodes.INTERNAL_SERVER_ERROR
+      )
+    );
+  }
 }
 
 export { auth, verifyEmail };

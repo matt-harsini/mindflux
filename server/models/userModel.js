@@ -5,66 +5,90 @@ import crypto from "crypto";
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    minLength: 8,
-    maxLength: 30,
-    validate: [
-      validator.isAlphanumeric,
-      "Username must contain letters or numbers",
-    ],
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: [validator.isEmail, "Must be a valid email"],
-  },
-  password: {
-    type: String,
-    required: true,
-    validate: [
-      validator.isStrongPassword,
-      "Password must contain at least one symbol, number, uppercase, and lowercase characters",
-    ],
-  },
-  first_name: {
-    type: String,
-  },
-  last_name: {
-    type: String,
-  },
-  phone_number: {
-    type: String,
-    validate: {
-      validator: function (v) {
-        return /^\d{3}-\d{3}-\d{4}$/.test(v);
-      },
-      message: (props) => `${props.value} is not a valid phone number!`,
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      minLength: 8,
+      maxLength: 30,
+      validate: [
+        validator.isAlphanumeric,
+        "Username must contain letters or numbers",
+      ],
     },
-  },
-  password_confirm: {
-    type: String,
-    validate: {
-      validator: function (el) {
-        return el === this.password;
-      },
-      message: "Passwords are not the same!",
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: [validator.isEmail, "Must be a valid email"],
     },
+    password: {
+      type: String,
+      required: true,
+      validate: [
+        validator.isStrongPassword,
+        "Password must contain at least one symbol, number, uppercase, and lowercase characters",
+      ],
+    },
+    first_name: {
+      type: String,
+    },
+    last_name: {
+      type: String,
+    },
+    phone_number: {
+      type: String,
+      validate: {
+        validator: function (v) {
+          return /^\d{3}-\d{3}-\d{4}$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid phone number!`,
+      },
+    },
+    password_confirm: {
+      type: String,
+      validate: {
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: "Passwords are not the same!",
+      },
+    },
+    password_reset_token: String,
+    password_reset_expires: Date,
+    password_changed_at: Date,
+    verificationToken: String,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verified: Date,
   },
-  password_reset_token: String,
-  password_reset_expires: Date,
-  password_changed_at: Date,
-});
+  {
+    timestamps: true,
+  }
+);
 
-userSchema.statics.register = async function (email, username, password) {
+userSchema.index(
+  { createdAt: 1 },
+  {
+    expireAfterSeconds: 60,
+    partialFilterExpression: { isVerified: false },
+  }
+);
+
+userSchema.statics.register = async function (
+  email,
+  username,
+  password,
+  verificationToken
+) {
   if (!username || !password || !email) {
     throw Error("All fields must be filled.");
   }
-  
+
   if (await this.findOne({ email })) {
     throw Error("Email is already in use.");
   }
@@ -74,7 +98,13 @@ userSchema.statics.register = async function (email, username, password) {
   }
 
   try {
-    const user = await this.create({ email, username, password });
+    const user = await this.create({
+      email,
+      username,
+      password,
+      verificationToken,
+    });
+
     return user;
   } catch (error) {
     throw Error(error);

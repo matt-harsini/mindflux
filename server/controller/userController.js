@@ -29,6 +29,14 @@ async function login(req, res, next) {
   const { username, password } = req.body;
   try {
     const user = await User.login(username, password);
+    if (!user.isVerified) {
+      next(
+        createAPIError(
+          "User has not verified their email",
+          StatusCodes.UNAUTHORIZED
+        )
+      );
+    }
     const token = createToken(user._id);
     res.status(StatusCodes.OK).json({ username, token, email: user.email });
   } catch (error) {
@@ -44,9 +52,35 @@ async function login(req, res, next) {
 async function register(req, res, next) {
   const { email, username, password } = req.body;
   try {
-    const user = await User.register(email, username, password);
-    const token = createToken(user._id);
-    res.status(StatusCodes.OK).json({ username, token });
+    const verificationToken = crypto.randomBytes(40).toString("hex");
+
+    const user = await User.register(
+      email,
+      username,
+      password,
+      verificationToken
+    );
+
+    const resetURL = `${req.get(
+      "origin"
+    )}/verify-email?token=${verificationToken}&email=${email}`;
+
+    const message = `Please confirm your email by clicking on the following link:\n${resetURL}`;
+
+    await sendEmail({
+      from: "mindfluxverify@gmail.com",
+      email: user.email,
+      subject: "Mindflux - Verify Email",
+      message,
+      key: process.env.SENDGRID_API_KEY,
+    });
+
+    return res.status(StatusCodes.OK).json({
+      username,
+      verificationToken: user.verificationToken,
+      status: "Success",
+      message: "Please check your email to verify your account",
+    });
   } catch (error) {
     next(
       createAPIError(
@@ -95,9 +129,11 @@ async function forgotPassword(req, res, next) {
   const message = `Forgot your password? Click on the link below to reset and confirm your password. If you didn't forget your password, please ignore this email.\n\n${resetURL}\n\n`;
   try {
     await sendEmail({
+      from: "mindfluxrecoveryhelpline@gmail.com",
       email: user.email,
       subject: "Mindflux - Reset Password",
       message,
+      key: process.env.SENDGRID_API_KEY,
     });
   } catch (error) {
     user.password_reset_token = undefined;

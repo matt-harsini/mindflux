@@ -81,10 +81,14 @@ export default function Forgot() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            required
           />
         </div>
         <button className="btn btn-secondary w-full">Continue</button>
       </form>
+      <Link to="/login" className="text-white text-md mt-5">
+        Go back
+      </Link>
     </div>
   );
 }

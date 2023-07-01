@@ -29,4 +29,5 @@ router.post("/verify-token", verifyPasswordToken);
 router.use(auth);
 
 router.patch("/update-user", updateUser);
+
 export { router };

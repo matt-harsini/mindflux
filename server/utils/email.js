@@ -1,16 +1,18 @@
 import nodemailer from "nodemailer";
+import "dotenv/config";
 
 async function sendEmail(options) {
+  console.log(123);
   const transporter = nodemailer.createTransport({
     service: "SendGrid",
     auth: {
       user: process.env.SENDGRID_USERNAME,
-      pass: process.env.SENDGRID_API_KEY,
+      pass: options.key,
     },
   });
 
   const mailOptions = {
-    from: "mindfluxrecoveryhelpline@gmail.com",
+    from: options.from,
     to: options.email,
     subject: options.subject,
     text: options.message,
@@ -19,6 +21,7 @@ async function sendEmail(options) {
   try {
     await transporter.sendMail(mailOptions);
   } catch (error) {
+    console.log(error);
     throw Error(error.message);
   }
 }

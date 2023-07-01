@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Dashboard, Forgot, Home, Login, Register, Reset } from "./pages";
 import { SidebarOutlet } from "./components";
 import { useAuthContext } from "./hooks/useAuthContext";
+import NotFound from "./pages/NotFound";
+import VerifyEmail from "./pages/VerifyEmail";
 
 export default function App() {
   const CalendarPage = lazy(() => import("./pages/CalendarPage"));
@@ -31,8 +33,12 @@ export default function App() {
           element={isAuth ? <Navigate to="/dashboard" /> : <Forgot />}
         />
         <Route
-          path=":token"
+          path="/user/:token"
           element={isAuth ? <Navigate to="/dashboard" /> : <Reset />}
+        />
+        <Route
+          path="/verify-email"
+          element={isAuth ? <Navigate to="/dashboard" /> : <VerifyEmail />}
         />
         <Route
           path="dashboard"
@@ -49,6 +55,7 @@ export default function App() {
             element={isAuth ? <Settings /> : <Navigate to="/" />}
           />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
