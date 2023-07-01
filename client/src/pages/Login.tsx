@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Error } from "../shared/interfaces";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { AuthContext } from "../shared/interfaces";
 import { getAuthFetch } from "../utils/axios";
 import PasswordInput from "../components/PasswordInput";
 import { Loading } from "../components";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -43,6 +44,13 @@ export default function Login() {
   };
   const { isAuth, isFetching, isLoading: isAuthLoading } = useAuthContext();
 
+  useEffect(() => {
+    return () => {
+      toast.dismiss();
+      toast.clearWaitingQueue();
+    };
+  }, []);
+
   if (!isAuth && localStorage.getItem("token") && isFetching) {
     return <div />;
   }
@@ -51,16 +59,13 @@ export default function Login() {
     return <Loading height="h-screen" />;
   }
 
+  if (isError) {
+    toast.error(error?.response.data.message, { toastId: "login_error" });
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h4 className="text-3xl font-bold text-accent mb-4">mindflux</h4>
-      <div
-        className={`max-w-max absolute top-10 alert alert-error flex justify-items-center py-2.5 ${
-          !isError && "invisible"
-        }`}
-      >
-        <span className="text-center">{error?.response.data.message}</span>
-      </div>
       <form
         className="py-6 px-8 pt-8 flex flex-col gap-6 max-w-lg w-full relative"
         onSubmit={handleSubmit}

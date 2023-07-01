@@ -17,6 +17,7 @@ import { authFetch } from "../utils";
 import { useState } from "react";
 import { formatISO, startOfToday, sub } from "date-fns";
 import { motion } from "framer-motion";
+import "react-toastify/dist/ReactToastify.css";
 
 interface pieData {
   value: number;

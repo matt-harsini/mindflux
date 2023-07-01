@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { SettingsActionType } from "../shared/types";
 import { SettingsAction, SettingsState } from "../shared/interfaces";
 import { AuthContext } from "../shared/interfaces";
 import { authFetch } from "../utils";
 import { UseMutateAsyncFunction, useMutation } from "react-query";
+import { toast } from "react-toastify";
 
 function reducer(state: SettingsState, action: SettingsAction) {
   switch (action.type) {
@@ -33,10 +34,10 @@ export default function Settings() {
   }: AuthContext = useAuthContext();
 
   const [state, dispatch] = useReducer(reducer, {
-    firstName: firstName as string,
-    lastName: lastName as string,
-    email: initialEmail as string,
-    phoneNumber: phoneNumber as string,
+    firstName: (firstName as string) || "",
+    lastName: (lastName as string) || "",
+    email: (initialEmail as string) || "",
+    phoneNumber: (phoneNumber as string) || "",
   });
 
   const {
@@ -61,18 +62,23 @@ export default function Settings() {
     lastName === state.lastName &&
     phoneNumber === state.phoneNumber;
 
+  if (isError) {
+    toast.error(error?.response.data.message, { toastId: "settings_error" });
+  }
+
+  useEffect(() => {
+    return () => {
+      toast.dismiss();
+      toast.clearWaitingQueue();
+    };
+  }, []);
+
   return (
     <div className="relative">
       <h3 className="text-2xl sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 text-start">
         Settings
       </h3>
-      <div
-        className={`max-w-max mb-7 lg:mb-3 mx-auto alert alert-error flex justify-items-center py-2.5 ${
-          !isError && "hidden"
-        }`}
-      >
-        <span className="text-center">{error?.response?.data.message}</span>
-      </div>
+
       <div className="flex flex-col mx-auto gap-10">
         <form className="flex flex-col gap-3">
           <div className="lg:max-w-[70%] flex flex-col gap-6">
