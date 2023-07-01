@@ -65,7 +65,7 @@ async function register(req, res, next) {
       "origin"
     )}/verify-email?token=${verificationToken}&email=${email}`;
 
-    const message = `Please confirm your email by clicking on the following link:\n${resetURL}\n\nYour session will expire in 30 minutes`;
+    const message = `Please confirm your email by clicking on the following link. Your session will expire in 30 minutes\n${resetURL}`;
 
     await sendEmail({
       from: "mindfluxverify@gmail.com",
