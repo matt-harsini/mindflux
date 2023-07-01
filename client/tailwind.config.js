@@ -5,7 +5,11 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui"), require("@tailwindcss/forms")],
+  plugins: [
+    require("daisyui"),
+    require("@tailwindcss/forms"),
+    require("autoprefixer"),
+  ],
   daisyui: {
     themes: ["dark"],
   },

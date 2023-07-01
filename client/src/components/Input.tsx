@@ -48,6 +48,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
           <motion.span
             variants={variants}
             animate={input === "1" ? "hidden" : "visible"}
+            className="w-full h-full flex items-center justify-center"
           >
             1
           </motion.span>
@@ -67,6 +68,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
           <motion.span
             variants={variants}
             animate={input === "2" ? "hidden" : "visible"}
+            className="w-full h-full flex items-center justify-center"
           >
             2
           </motion.span>
@@ -78,6 +80,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
           <motion.span
             variants={variants}
             animate={input === "3" ? "hidden" : "visible"}
+            className="w-full h-full flex items-center justify-center"
           >
             3
           </motion.span>
@@ -89,6 +92,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
           <motion.span
             variants={variants}
             animate={input === "4" ? "hidden" : "visible"}
+            className="w-full h-full flex items-center justify-center"
           >
             4
           </motion.span>
@@ -100,6 +104,7 @@ export default function Input({ card_title, setMoodMeter }: InputProps) {
           <motion.span
             variants={variants}
             animate={input === "5" ? "hidden" : "visible"}
+            className="w-full h-full flex items-center justify-center"
           >
             5
           </motion.span>
