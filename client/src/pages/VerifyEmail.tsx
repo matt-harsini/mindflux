@@ -57,7 +57,7 @@ export default function VerifyEmail() {
       <h4 className="text-sm md:text-lg text-white text-center mt-2">
         Your account is now verified.
       </h4>
-      <Link to="/login" className="btn btn-accent mt-4">
+      <Link to="/login" className="btn btn-accent mt-8">
         Please log in
       </Link>
     </div>
