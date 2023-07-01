@@ -26,8 +26,6 @@ export default function VerifyEmail() {
     },
   });
 
-  console.log(isError);
-
   useEffect(() => {
     mutate();
   }, [mutate]);

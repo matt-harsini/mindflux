@@ -2,7 +2,6 @@ import nodemailer from "nodemailer";
 import "dotenv/config";
 
 async function sendEmail(options) {
-  console.log(123);
   const transporter = nodemailer.createTransport({
     service: "SendGrid",
     auth: {
