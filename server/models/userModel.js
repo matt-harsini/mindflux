@@ -74,7 +74,7 @@ const userSchema = new Schema(
 userSchema.index(
   { createdAt: 1 },
   {
-    expireAfterSeconds: 60,
+    expireAfterSeconds: 1800,
     partialFilterExpression: { isVerified: false },
   }
 );
