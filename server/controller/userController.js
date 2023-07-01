@@ -30,7 +30,7 @@ async function login(req, res, next) {
   try {
     const user = await User.login(username, password);
     if (!user.isVerified) {
-      next(
+      return next(
         createAPIError(
           "User has not verified their email",
           StatusCodes.UNAUTHORIZED
@@ -38,9 +38,11 @@ async function login(req, res, next) {
       );
     }
     const token = createToken(user._id);
-    res.status(StatusCodes.OK).json({ username, token, email: user.email });
+    return res
+      .status(StatusCodes.OK)
+      .json({ username, token, email: user.email });
   } catch (error) {
-    next(
+    return next(
       createAPIError(
         displayErrorMessage(error.message),
         StatusCodes.BAD_REQUEST
