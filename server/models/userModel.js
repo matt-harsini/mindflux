@@ -65,6 +65,14 @@ const userSchema = new Schema(
       default: false,
     },
     verified: Date,
+    notify_calendar: {
+      type: Boolean,
+      default: false,
+    },
+    notify_log: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

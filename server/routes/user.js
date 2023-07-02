@@ -8,6 +8,8 @@ import {
   resetPassword,
   verifyPasswordToken,
   updateUser,
+  notifyCalendar,
+  notifyLog,
 } from "../controller/userController.js";
 
 const router = express.Router();
@@ -27,6 +29,10 @@ router.patch("/forgot-password/:token", resetPassword);
 router.post("/verify-token", verifyPasswordToken);
 
 router.use(auth);
+
+router.post("/notify-calendar", notifyCalendar);
+
+router.post("/notify-log", notifyLog);
 
 router.patch("/update-user", updateUser);
 

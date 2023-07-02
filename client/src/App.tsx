@@ -1,17 +1,15 @@
 import { lazy } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Dashboard, Home, Login, Register } from "./pages";
+import { Dashboard, Forgot, Home, Login, Register, Reset } from "./pages";
 import { SidebarOutlet } from "./components";
 import { useAuthContext } from "./hooks/useAuthContext";
 import VerifyEmail from "./pages/VerifyEmail";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   const CalendarPage = lazy(() => import("./pages/CalendarPage"));
   const Settings = lazy(() => import("./pages/Settings"));
   const Log = lazy(() => import("./pages/Log"));
-  const NotFound = lazy(() => import("./pages/NotFound"));
-  const Forgot = lazy(() => import("./pages/Forgot"));
-  const Reset = lazy(() => import("./pages/Reset"));
 
   const { isAuth } = useAuthContext();
 

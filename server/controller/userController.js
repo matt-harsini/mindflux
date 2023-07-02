@@ -239,6 +239,42 @@ async function updateUser(req, res, next) {
   }
 }
 
+async function notifyCalendar(req, res, next) {
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+    if (user.notify_calendar) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "User has already been notified" });
+    }
+    user.notify_calendar = true;
+    await user.save();
+    return res.status(StatusCodes.OK).json({ message: "Success", user });
+  } catch (error) {
+    return next(
+      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+    );
+  }
+}
+
+async function notifyLog(req, res, next) {
+  try {
+    const user = await User.findOne({ _id: req.user._id });
+    if (user.notify_log) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: "User has already been notified" });
+    }
+    user.notify_log = true;
+    await user.save();
+    return res.status(StatusCodes.OK).json({ message: "Success", user });
+  } catch (error) {
+    return next(
+      createAPIError(error.message, StatusCodes.INTERNAL_SERVER_ERROR)
+    );
+  }
+}
+
 export {
   login,
   register,
@@ -247,4 +283,6 @@ export {
   resetPassword,
   verifyPasswordToken,
   updateUser,
+  notifyCalendar,
+  notifyLog,
 };

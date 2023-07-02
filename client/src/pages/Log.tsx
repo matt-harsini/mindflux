@@ -9,6 +9,7 @@ import { useMutation } from "react-query";
 import { authFetch } from "../utils";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const defaultCardState = {
   CARD_HAPPY: false,
@@ -44,6 +45,19 @@ function reducer(state: State, action: Action) {
 }
 
 export default function Log() {
+  const { mutate: mutateNotifcations } = useMutation({
+    mutationFn: () => authFetch.post("/notify-log"),
+    onSuccess: () => {
+      toast("Click on multiple cards to log multiple emotions!", {
+        toastId: "log_notify",
+      });
+    },
+  });
+
+  useEffect(() => {
+    mutateNotifcations();
+  }, [mutateNotifcations]);
+
   const [state, dispatch] = useReducer(reducer, defaultCardState);
   const [log, setLog] = useState("");
   const [moodMeter, setMoodMeter] = useState({
