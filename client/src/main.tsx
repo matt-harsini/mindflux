@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <AuthContextProvider>
         <App />
         <ToastContainer
-          position="top-center"
+          position="top-right"
           autoClose={5000}
           limit={1}
           hideProgressBar={false}
