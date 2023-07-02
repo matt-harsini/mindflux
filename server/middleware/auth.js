@@ -61,7 +61,6 @@ async function verifyEmail(req, res) {
       .status(StatusCodes.OK)
       .json({ email, message: "Email verified" });
   } catch (error) {
-    console.log(error);
     next(
       createAPIError(
         "Something went wrong, please try again later",

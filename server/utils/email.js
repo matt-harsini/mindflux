@@ -20,7 +20,6 @@ async function sendEmail(options) {
   try {
     await transporter.sendMail(mailOptions);
   } catch (error) {
-    console.log(error);
     throw Error(error.message);
   }
 }
