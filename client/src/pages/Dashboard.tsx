@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAuthContext } from "../hooks/useAuthContext";
 import {
-  CartesianGrid,
   Cell,
-  Legend,
   Line,
   LineChart,
   Pie,
