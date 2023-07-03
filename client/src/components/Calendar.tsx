@@ -370,7 +370,11 @@ export default function Calendar() {
                       <div className="flex items-center justify-between">
                         <div className="flex flex-col gap-y-2">
                           {Object.keys(log.moodMeter).map((key, index) => {
-                            if (log.moodMeter[key] === null) return;
+                            if (
+                              log.moodMeter[key] === null ||
+                              log.moodMeter === false
+                            )
+                              return;
                             return (
                               <div
                                 key={index}
