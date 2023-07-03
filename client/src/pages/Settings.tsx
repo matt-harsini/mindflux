@@ -154,7 +154,6 @@ export default function Settings() {
                 onChange={(e) => {
                   dispatch({ type: "PHONE_NUMBER", payload: e.target.value });
                 }}
-                required
               />
             </div>
           </div>

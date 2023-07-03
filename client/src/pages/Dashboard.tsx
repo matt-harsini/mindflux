@@ -176,25 +176,21 @@ export default function Dashboard() {
                 type="monotone"
                 dataKey="Happiness"
                 stroke={chartColors.Happiness}
-                activeDot={{ r: 8 }}
               />
               <Line
                 type="monotone"
                 dataKey="Sadness"
                 stroke={chartColors.Sadness}
-                activeDot={{ r: 8 }}
               />
               <Line
                 type="monotone"
                 dataKey="Anger"
                 stroke={chartColors.Anger}
-                activeDot={{ r: 8 }}
               />
               <Line
                 type="monotone"
                 dataKey="Anxiety"
                 stroke={chartColors.Anxiety}
-                activeDot={{ r: 8 }}
               />
             </LineChart>
           </ResponsiveContainer>

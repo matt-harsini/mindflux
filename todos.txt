@@ -1,7 +1,1 @@
 Bugs:
-
-Clicking then unclicking the mood card in the log page still renders that mood in the calendar, look at the state updates
-
-When user initially logs in, the settings page is blank, but when refresh browser, than settings page has filled in information
-look at how the reducer is being called in AuthContext
-
