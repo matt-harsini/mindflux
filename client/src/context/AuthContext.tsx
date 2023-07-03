@@ -20,8 +20,6 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
       authFetch.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
-      console.log(state);
-
       return {
         ...state,
         isAuth: action.payload?.isAuth,
@@ -44,8 +42,6 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
       authFetch.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
-      console.log(action.payload);
-
       return {
         ...state,
         isAuth: action.payload?.isAuth,
@@ -80,8 +76,6 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     notifyCalendar: null,
     notifyLog: null,
   });
-  console.log(state);
-
   const [isFetching, setIsFetching] = useState(true);
   const { isLoading } = useQuery({
     queryFn: () =>
@@ -92,8 +86,6 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
       }),
     onSuccess: (data) => {
       setIsFetching(false);
-      console.log(data);
-
       dispatch({
         type: "SET_AUTH",
         payload: {
