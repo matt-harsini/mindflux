@@ -106,7 +106,6 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     queryKey: ["auth"],
     refetchOnWindowFocus: false,
   });
-  console.log(state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch, isFetching, isLoading }}>
