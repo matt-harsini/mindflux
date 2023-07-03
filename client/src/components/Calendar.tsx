@@ -329,7 +329,11 @@ export default function Calendar() {
                               >
                                 {Object.keys(log.moodMeter).map(
                                   (key, index) => {
-                                    if (log.moodMeter[key] === null) return;
+                                    if (
+                                      log.moodMeter[key] === null ||
+                                      log.moodMeter[key] === false
+                                    )
+                                      return;
                                     return (
                                       <span
                                         key={log._id + index}
@@ -372,7 +376,7 @@ export default function Calendar() {
                           {Object.keys(log.moodMeter).map((key, index) => {
                             if (
                               log.moodMeter[key] === null ||
-                              log.moodMeter === false
+                              log.moodMeter[key] === false
                             )
                               return;
                             return (
