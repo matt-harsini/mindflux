@@ -108,6 +108,8 @@ async function verify(req, res) {
       firstName: user.first_name,
       lastName: user.last_name,
       phoneNumber: user.phone_number,
+      notifyLog: user.notify_log,
+      notifyCalendar: user.notify_calendar,
     });
   } catch (error) {
     return res.json({
