@@ -224,7 +224,11 @@ export default function Calendar() {
                                   <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                     {Object.keys(log.moodMeter).map(
                                       (key, index) => {
-                                        if (log.moodMeter[key] === null) return;
+                                        if (
+                                          log.moodMeter[key] === null ||
+                                          log.moodMeter[key] === false
+                                        )
+                                          return;
                                         return (
                                           <span
                                             key={log._id + index}
