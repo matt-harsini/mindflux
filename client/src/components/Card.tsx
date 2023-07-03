@@ -35,7 +35,7 @@ export default function Card({
       onClick={() => {
         dispatch({ type: id });
         setMoodMeter((prevState) => {
-          return { ...prevState, [id]: 1 };
+          return { ...prevState, [id]: !state ? 1 : null };
         });
       }}
     >

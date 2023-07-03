@@ -21,7 +21,11 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
       return {
-        ...state,
+        notifyLog: action.payload?.notifyLog,
+        notifyCalendar: action.payload?.notifyCalendar,
+        phoneNumber: action.payload?.phoneNumber,
+        firstName: action.payload?.firstName,
+        lastName: action.payload?.lastName,
         isAuth: action.payload?.isAuth,
         email: action.payload?.email,
         username: action.payload?.username,
@@ -43,7 +47,6 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
       return {
-        ...state,
         isAuth: action.payload?.isAuth,
         email: action.payload?.email,
         username: action.payload?.username,
@@ -103,6 +106,7 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     queryKey: ["auth"],
     refetchOnWindowFocus: false,
   });
+  console.log(state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch, isFetching, isLoading }}>

@@ -224,11 +224,7 @@ export default function Calendar() {
                                   <p className="flex-auto truncate font-medium text-primary-content group-hover:text-accent">
                                     {Object.keys(log.moodMeter).map(
                                       (key, index) => {
-                                        if (
-                                          log.moodMeter[key] === null ||
-                                          log.moodMeter[key] === false
-                                        )
-                                          return;
+                                        if (log.moodMeter[key] === null) return;
                                         return (
                                           <span
                                             key={log._id + index}
@@ -329,11 +325,7 @@ export default function Calendar() {
                               >
                                 {Object.keys(log.moodMeter).map(
                                   (key, index) => {
-                                    if (
-                                      log.moodMeter[key] === null ||
-                                      log.moodMeter[key] === false
-                                    )
-                                      return;
+                                    if (log.moodMeter[key] === null) return;
                                     return (
                                       <span
                                         key={log._id + index}
@@ -374,11 +366,7 @@ export default function Calendar() {
                       <div className="flex items-center justify-between">
                         <div className="flex flex-col gap-y-2">
                           {Object.keys(log.moodMeter).map((key, index) => {
-                            if (
-                              log.moodMeter[key] === null ||
-                              log.moodMeter[key] === false
-                            )
-                              return;
+                            if (log.moodMeter[key] === null) return;
                             return (
                               <div
                                 key={index}
