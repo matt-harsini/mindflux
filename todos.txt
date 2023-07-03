@@ -1,9 +1,7 @@
 Bugs:
 
-MongoDB stores times in UTC, so all the dates in the application are off
-https://www.mongodb.com/docs/v4.4/tutorial/model-time-data/
+Clicking then unclicking the mood card in the log page still renders that mood in the calendar, look at the state updates
 
-Possibly add in loading state for the calendar?
-
-Deploy the backend on fly using docker
+When user initially logs in, the settings page is blank, but when refresh browser, than settings page has filled in information
+look at how the reducer is being called in AuthContext
 
