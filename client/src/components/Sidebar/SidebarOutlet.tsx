@@ -146,7 +146,7 @@ export default function SidebarOutlet() {
                       </ul>
                       <button
                         onClick={handleLogout}
-                        className="btn btn-neutral w-full self-center"
+                        className="btn btn-accent w-full self-center"
                       >
                         log out
                       </button>
@@ -202,7 +202,7 @@ export default function SidebarOutlet() {
               </ul>
               <button
                 onClick={handleLogout}
-                className="btn btn-secondary w-full self-center"
+                className="btn btn-accent w-full self-center"
               >
                 log out
               </button>
