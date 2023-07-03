@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAuthContext } from "../hooks/useAuthContext";
 import {
-  Area,
-  AreaChart,
+  CartesianGrid,
   Cell,
+  Legend,
+  Line,
+  LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -153,15 +155,15 @@ export default function Dashboard() {
             </PieChart>
           </ResponsiveContainer>
           <ResponsiveContainer width="100%" aspect={3}>
-            <AreaChart
+            <LineChart
               width={500}
-              height={400}
-              data={chartData?.data.documents}
+              height={300}
+              data={chartData.data?.documents}
               margin={{
-                top: 10,
+                top: 5,
                 right: 30,
-                left: 0,
-                bottom: 0,
+                left: 20,
+                bottom: 5,
               }}
             >
               <XAxis
@@ -172,35 +174,31 @@ export default function Dashboard() {
               />
               <YAxis stroke="#ffffff" fontSize={13} />
               <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="Anxiety"
-                stackId="1"
-                stroke={chartColors.Anxiety}
-                fill={chartColors.Anxiety}
-              />
-              <Area
+              <Line
                 type="monotone"
                 dataKey="Happiness"
-                stackId="1"
                 stroke={chartColors.Happiness}
-                fill={chartColors.Happiness}
+                activeDot={{ r: 8 }}
               />
-              <Area
-                type="monotone"
-                dataKey="Anger"
-                stackId="1"
-                stroke={chartColors.Anger}
-                fill={chartColors.Anger}
-              />
-              <Area
+              <Line
                 type="monotone"
                 dataKey="Sadness"
-                stackId="1"
                 stroke={chartColors.Sadness}
-                fill={chartColors.Sadness}
+                activeDot={{ r: 8 }}
               />
-            </AreaChart>
+              <Line
+                type="monotone"
+                dataKey="Anger"
+                stroke={chartColors.Anger}
+                activeDot={{ r: 8 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="Anxiety"
+                stroke={chartColors.Anxiety}
+                activeDot={{ r: 8 }}
+              />
+            </LineChart>
           </ResponsiveContainer>
         </div>
       ) : (
