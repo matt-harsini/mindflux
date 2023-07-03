@@ -38,9 +38,16 @@ async function login(req, res, next) {
       );
     }
     const token = createToken(user._id);
-    return res
-      .status(StatusCodes.OK)
-      .json({ username, token, email: user.email });
+    return res.status(StatusCodes.OK).json({
+      username,
+      token,
+      email: user.email,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      phoneNumber: user.phone_number,
+      notifyLog: user.notify_log,
+      notifyCalendar: user.notify_calendar,
+    });
   } catch (error) {
     return next(
       createAPIError(
