@@ -32,6 +32,7 @@ export default function Settings() {
     phoneNumber,
     isAuth,
   }: AuthContext = useAuthContext();
+  console.log(firstName, lastName, phoneNumber);
 
   const [state, dispatch] = useReducer(reducer, {
     firstName: (firstName as string) || "",

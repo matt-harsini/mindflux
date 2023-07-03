@@ -20,15 +20,13 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
       authFetch.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
+      console.log(state);
+
       return {
-        isAuth: true,
+        ...state,
+        isAuth: action.payload?.isAuth,
         email: action.payload?.email,
         username: action.payload?.username,
-        firstName: action.payload?.firstName,
-        lastName: action.payload?.lastName,
-        phoneNumber: action.payload?.phoneNumber,
-        notifyCalendar: action.payload?.notifyCalendar,
-        notifyLog: action.payload?.notifyLog,
       };
     case AuthActionTypes.LOGOUT:
       delete authFetch.defaults.headers.common["Authorization"];
@@ -46,6 +44,8 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
       authFetch.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
+      console.log(action.payload);
+
       return {
         ...state,
         isAuth: action.payload?.isAuth,
@@ -54,6 +54,8 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
         firstName: action.payload?.firstName,
         lastName: action.payload?.lastName,
         phoneNumber: action.payload?.phoneNumber,
+        notifyLog: action.payload?.notifyLog,
+        notifyCalendar: action.payload?.notifyCalendar,
       };
     case AuthActionTypes.SET_DATA:
       return {
@@ -78,6 +80,8 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     notifyCalendar: null,
     notifyLog: null,
   });
+  console.log(state);
+
   const [isFetching, setIsFetching] = useState(true);
   const { isLoading } = useQuery({
     queryFn: () =>
@@ -88,6 +92,8 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
       }),
     onSuccess: (data) => {
       setIsFetching(false);
+      console.log(data);
+
       dispatch({
         type: "SET_AUTH",
         payload: {
@@ -97,6 +103,8 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
           isAuth: data.data.authorized,
           username: data.data.username,
           email: data.data.email,
+          notifyLog: data.data.notifyLog,
+          notifyCalendar: data.data.notifyCalendar,
         },
       });
     },

@@ -33,11 +33,6 @@ export default function Login() {
           isAuth: true,
           username: data.data.username,
           email: data.data.email,
-          firstName: data.data.firstName,
-          lastName: data.data.lastName,
-          phoneNumber: data.data.phoneNumber,
-          notifyLog: data.data.notifyLog,
-          notifyCalendar: data.data.notifyLog,
         },
       });
     },
