@@ -83,7 +83,7 @@ export default function Dashboard() {
         <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
           Hello {username}
         </h3>
-        <div className="flex self-center gap-x-10">
+        <div className="flex self-center gap-x-6 lg:gap-x-10">
           {buttons.map(({ text }: { text: string }, index) => {
             return (
               <button
@@ -102,7 +102,7 @@ export default function Dashboard() {
         </div>
         <div className="flex flex-col gap-y-2">
           <h4 className="text-lg text-white text-center">Guide</h4>
-          <div className="flex items-center justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
+          <div className="grid grid-cols-2 sm:flex sm:items-center sm:justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
             {Object.keys(inputIcons).map((icon, index) => {
               return (
                 <motion.div
@@ -117,12 +117,14 @@ export default function Dashboard() {
                   }}
                   initial="hidden"
                   animate="visible"
-                  className="flex flex-col items-center gap-y-1 p-4"
+                  className="flex flex-col items-center gap-y-1 p-3 lg:p-4"
                 >
                   <span
-                    className={`text-4xl fa-solid ${inputIcons[icon][5]} ${colors[icon]}`}
+                    className={`text-2xl lg:text-4xl fa-solid ${inputIcons[icon][5]} ${colors[icon]}`}
                   />
-                  <span className="text-white text-md">{feelings[icon]}</span>
+                  <span className="text-white text-sm lg:text-md">
+                    {feelings[icon]}
+                  </span>
                 </motion.div>
               );
             })}
@@ -131,9 +133,9 @@ export default function Dashboard() {
       </div>
       {!!chartData?.data.documents.length &&
       !!pieData?.data.documents.length ? (
-        <div className="flex flex-col 2xl:flex-row items-center justify-evenly w-full gap-10 mt-16 pb-8">
-          <ResponsiveContainer width="44%" aspect={2}>
-            <PieChart width={730} height={250}>
+        <div className="flex flex-col 2xl:flex-row items-center justify-between w-full gap-10 lg:mt-16 pb-8">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
               <Pie
                 data={pieData?.data?.documents[0]?.data}
                 cx="50%"
@@ -152,16 +154,12 @@ export default function Dashboard() {
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
-          <ResponsiveContainer width="100%" aspect={3}>
+          <ResponsiveContainer width="100%" aspect={2}>
             <LineChart
-              width={500}
-              height={300}
               data={chartData.data?.documents}
               margin={{
                 top: 10,
-                right: 30,
-                left: 20,
-                bottom: 5,
+                right: 45,
               }}
             >
               <XAxis
