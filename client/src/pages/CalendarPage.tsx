@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import { authFetch } from "../utils";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function CalendarPage() {
   const { mutate } = useMutation({
@@ -15,9 +16,12 @@ export default function CalendarPage() {
     },
   });
 
+  const { notifyCalendar } = useAuthContext();
+
   useEffect(() => {
+    if (notifyCalendar) return;
     mutate();
-  }, [mutate]);
+  }, [mutate, notifyCalendar]);
 
   return (
     <>

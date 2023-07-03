@@ -14,7 +14,7 @@ enum AuthActionTypes {
   SET_DATA = "SET_DATA",
 }
 
-function authReducer(_state: AuthState, action: AuthAction): AuthState {
+function authReducer(state: AuthState, action: AuthAction): AuthState {
   switch (action.type) {
     case AuthActionTypes.LOGIN:
       authFetch.defaults.headers.common[
@@ -27,6 +27,8 @@ function authReducer(_state: AuthState, action: AuthAction): AuthState {
         firstName: action.payload?.firstName,
         lastName: action.payload?.lastName,
         phoneNumber: action.payload?.phoneNumber,
+        notifyCalendar: action.payload?.notifyCalendar,
+        notifyLog: action.payload?.notifyLog,
       };
     case AuthActionTypes.LOGOUT:
       delete authFetch.defaults.headers.common["Authorization"];
@@ -37,12 +39,15 @@ function authReducer(_state: AuthState, action: AuthAction): AuthState {
         firstName: null,
         lastName: null,
         phoneNumber: null,
+        notifyCalendar: null,
+        notifyLog: null,
       };
     case AuthActionTypes.SET_AUTH:
       authFetch.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${localStorage.getItem("token")}`;
       return {
+        ...state,
         isAuth: action.payload?.isAuth,
         email: action.payload?.email,
         username: action.payload?.username,
@@ -52,7 +57,7 @@ function authReducer(_state: AuthState, action: AuthAction): AuthState {
       };
     case AuthActionTypes.SET_DATA:
       return {
-        ..._state,
+        ...state,
         firstName: action.payload?.firstName,
         lastName: action.payload?.lastName,
         phoneNumber: action.payload?.phoneNumber,
@@ -70,6 +75,8 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     lastName: null,
     phoneNumber: null,
     isAuth: false,
+    notifyCalendar: null,
+    notifyLog: null,
   });
   const [isFetching, setIsFetching] = useState(true);
   const { isLoading } = useQuery({

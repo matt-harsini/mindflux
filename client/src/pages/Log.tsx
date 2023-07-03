@@ -10,6 +10,7 @@ import { authFetch } from "../utils";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const defaultCardState = {
   CARD_HAPPY: false,
@@ -54,9 +55,12 @@ export default function Log() {
     },
   });
 
+  const { notifyLog } = useAuthContext();
+
   useEffect(() => {
+    if (notifyLog) return;
     mutateNotifcations();
-  }, [mutateNotifcations]);
+  }, [mutateNotifcations, notifyLog]);
 
   const [state, dispatch] = useReducer(reducer, defaultCardState);
   const [log, setLog] = useState("");

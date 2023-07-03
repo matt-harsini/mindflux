@@ -5,6 +5,8 @@ interface AuthState {
   firstName?: string | null | undefined;
   lastName?: string | null | undefined;
   phoneNumber?: string | null | undefined;
+  notifyCalendar?: boolean | null;
+  notifyLog?: boolean | null;
 }
 
 interface AuthAction {
@@ -21,6 +23,8 @@ interface AuthContext {
   firstName?: string | null | undefined;
   lastName?: string | null | undefined;
   phoneNumber?: string | null | undefined;
+  notifyCalendar?: boolean | null;
+  notifyLog?: boolean | null;
   dispatch: React.Dispatch<AuthAction>;
 }
 
