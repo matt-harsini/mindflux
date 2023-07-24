@@ -64,8 +64,6 @@ export default function Features() {
               src="./Calendar.png"
               alt="Product screenshot"
               className="w-[30rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[37rem] md:-ml-4 lg:-ml-0 object-cover"
-              width={2432}
-              height={1442}
             />
           </div>
         </div>
