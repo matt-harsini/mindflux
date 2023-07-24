@@ -15,7 +15,7 @@ export default function Footer() {
     <footer className="bg-base-100">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
         <nav
-          className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
+          className="-mb-6 flex flex-col sm:flex-row items-center justify-center gap-x-12"
           aria-label="Footer"
         >
           {navigation.main.map((item) => (

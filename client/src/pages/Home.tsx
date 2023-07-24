@@ -53,11 +53,11 @@ export default function Home() {
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Gain valuable insight.
               <br />
-              Start using our app today.
+              Start using our app today for free.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-white/80">
-              It&apos;s completely free! Create an account and verify your email
-              to start tracking your mood.
+              Create an account and verify your email to start tracking your
+              mood.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <button
