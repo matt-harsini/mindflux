@@ -1,7 +1,7 @@
 import {
-  CloudArrowUpIcon,
+  PresentationChartBarIcon,
   LockClosedIcon,
-  ServerIcon,
+  BookmarkSquareIcon,
 } from "@heroicons/react/20/solid";
 
 const features = [
@@ -9,18 +9,18 @@ const features = [
     name: "Secure",
     description:
       "Leveraging JWT best practices to prevent hackers from gaining sensitive info.",
-    icon: CloudArrowUpIcon,
+    icon: LockClosedIcon,
   },
   {
     name: "Create and delete logs",
     description: "View logs from years ago to reminisce your feelings.",
-    icon: LockClosedIcon,
+    icon: BookmarkSquareIcon,
   },
   {
     name: "Visualize your data",
     description:
       "Utilizing D3.js to it's fullest potential, display your data through intervals of months or weeks to gain a greater understanding of yourself.",
-    icon: ServerIcon,
+    icon: PresentationChartBarIcon,
   },
 ];
 
