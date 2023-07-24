@@ -21,6 +21,7 @@ Next, create a .env file and create secrets for each environment variable used i
 ### Environment variables
 
 - PORT
+- SENDGRID_USERNAME
 - SENDGRID_API_KEY
 - JWT_SECRET
 - JWT_LIFETIME
@@ -34,6 +35,8 @@ Finally, you can go to MongoDB Atlas and get the connection string from the host
 
 Look at the docs in the link below.
 
-https://fly.io/
+<https://fly.io/>
 
 Follow the instructions to deploy an app and install Docker if you need to.
+
+You might have to install the flyctl command line multiple times, this is a bug in xubuntu virtual box machine.
