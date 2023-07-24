@@ -12,7 +12,7 @@ const features = [
     icon: CloudArrowUpIcon,
   },
   {
-    name: "Create and delete logs.",
+    name: "Create and delete logs",
     description: "View logs from years ago to reminisce your feelings.",
     icon: LockClosedIcon,
   },
