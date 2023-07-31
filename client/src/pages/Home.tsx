@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <header className="hero py-56 bg-base-200">
+      <header className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold text-accent">mindflux</h1>
