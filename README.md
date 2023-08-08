@@ -27,16 +27,8 @@ Next, create a .env file and create secrets for each environment variable used i
 - JWT_LIFETIME
 - MONGO_URI
 
-The ```SENDGRID_API_KEY``` can be found on sendgrid's website.
-Use Node.js in the terminal to generate a JWT_SECRET using the built in crypto library.
-Finally, you can go to MongoDB Atlas and get the connection string from the hosted database.
-
 ## Deployment
 
-Look at the docs in the link below.
+Deployed on fly.io with a docker container.
 
-<https://fly.io/>
-
-Follow the instructions to deploy an app and install Docker if you need to.
-
-You might have to install the flyctl command line multiple times, this is a bug in xubuntu virtual box machine.
+https://fly.io/
