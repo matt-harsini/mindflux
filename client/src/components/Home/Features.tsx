@@ -19,7 +19,7 @@ const features = [
   {
     name: "Visualize your data",
     description:
-      "Display your data through intervals of months or weeks to track how you felt.",
+      "Display your data through intervals of weeks or months to track how you felt.",
     icon: PresentationChartBarIcon,
   },
 ];
