@@ -19,7 +19,7 @@ const features = [
   {
     name: "Visualize your data",
     description:
-      "Utilizing D3.js to it's fullest potential, display your data through intervals of months or weeks to gain a greater understanding of yourself.",
+      "Display your data through intervals of months or weeks to track how you felt.",
     icon: PresentationChartBarIcon,
   },
 ];
