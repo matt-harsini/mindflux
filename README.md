@@ -1,6 +1,6 @@
 # mindflux
 
-Web application to track your mood and display data through charts.
+Web application to track your mood with an interactive calendar and display data through charts.
 
 Live site: <br/>
 https://mindflux.dev
