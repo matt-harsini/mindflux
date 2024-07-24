@@ -6,7 +6,6 @@ import {
   AuthState,
   AuthContext as AuthContextType,
 } from "../shared/interfaces";
-import { redirect } from "react-router-dom";
 
 enum AuthActionTypes {
   LOGIN = "LOGIN",
