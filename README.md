@@ -3,7 +3,7 @@
 Web application to track your mood with an interactive calendar and display data through charts.
 
 Live site: <br/>
-https://mindflux.dev
+[https://mindflux.dev](https://mindflux-2jx0.onrender.com/)
 
 ## Technologies
 
