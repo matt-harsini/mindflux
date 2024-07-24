@@ -119,7 +119,7 @@ async function verify(req, res) {
       notifyCalendar: user.notify_calendar,
     });
   } catch (error) {
-    return res.json({
+    return res.status(401).json({
       authorized: false,
       message: error.message,
     });
