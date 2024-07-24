@@ -49,7 +49,7 @@ export default function SidebarOutlet() {
   };
 
   return (
-    <div className="max-w-[1920px] mx-auto">
+    <div className="mx-auto">
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
