@@ -6,6 +6,7 @@ import {
   AuthState,
   AuthContext as AuthContextType,
 } from "../shared/interfaces";
+import { redirect } from "react-router-dom";
 
 enum AuthActionTypes {
   LOGIN = "LOGIN",
@@ -69,6 +70,7 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
+  const [retry, setRetry] = useState(false);
   const [state, dispatch] = useReducer(authReducer, {
     username: null,
     email: null,
@@ -80,13 +82,14 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     notifyLog: null,
   });
   const [isFetching, setIsFetching] = useState(true);
-  const { isLoading } = useQuery({
-    queryFn: () =>
-      authFetch.get("/verify", {
+  const { isLoading, refetch } = useQuery({
+    queryFn: () => {
+      return authFetch.get("/verify", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      }),
+      });
+    },
     onSuccess: (data) => {
       setIsFetching(false);
       dispatch({
@@ -105,7 +108,14 @@ export const AuthContextProvider = ({ children }: React.PropsWithChildren) => {
     },
     queryKey: ["auth"],
     refetchOnWindowFocus: false,
+    retry: false,
+    enabled: false,
   });
+
+  if (localStorage.getItem("token") && !retry) {
+    refetch();
+    setRetry(true);
+  }
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch, isFetching, isLoading }}>
