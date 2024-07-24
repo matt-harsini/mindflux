@@ -135,7 +135,7 @@ async function forgotPassword(req, res, next) {
 
   await user.save();
 
-  const resetURL = `${req.get("origin")}/${resetToken}`;
+  const resetURL = `${req.get("origin")}/user/${resetToken}`;
 
   const message = `Forgot your password? Click on the link below to reset and confirm your password. If you didn't forget your password, please ignore this email.\n\n${resetURL}\n\n`;
   try {
