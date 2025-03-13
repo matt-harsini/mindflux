@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { UseMutateFunction, useMutation } from "react-query";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { authFetch } from "../utils";
 import { Loading } from "../components";
 import PasswordInput from "../components/PasswordInput";
@@ -13,6 +13,7 @@ function useQuery() {
 
 export default function Reset() {
   const { token } = useQuery();
+  console.log(token);
   const [mount, setMount] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [password, setPassword] = useState("");
