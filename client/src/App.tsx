@@ -33,7 +33,7 @@ export default function App() {
           element={isAuth ? <Navigate to="/dashboard" /> : <Forgot />}
         />
         <Route
-          path="/user/:token"
+          path="/user"
           element={isAuth ? <Navigate to="/dashboard" /> : <Reset />}
         />
         <Route
