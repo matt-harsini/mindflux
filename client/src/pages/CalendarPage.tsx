@@ -36,7 +36,7 @@ export default function CalendarPage() {
         }}
         initial="hidden"
         animate="visible"
-        className="flex flex-col mx-auto gap-10"
+        className="flex flex-col mx-auto gap-10 h-full pb-8"
       >
         <Calendar />
       </motion.div>

@@ -143,7 +143,7 @@ export default function Log() {
         <h4 className="text-xl text-primary-content md:text-2xl lg:text-3xl font-bold mx-auto">
           How are you feeling?
         </h4>
-        <div className="flex flex-col items-center justify-between gap-y-8 lg:flex-row px-8">
+        <div className="md:grid md:grid-cols-2 gap-8 flex flex-col">
           {icons.map(({ icon, title, id }, i) => {
             return (
               <motion.div
@@ -243,7 +243,7 @@ export default function Log() {
               onChange={(e) => {
                 setLog(e.target.value);
               }}
-              className="textarea resize-none text-md lg:text-lg w-full max-w-[780px] mx-auto text-primary-content bg-base-200"
+              className="textarea h-[200px] resize-none text-md lg:text-lg w-full max-w-[780px] mx-auto text-primary-content bg-base-200"
             />
             <button
               onClick={handleLog}

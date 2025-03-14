@@ -209,7 +209,7 @@ export default function SidebarOutlet() {
             </nav>
           </div>
         </div>
-        <div className="lg:pl-72">
+        <div className="lg:pl-72 h-screen">
           <div className="mb-5 bg-base-200 lg:bg-transparent sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 px-4 sm:gap-x-6 sm:px-6 lg:px-8">
             <button
               type="button"
@@ -229,8 +229,8 @@ export default function SidebarOutlet() {
             />
           </div>
 
-          <main className="max-w-[1500px] mx-auto">
-            <div className="px-4 sm:px-6 lg:px-8">
+          <main className="mx-auto h-[calc(100vh-(64px+1.25rem))]">
+            <div className="px-4 sm:px-6 lg:px-8 h-full">
               <Suspense fallback={<Loading height="h-screen" />}>
                 <Outlet />
               </Suspense>

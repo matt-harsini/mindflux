@@ -29,7 +29,7 @@ export default function Card({
 }: CardProps) {
   return (
     <motion.div
-      className="flex flex-col items-center justify-center rounded-lg w-44 lg:w-32 xl:w-48 2xl:w-64 bg-base-200 shadow-md p-4 cursor-pointer"
+      className="flex flex-col gap-8 items-center justify-center h-[300px] bg-base-200 shadow-md p-4 cursor-pointer"
       variants={variants}
       animate={state ? "hover" : "default"}
       onClick={() => {
@@ -39,9 +39,7 @@ export default function Card({
         });
       }}
     >
-      <figure className="card-body">
-        <span className={`fa-solid ${icon} ${colors[id]} scale-[3.3]`} />
-      </figure>
+      <span className={`fa-solid ${icon} ${colors[id]} scale-[3.3]`} />
       <span className="sm:text-md text-primary-content md:text-lg lg:text-xl">
         {title}
       </span>
