@@ -6,7 +6,7 @@ const navigation = {
       href: "https://www.linkedin.com/in/matthew-kim-667392206",
     },
     { name: "GitHub", href: "https://github.com/matt-harsini" },
-    { name: "Portfolio", href: "https://matthew-dev.vercel.app" },
+    { name: "Portfolio", href: "https://matt-dev.net" },
   ],
 };
 
