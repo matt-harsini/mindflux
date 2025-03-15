@@ -79,11 +79,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col gap-y-[46px] mt-12">
+      <div className="flex flex-col gap-y-[46px] pt-12">
         <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
           Hello {username}
         </h3>
-        <div className="flex flex-col gap-y-2 mt-12">
+        <div className="flex flex-col gap-y-2">
           <h4 className="text-lg text-white text-center">Guide</h4>
           <div className="grid grid-cols-2 sm:flex sm:items-center sm:justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
             {Object.keys(inputIcons).map((icon, index) => {
