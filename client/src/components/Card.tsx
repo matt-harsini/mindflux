@@ -29,7 +29,7 @@ export default function Card({
 }: CardProps) {
   return (
     <motion.div
-      className="flex flex-col gap-8 items-center justify-center h-[300px] bg-base-200 shadow-md p-4 cursor-pointer"
+      className="flex flex-col gap-8 items-center rounded-lg justify-center h-[300px] bg-base-200 shadow-md p-4 cursor-pointer"
       variants={variants}
       animate={state ? "hover" : "default"}
       onClick={() => {

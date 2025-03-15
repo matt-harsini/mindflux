@@ -79,28 +79,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="flex flex-col gap-y-[46px]">
+      <div className="flex flex-col gap-y-[46px] mt-12">
         <h3 className="text-2xl text-center sm:text-3xl mx-auto lg:mx-0 text-primary-content lg:text-4xl font-bold mb-7 sm:text-start">
           Hello {username}
         </h3>
-        <div className="flex self-center gap-x-6 lg:gap-x-10">
-          {buttons.map(({ text }: { text: string }, index) => {
-            return (
-              <button
-                key={index}
-                onClick={() => setFilter(index)}
-                className={`btn w-[50px] sm:w-[75px] md:w-[100px] lowercase ${
-                  index === filter
-                    ? "btn-accent"
-                    : "bg-white/10 hover:bg-white/20"
-                }`}
-              >
-                {text}
-              </button>
-            );
-          })}
-        </div>
-        <div className="flex flex-col gap-y-2">
+        <div className="flex flex-col gap-y-2 mt-12">
           <h4 className="text-lg text-white text-center">Guide</h4>
           <div className="grid grid-cols-2 sm:flex sm:items-center sm:justify-evenly bg-base-200 bg-opacity-75 rounded-xl">
             {Object.keys(inputIcons).map((icon, index) => {
@@ -129,7 +112,7 @@ export default function Dashboard() {
               );
             })}
           </div>
-        </div>
+        </div>{" "}
       </div>
       {!!chartData?.data.documents.length &&
       !!pieData?.data.documents.length ? (
@@ -198,6 +181,24 @@ export default function Dashboard() {
           No data yet, please log your mood to start populating your charts
         </h4>
       )}
+
+      <div className="flex items-center justify-center mt-12 gap-x-6 lg:gap-x-10">
+        {buttons.map(({ text }: { text: string }, index) => {
+          return (
+            <button
+              key={index}
+              onClick={() => setFilter(index)}
+              className={`btn w-[50px] sm:w-[75px] md:w-[100px] lowercase ${
+                index === filter
+                  ? "btn-accent"
+                  : "bg-white/10 hover:bg-white/20"
+              }`}
+            >
+              {text}
+            </button>
+          );
+        })}
+      </div>
     </>
   );
 }
